@@ -1,4 +1,4 @@
-# BancoAlimentar.AlimentaEstaIdeia.easypay.Model.PropertiesHasCustomer
+# Easypay.Model.PropertiesHasCustomer
 ## Properties
 
 Name | Type | Description | Notes

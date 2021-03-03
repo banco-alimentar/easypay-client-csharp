@@ -1,4 +1,4 @@
-# EasyPay C# client SDK
+# Easypay - the C# library for the Easypay API
 
 EasyPay - API allows you to query payment meta-data, receive payment notifications and generate payment references. Two distinct environments - [Sandbox environment](https://api.test.easypay.pt/docs) and [Production environment](https://api.prod.easypay.pt/docs).
 
@@ -38,9 +38,9 @@ Run the following command to generate the DLL
 
 Then include the DLL (under the `bin` folder) in the C# project, and use the namespaces:
 ```csharp
-using BancoAlimentar.AlimentaEstaIdeia.easypay.Api;
-using BancoAlimentar.AlimentaEstaIdeia.easypay.Client;
-using BancoAlimentar.AlimentaEstaIdeia.easypay.Model;
+using Easypay.Api;
+using Easypay.Client;
+using Easypay.Model;
 ```
 <a name="packaging"></a>
 ## Packaging
@@ -50,7 +50,7 @@ A `.nuspec` is included with the project. You can follow the Nuget quickstart to
 This `.nuspec` uses placeholders from the `.csproj`, so build the `.csproj` directly:
 
 ```
-nuget pack -Build -OutputDirectory out BancoAlimentar.AlimentaEstaIdeia.easypay.csproj
+nuget pack -Build -OutputDirectory out Easypay.csproj
 ```
 
 Then, publish to a [local feed](https://docs.microsoft.com/en-us/nuget/hosting-packages/local-feeds) or [other host](https://docs.microsoft.com/en-us/nuget/hosting-packages/overview) and consume the new package via Nuget as usual.
@@ -72,9 +72,9 @@ c.Proxy = webProxy;
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
-using BancoAlimentar.AlimentaEstaIdeia.easypay.Api;
-using BancoAlimentar.AlimentaEstaIdeia.easypay.Client;
-using BancoAlimentar.AlimentaEstaIdeia.easypay.Model;
+using Easypay.Api;
+using Easypay.Client;
+using Easypay.Model;
 
 namespace Example
 {

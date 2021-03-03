@@ -1,4 +1,4 @@
-# BancoAlimentar.AlimentaEstaIdeia.easypay.Model.PaymentBase
+# Easypay.Model.PaymentBase
 ## Properties
 
 Name | Type | Description | Notes

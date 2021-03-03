@@ -2,7 +2,7 @@
 
 ## Reporting Feedback
 
-TODO: please [open a GitHub issue](https://github.com/banco-alimentar/easypay-client-csharp/issues/new/choose)
+TODO: please [open a GitHub issue](https://github.com/easypay/easypay-client-csharp/issues/new/choose)
 
 ## Development
 

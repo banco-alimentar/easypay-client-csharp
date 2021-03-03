@@ -1,0 +1,27 @@
+{
+  "allowUnicodeIdentifiers":false,
+  "caseInsensitiveResponseHeaders":false,
+  "hideGenerationTimestamp":true,
+  "interfacePrefix":"I",
+  "licenseId":"MIT",
+  "modelPropertyNaming":"PascalCase",
+  "netCoreProjectFile":true,
+  "nonPublicApi":false,
+  "optionalAssemblyInfo":true,
+  "optionalEmitDefaultValues":false,
+  "optionalMethodArgument":true,
+  "optionalProjectFile":true,
+  "packageGuid":"db91bdac-9302-4ba8-b93f-254b03a3a0b8",
+  "packageName":"Easypay",
+  "packageTags":"",
+  "packageVersion":"1.1.0",
+  "releaseNote":"easypay C# SDK Pre-release",
+  "returnICollection":false,
+  "sortParamsByRequiredFlag":true,
+  "sourceFolder":"src",
+  "targetFramework":"net5.0",
+  "useCollection":true,
+  "useDateTimeOffset":false,
+  "validatable":true
+}
+

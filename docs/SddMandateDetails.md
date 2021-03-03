@@ -1,4 +1,4 @@
-# BancoAlimentar.AlimentaEstaIdeia.easypay.Model.SddMandateDetails
+# Easypay.Model.SddMandateDetails
 ## Properties
 
 Name | Type | Description | Notes

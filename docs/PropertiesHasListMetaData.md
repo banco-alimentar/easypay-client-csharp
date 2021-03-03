@@ -1,4 +1,4 @@
-# BancoAlimentar.AlimentaEstaIdeia.easypay.Model.PropertiesHasListMetaData
+# Easypay.Model.PropertiesHasListMetaData
 ## Properties
 
 Name | Type | Description | Notes

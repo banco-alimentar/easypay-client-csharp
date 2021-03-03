@@ -1,4 +1,4 @@
-# BancoAlimentar.AlimentaEstaIdeia.easypay.Model.PropertiesHasExpirationTime
+# Easypay.Model.PropertiesHasExpirationTime
 ## Properties
 
 Name | Type | Description | Notes

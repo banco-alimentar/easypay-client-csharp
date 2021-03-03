@@ -1,4 +1,4 @@
-# BancoAlimentar.AlimentaEstaIdeia.easypay.Model.StatusFailed
+# Easypay.Model.StatusFailed
 ## Properties
 
 Name | Type | Description | Notes

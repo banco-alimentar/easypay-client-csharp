@@ -1,0 +1,651 @@
+openapi: '3.0.3'
+info:
+  version: '2.0'
+  title: Easypay API
+  description: EasyPay - API allows you to query payment meta-data, receive payment notifications and generate payment references. Two distinct 
+    environments - [Sandbox environment](https://api.test.easypay.pt/docs) and [Production environment](https://api.prod.easypay.pt/docs). 
+  termsOfService: https://www.easypay.pt/pt/termos-e-condicoes/
+  contact:
+    name: Easypay Documentation
+    url: https://www.easypay.pt
+    email: tec@easypay.pt
+  x-logo:
+    url: 'https://www.easypay.pt/images-old/logo_esypay_canvas.png'
+    altText: easypay
+servers:
+  - url: https://api.prod.easypay.pt/2.0
+    description: Production environment
+  - url: https://api.test.easypay.pt/2.0
+    description: Sandbox environment
+paths:
+  /single:
+    get:
+      tags:
+        - Single Payment
+      summary: Lists single payments
+      description: Full report with all the single payments from your Account Id
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/Properties_Has_ListMetaData'
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Payment_Single'
+              example:
+                meta: 
+                  page:
+                    current: 1
+                    total: 0
+                  records:
+                    total: 0
+                    per_page: 10
+                  links:
+                    first: '?page=1'
+                    prev: ''
+                    next: ''
+                    last: '?page=0'
+                data:
+                  payment:
+                    id: 4c67e74b-a256-4e0a-965d-97bf5d01bd50
+                    type: sale
+                    key: Key Example
+                    expiration_time: 2017-12-12 16:05
+                    customer:
+                      id: 22ea3cc9-424b-489a-91b7-8955f643dc93</id>
+                      name: Customer Example
+                      email: customer@example.com
+                      phone: '911234567'
+                      phone_indicative: '+351'
+                      fiscal_number: PT123456789
+                      key: Key Example
+                      language: PT
+                    method:
+                      type: mb
+                      status: active
+                      entity: 10611
+                      reference: 987654321
+                      url: https://www.easypay.pt/_s/c11.php?e=10611&r=987654321&v=19&t_key=example+key&c=EN&l=EN
+                      last_four: 1234
+                      card_type: VISA
+                      expiration_date: 01/22
+                      alias: 626E6AA2224D017917D839D4D39296B49441A1D10DA7E8DB6E7E1A4356DDE75429531BEB32190C6D736FA12C7A116CA5F3FCAEE72570406F51371A0CB6E14B6B
+                      sdd_mandate:
+                        id: 12345678901
+                        billing_entity: PT16103627
+                        iban: PT50002700000001234567833
+                        key: Key Example
+                        name: Name Example
+                        email: customer@example.com
+                        phone: 911234567
+                        account_holder: Account Name Example
+                        country_code: PT
+                        max_num_debits: 12
+                      currency: EUR
+                      value: 17.5
+        '403':
+          $ref: '#/components/responses/Response_Http_Codes_403'
+        '429':
+          $ref: '#/components/responses/Response_Http_Codes_429'
+        '500':
+          $ref: '#/components/responses/Response_Http_Codes_500'
+      parameters:
+      - name: page
+        in: query
+        description: Page Number
+        required: false
+        schema: 
+          type: integer
+          format: int32
+        example: '2'
+      - name: records_per_page
+        in: query
+        description: 'Limit records per page (Max: 100)'
+        schema: 
+          type: integer
+          format: int32
+        example: '2'
+      - name: type
+        in: query
+        description: Filter by type
+        schema: 
+          type: string
+        example: sale
+      - name: expiration_time
+        in: query
+        description: Filter by expiration time interval (max 30 days)
+        schema: 
+          type: string
+        example: 'interval(2019-07-01 00:00,2019-07-01 23:59)'
+      - name: method
+        in: query
+        description: Filter by method
+        schema: 
+          allOf:
+            - $ref: '#/components/schemas/Payment_Single_Method_Available'
+        example: cc
+      - name: customer
+        in: query
+        description: Filter by customer key
+        schema: 
+          type: string
+        example: Key Example
+      - name: id
+        in: query
+        description: Filter by id
+        schema: 
+          type: string
+        example: b100175d-e347-4501-8388-5d4b00b8551b
+      - name: key
+        in: query
+        description: Filter by single key
+        schema: 
+          type: string
+        example: Single Key Example
+      - name: value
+        in: query
+        description: Filter by value
+        schema: 
+          type: number
+          format: double
+        example: 17.5
+      - name: created_at
+        in: query
+        description: Filter by created datetime interval (max 30 days)
+        schema: 
+          type: string
+        example: 'interval(2019-07-01 00:00,2019-07-01 23:59)'
+components:
+  # Reusable schemas (data models)
+  schemas:
+    StatusFailed:
+      type: object
+      properties:
+        status:
+          type: string
+          example: error
+        message:
+          type: array
+          items:
+            type: string
+            example: Custom error message
+    Properties_Has_ListMetaData:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            page:
+              type: object
+              properties:
+                current:
+                  type: integer
+                  example: 2
+                total:
+                  type: integer
+                  example: 4
+            records:
+              type: object
+              properties:
+                total:
+                  type: integer
+                  example: 50
+                per_page:
+                  type: integer
+                  example: 15
+            links:
+              type: object
+              properties:
+                first:
+                  type: string
+                  example: 'https://......?page=1'
+                prev:
+                  type: string
+                  example: 'https://......?page=1'
+                next:
+                  type: string
+                  example: 'https://......?page=3'
+                last:
+                  type: string
+                  example: 'https://......?page=4'
+    Payment_Single:
+      type: object
+      title: payment
+      allOf:
+        - $ref: '#/components/schemas/Properties_Has_ID'
+        - $ref: '#/components/schemas/Payment_Single_Base'
+        - $ref: '#/components/schemas/Payment_Single_Method_Response'
+        - $ref: '#/components/schemas/Properties_Has_PaymentStatus'
+        - $ref: '#/components/schemas/Properties_Has_PaidAt'
+        - $ref: '#/components/schemas/Properties_Has_CreatedAt'
+      required:
+        - method
+    Payment_Base:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Properties_Has_ExpirationTime'
+        - $ref: '#/components/schemas/Properties_Has_Currency'
+        - $ref: '#/components/schemas/Properties_Has_Customer'
+        - $ref: '#/components/schemas/Properties_Has_Key'
+    PaymentMethod_Properties_Status:
+      type: object
+      properties:
+        status:
+          type: string
+          example: pending
+          enum:
+            - waiting
+            - pending
+            - active
+            - deleted
+    PaymentMethod_Base:
+      type: object
+      properties:
+        entity:
+          type: integer
+          example: '10611'
+        reference:
+          type: string
+          example: '987654321'
+        url:
+          type: string
+          format: url
+          example: >-
+            https://www.easypay.pt/_s/c11.php?e=10611&r=987654321&v=19&t_key=example+key&c=EN&l=EN
+        last_four:
+          type: string
+          description: Last 4 digits of the  submitted Credit Card
+          example: '1234'
+        card_type:
+          type: string
+          description: 'MasterCard, VISA'
+          example: VISA
+        expiration_date:
+          type: string
+          format: mm/yy
+          example: 01/22
+    Properties_Has_Value:
+      type: object
+      properties:
+        value:
+          type: number
+          minimum: 0.5
+          format: double
+          description: Value will be rounded to 2 decimals
+          example: 17.5
+    Properties_Has_Key:
+      type: object
+      properties:
+        key:
+          type: string
+          maxLength: 50
+          description: Merchant identification key
+          example: Example Key
+    SddMandate_Details:
+      type: object
+      properties:
+        iban:
+          type: string
+          maxLength: 34
+          example: PT50002700000001234567833
+        key:
+          type: string
+          maxLength: 255
+          description: Custom string controlled by our clients
+          example: Key Example
+        name:
+          type: string
+          maxLength: 100
+          example: Name Example
+        email:
+          type: string
+          maxLength: 50
+          example: customer@example.com
+        phone:
+          type: string
+          maxLength: 20
+          example: '911234567'
+        account_holder:
+          type: string
+          maxLength: 100
+          description: Bank account holder name
+          example: Acount Name Example
+        country_code:
+          type: string
+          description: Bank account country code
+          example: PT
+        max_num_debits:
+          type: string
+          description: 'Optional: Max number of debits described in SDD Mandate'
+          example: '12'
+      required:
+        - iban
+        - name
+        - email
+        - phone
+        - account_holder
+    Payment_Single_Method_Available:
+      type: string
+      enum:
+        - mb
+        - cc
+        - mbw
+        - dd
+        - bb
+    Payment_Single_Method_Response:
+      type: object
+      properties:
+        method:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/PaymentMethod'
+            - $ref: '#/components/schemas/Properties_Has_Alias'
+          properties:
+            type:
+              $ref: '#/components/schemas/Payment_Single_Method_Available'
+            sdd_mandate:
+              $ref: '#/components/schemas/SddMandate'
+    Payment_Single_Base:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Payment_Base'
+        - $ref: '#/components/schemas/Properties_Has_Value'
+        - $ref: '#/components/schemas/Properties_Has_Type'
+    SddMandate_Identification:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Optional - unique identifier from previous created mandates
+          example: '12345678901'
+    SddMandate:
+      type: object
+      description: Only required if 'method' is 'dd'
+      allOf:
+        - $ref: '#/components/schemas/SddMandate_Identification'
+        - $ref: '#/components/schemas/SddMandate_Details'
+    Properties_Has_CreatedAt:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: 'Y-m-d H:i:s'
+          description: Date when payment was created
+          example: '2017-12-12 16:05:02'
+    Properties_Has_Currency:
+      type: object
+      properties:
+        currency:
+          type: string
+          default: EUR
+          example: EUR
+          enum:
+            - EUR
+            - BRL
+    Properties_Has_PaymentStatus:
+      type: object
+      properties:
+        payment_status:
+          type: string
+          description: Status of the single payment
+          example: Paid
+    Properties_Has_PaidAt:
+      type: object
+      properties:
+        paid_at:
+          type: string
+          format: 'Y-m-d H:i:s'
+          description: Date when the single payment was paid
+          example: '2017-12-12 16:05:02'
+    Properties_Has_ExpirationTime:
+      type: object
+      properties:
+        expiration_time:
+          type: string
+          format: 'Y-m-d H:i'
+          description: Optional
+          example: '2017-12-12 16:05'
+    Properties_Has_Customer:
+      type: object
+      properties:
+        customer:
+          $ref: '#/components/schemas/Customer'
+    Properties_Has_Alias:
+      type: object
+      properties:
+        alias:
+          type: string
+          description: MBWAY Alias (only for mobile implementation using MBWAY SDK)
+          example: 626E6AA2224D017917D839D4D39296B49441A1D10DA7E8DB6E7E1A4356DDE75429531BEB32190C6D736FA12C7A116CA5F3FCAEE72570406F51371A0CB6E14B6B
+    Properties_Has_Type:
+      type: object
+      properties:
+        type:
+          type: string
+          example: sale
+          default: sale
+          description: Optional - only applicable to method cc or mbw
+          enum:
+            - sale
+            - authorisation
+    Properties_Has_ID:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 4c67e74b-a256-4e0a-965d-97bf5d01bd50
+    PaymentMethod:
+      type: object
+      title: method
+      allOf:
+        - $ref: '#/components/schemas/PaymentMethod_Base'
+        - $ref: '#/components/schemas/PaymentMethod_Properties_Status'
+      required:
+        - type
+        - status
+    Customer:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Customer_Identification'
+        - $ref: '#/components/schemas/Customer_Details'
+    Customer_Details:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          example: Customer Example
+          description: Required if 'method' is 'mbw'
+        email:
+          type: string
+          maxLength: 70
+          example: customer@example.com
+        phone:
+          type: string
+          maxLength: 15
+          example: '911234567'
+          description: Required if 'method' is 'mbw'
+        phone_indicative:
+          type: string
+          maxLength: 5
+          default: '+351'
+        fiscal_number:
+          type: string
+          maxLength: 20
+          description: Fiscal Number must be prefixed with country code
+          example: PT123456789
+        key:
+          type: string
+          maxLength: 255
+          example: Key Example
+        language:
+          type: string
+          default: PT
+          example: PT
+          description: ISO Alpha-2 code
+    Customer_Identification:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Optional - uuid from previous created customers
+          example: 22ea3cc9-424b-489a-91b7-8955f643dc93
+  # Reusable path, query, header and cookie parameters
+  parameters:
+    Request_Parameters_ID:
+      name: id
+      in: query
+      description: Resource Identification
+      required: true
+      schema:
+        type: string
+        format: uuid
+  # Security scheme definitions (see Authentication)
+  securitySchemes:
+    accountId:
+      type: apiKey
+      in: header
+      name: AccountId
+      description: This is the identification for the Easypay Client Account
+    apiKey:
+      type: apiKey
+      in: header
+      name: ApiKey
+      description: This is the counter key for the used Account Id
+  # Reusable request bodies
+  # requestBodies:
+  # Reusable responses, such as 401 Unauthorized or 400 Bad Request
+  responses:
+    Response_Http_Codes_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_304:
+      description: Not Modified
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_413:
+      description: Request Entity Too Large
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_404:
+      description: Resource Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_412:
+      description: Precondition Failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_428:
+      description: Precondition Required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_422:
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_204:
+      description: No content
+  # Reusable response headers
+  # headers:
+  # Reusable examples
+  # examples:
+  # Reusable links
+  # links:
+  # Reusable callbacks
+  # callbacks: 
+security:
+  - accountId: []
+    apiKey: []
+tags:
+  - name: Single Payment
+    description: Payments used on a one time purchase

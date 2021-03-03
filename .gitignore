@@ -361,7 +361,10 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-#specific
+#OpenAPI-Generator
+.openapi-generator
+
+# Specific
 .old
 .backup
 .resources

@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: alimentestaideia.pt
-    url: https://github.com/banco-alimentar/alimentestaideia.pt
-    about: Your contribution makes all the difference. Please, help people in need. Alimente esta ideia has its own repository.
+  - name: documentation
+    url: https://github.com/Easypay/documentation
+    about: General documentation repository.

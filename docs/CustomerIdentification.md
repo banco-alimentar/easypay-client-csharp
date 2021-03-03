@@ -1,4 +1,4 @@
-# BancoAlimentar.AlimentaEstaIdeia.easypay.Model.CustomerIdentification
+# Easypay.Model.CustomerIdentification
 ## Properties
 
 Name | Type | Description | Notes

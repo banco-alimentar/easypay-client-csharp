@@ -1,4 +1,4 @@
-# BancoAlimentar.AlimentaEstaIdeia.easypay.Model.PropertiesHasCreatedAt
+# Easypay.Model.PropertiesHasCreatedAt
 ## Properties
 
 Name | Type | Description | Notes

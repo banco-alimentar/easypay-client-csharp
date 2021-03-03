@@ -1,4 +1,4 @@
-# BancoAlimentar.AlimentaEstaIdeia.easypay.Api.SinglePaymentApi
+# Easypay.Api.SinglePaymentApi
 
 All URIs are relative to *https://api.prod.easypay.pt/2.0*
 
@@ -19,9 +19,9 @@ Full report with all the single payments from your Account Id
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
-using BancoAlimentar.AlimentaEstaIdeia.easypay.Api;
-using BancoAlimentar.AlimentaEstaIdeia.easypay.Client;
-using BancoAlimentar.AlimentaEstaIdeia.easypay.Model;
+using Easypay.Api;
+using Easypay.Client;
+using Easypay.Model;
 
 namespace Example
 {

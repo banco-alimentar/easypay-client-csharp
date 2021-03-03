@@ -1,4 +1,4 @@
-# BancoAlimentar.AlimentaEstaIdeia.easypay.Model.SddMandate
+# Easypay.Model.SddMandate
 Only required if 'method' is 'dd'
 ## Properties
 
