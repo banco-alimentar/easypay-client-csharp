@@ -25,5 +25,4 @@
 .openapi-generator/FILES
 README.md
 appveyor.yml
-git_push.sh
 .gitignore

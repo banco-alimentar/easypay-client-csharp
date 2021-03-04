@@ -1,0 +1,96 @@
+name: EasyPay (.Net) CD
+
+on: [push, pull_request]
+
+env: 
+  CONFIGURATION: Release
+  OPENAPI_GENERATOR_SPEC: ./openapi-specs/easypay-3.0.yaml
+  OPENAPI_GENERATOR_NAME: csharp-netcore
+  OPENAPI_GENERATOR_OUTPUT: .
+
+jobs:
+  build:
+    name: Generate SDK
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+    # - name: Fetch all history for all tags and branches
+    #   run: git fetch --prune --unshallow
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    
+    - name: Install NBGV tool
+      uses: dotnet/nbgv@master
+      id: nbgv
+      with:
+        setAllVars: true
+    - run: echo 'SemVer2=${{ steps.nbgv.outputs.SemVer2 }}'
+    - run: |
+        echo "NBGV_SemVer1 $NBGV_SemVer1"
+        echo "NBGV_SemVer2 $NBGV_SemVer2"
+        echo "NBGV_NuGetPackageVersion $NBGV_NuGetPackageVersion"
+        echo "NBGV_CloudBuildNumber $NBGV_CloudBuildNumber"	
+        echo "NBGV_VersionFileFound $NBGV_VersionFileFound"
+        echo "NBGV_AssemblyVersion $NBGV_AssemblyVersion"
+        echo "NBGV_AssemblyFileVersion $NBGV_AssemblyFileVersion"
+        echo "NBGV_AssemblyInformationalVersion $NBGV_AssemblyInformationalVersion"
+        echo "NBGV_SimpleVersion $NBGV_SimpleVersion"
+        echo "NBGV_BuildNumber $NBGV_BuildNumber"
+        echo "NBGV_PublicRelease $NBGV_PublicRelease"
+        echo "NBGV_PrereleaseVersion $NBGV_PrereleaseVersion"
+        echo "NBGV_PrereleaseVersionNoLeadingHyphen $NBGV_PrereleaseVersionNoLeadingHyphen"
+        echo "NBGV_VersionRevision $NBGV_VersionRevision"
+        echo "NBGV_MajorMinorVersion $NBGV_MajorMinorVersion"
+        echo "NBGV_VersionMajor $NBGV_VersionMajor"
+        echo "NBGV_VersionMinor $NBGV_VersionMinor"
+        echo "NBGV_GitCommitId $NBGV_GitCommitId"
+        echo "NBGV_GitCommitIdShort $NBGV_GitCommitIdShort"
+        echo "NBGV_GitCommitDate $NBGV_GitCommitDate"
+        echo "NBGV_VersionHeight $NBGV_VersionHeight"
+        echo "NBGV_VersionHeightOffset $NBGV_VersionHeightOffset"
+        echo "NBGV_BuildMetadataFragment $NBGV_BuildMetadataFragment"
+        echo "NBGV_ChocolateyPackageVersion $NBGV_ChocolateyPackageVersion"
+
+    # - name: Install NBGV tool
+    #   run: dotnet tool install --tool-path . nbgv
+    # - name: Set Version
+    #   run: ./nbgv cloud --common-vars
+
+    - name: Install OpenApi-Generator
+      working-directory: ./temp      
+      run: |
+        mkdir -p ~/${{ runner.temp }}/openapitools
+        curl https://raw.githubusercontent.com/OpenAPITools/openapi-generator/master/bin/utils/openapi-generator-cli.sh > ~/${{ runner.temp }}/openapitools/openapi-generator-cli
+        chmod u+x ~/${{ runner.temp }}/openapitools/openapi-generator-cli
+        export PATH=$PATH:~/${{ runner.temp }}/openapitools/
+        export OPENAPI_GENERATOR_VERSION=5.0.1
+        openapi-generator-cli generate --additional-properties=packageVersion=${{ steps.nbgv.outputs.SemVer2 }} -i ${{ env.OPENAPI_GENERATOR_SPEC }} -g ${{ env.OPENAPI_GENERATOR_NAME }} -o ${{ env.OPENAPI_GENERATOR_OUTPUT }} -c ./openapi-specs/config.dotnet.json --release-note 'easypay C# SDK Pre-release' --git-user-id "banco-alimentar" --git-repo-id "easypay-client-csharp"
+ 
+    - name: Push sdk code
+      shell: bash
+      run: git_push.sh
+      # working-directory: ./temp
+
+    - name: Create Package 
+      run: dotnet pack --configuration ${{ env.CONFIGURATION }} -o packages
+    - name: Push packages to NuGet.org
+      run: |
+        dotnet nuget push ./packages/Easypay.*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+    - name: Create Release
+      uses: actions/create-release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: true
+        prerelease: false
+
+
+
