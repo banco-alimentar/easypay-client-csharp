@@ -9,8 +9,8 @@ env:
   #OPENAPI_GENERATOR_OUTPUT: .
   OPENAPI_VERSION: '5.0.1'
   RELEASE_NOTE: 'easypay C# SDK Pre-release'
-  GIT_USER_ID: "banco-alimentar"
-  GIT_REPO_ID: "easypay-client-csharp"
+  GIT_USER_ID: banco-alimentar
+  GIT_REPO_ID: easypay-client-csharp
 
 jobs:
   build:
