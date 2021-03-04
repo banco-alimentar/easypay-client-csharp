@@ -8,6 +8,9 @@ env:
   OPENAPI_GENERATOR_NAME: csharp-netcore
   #OPENAPI_GENERATOR_OUTPUT: .
   OPENAPI_VERSION: '5.0.1'
+  RELEASE_NOTE: 'easypay C# SDK Pre-release'
+  GIT_USER_ID: "banco-alimentar"
+  GIT_REPO_ID: "easypay-client-csharp"
 
 jobs:
   build:
@@ -41,14 +44,17 @@ jobs:
 
     - name: Generate C# SDK with OpenApi-Generator
       # working-directory: ./temp      
-      run: ${{ runner.temp }}/openapitools/openapi-generator-cli generate --additional-properties=packageVersion=${{ steps.nbgv.outputs.Version }} -i ${{ env.OPENAPI_GENERATOR_SPEC }} -g ${{ env.OPENAPI_GENERATOR_NAME }} -c ./openapi-specs/config.dotnet.json --release-note 'easypay C# SDK Pre-release' --git-user-id "banco-alimentar" --git-repo-id "easypay-client-csharp"
+      run: ${{ runner.temp }}/openapitools/openapi-generator-cli generate --additional-properties=packageVersion=${{ steps.nbgv.outputs.Version }} -i ${{ env.OPENAPI_GENERATOR_SPEC }} -g ${{ env.OPENAPI_GENERATOR_NAME }} -c ./openapi-specs/config.dotnet.json --release-note {{ env.RELEASE_NOTE }} --git-user-id "banco-alimentar" --git-repo-id "easypay-client-csharp"
 
     - name: LS
       run: ls -laR
       #working-directory: ${{ runner.temp }}
 
     - name: Push sdk code
-      run: git_push.sh
+      run: |
+        chmod u+x git_push.sh
+        git update-index --chmod +x 
+        ./git_push.sh {{ env.GIT_USER_ID }} {{ env.GIT_REPO_ID }} "{{ env.RELEASE_NOTE }}" "github.com"
       # shell: bash
       # run: git_push.sh
 
