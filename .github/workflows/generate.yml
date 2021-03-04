@@ -7,6 +7,7 @@ env:
   OPENAPI_GENERATOR_SPEC: ./openapi-specs/easypay-3.0.yaml
   OPENAPI_GENERATOR_NAME: csharp-netcore
   OPENAPI_GENERATOR_OUTPUT: .
+  OPENAPI_VERSION: '5.0.1'
 
 jobs:
   build:
@@ -69,13 +70,20 @@ jobs:
         ls -laR ${{ runner.temp }}
         curl https://raw.githubusercontent.com/OpenAPITools/openapi-generator/master/bin/utils/openapi-generator-cli.sh > ${{ runner.temp }}/openapitools/openapi-generator-cli
         chmod u+x ${{ runner.temp }}/openapitools/openapi-generator-cli
-        export OPENAPI_GENERATOR_VERSION=5.0.1
+
+    - name: Set OpenApi-Generator Version
+      run: export OPENAPI_GENERATOR_VERSION=${{ env.OPENAPI_VERSION }}
+
+    - name: Install OpenApi-Generator
+      # working-directory: ./temp      
+      run: |
         ${{ runner.temp }}/openapitools/openapi-generator-cli generate --additional-properties=packageVersion=${{ steps.nbgv.outputs.SemVer2 }} -i ${{ env.OPENAPI_GENERATOR_SPEC }} -g ${{ env.OPENAPI_GENERATOR_NAME }} -o ${{ env.OPENAPI_GENERATOR_OUTPUT }} -c ./openapi-specs/config.dotnet.json --release-note 'easypay C# SDK Pre-release' --git-user-id "banco-alimentar" --git-repo-id "easypay-client-csharp"
- 
+
+
     - name: Push sdk code
       shell: bash
       run: git_push.sh
-      # working-directory: ./temp
+      working-directory: ./temp
 
     - name: Create Package 
       run: dotnet pack --configuration ${{ env.CONFIGURATION }} -o packages
