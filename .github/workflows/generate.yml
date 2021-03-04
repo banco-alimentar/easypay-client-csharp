@@ -58,6 +58,20 @@ jobs:
       run: |
         cat ./src/Easypay.Rest.Client/Easypay.Rest.Client.csproj
 
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v7
+      with:
+        author_name: user.name "easypay-github-actions[bot]"
+        author_email: "easypay-github-actions[bot]@noreply.easypay.pt"
+        message: '${{ env.RELEASE_NOTE }}'
+        add: '*'
+
+    # - name: Commit files
+    #   run: |
+    #     git config --local user.email "easypay-github-actions[bot]@noreply.easypay.pt"
+    #     git config --local user.name "easypay-github-actions[bot]"
+    #     git commit -m "${{ env.RELEASE_NOTE }}" -a
+
     - name: Push SDK generated code
       uses: ad-m/github-push-action@master
       with:
