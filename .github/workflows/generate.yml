@@ -41,12 +41,16 @@ jobs:
 
     - name: Generate C# SDK with OpenApi-Generator
       # working-directory: ./temp      
-      run: |
-        ${{ runner.temp }}/openapitools/openapi-generator-cli generate --additional-properties=packageVersion=${{ steps.nbgv.outputs.Version }} -i ${{ env.OPENAPI_GENERATOR_SPEC }} -g ${{ env.OPENAPI_GENERATOR_NAME }} -c ./openapi-specs/config.dotnet.json --release-note 'easypay C# SDK Pre-release' --git-user-id "banco-alimentar" --git-repo-id "easypay-client-csharp"
+      run: ${{ runner.temp }}/openapitools/openapi-generator-cli generate --additional-properties=packageVersion=${{ steps.nbgv.outputs.Version }} -i ${{ env.OPENAPI_GENERATOR_SPEC }} -g ${{ env.OPENAPI_GENERATOR_NAME }} -c ./openapi-specs/config.dotnet.json --release-note 'easypay C# SDK Pre-release' --git-user-id "banco-alimentar" --git-repo-id "easypay-client-csharp"
+
+    - name: LS
+      run: ls -laR
+      #working-directory: ${{ runner.temp }}
 
     - name: Push sdk code
-      shell: bash
       run: git_push.sh
+      # shell: bash
+      # run: git_push.sh
 
     - name: Create Package 
       run: dotnet pack --configuration ${{ env.CONFIGURATION }} -o packages
