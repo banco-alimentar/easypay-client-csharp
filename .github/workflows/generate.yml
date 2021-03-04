@@ -14,7 +14,7 @@ on:
 
 env: 
   CONFIGURATION: Release
-  OPENAPI_GENERATOR_SPEC: ./openapi-specs/easypay-3.0.yaml
+  OPENAPI_GENERATOR_SPEC: ./openapi-specs/${{ github.event.inputs.spec }}
   OPENAPI_GENERATOR_NAME: csharp-netcore
   OPENAPI_VERSION: '5.0.1'
   RELEASE_NOTE: 'easypay C# SDK Pre-release'
