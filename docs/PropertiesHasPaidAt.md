@@ -1,4 +1,4 @@
-# Easypay.Model.PropertiesHasPaidAt
+# Easypay.Rest.Client.Model.PropertiesHasPaidAt
 ## Properties
 
 Name | Type | Description | Notes

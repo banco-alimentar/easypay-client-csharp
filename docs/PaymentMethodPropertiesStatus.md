@@ -1,4 +1,4 @@
-# Easypay.Model.PaymentMethodPropertiesStatus
+# Easypay.Rest.Client.Model.PaymentMethodPropertiesStatus
 ## Properties
 
 Name | Type | Description | Notes

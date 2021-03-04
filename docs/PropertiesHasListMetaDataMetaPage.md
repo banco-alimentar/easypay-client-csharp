@@ -1,4 +1,4 @@
-# Easypay.Model.PropertiesHasListMetaDataMetaPage
+# Easypay.Rest.Client.Model.PropertiesHasListMetaDataMetaPage
 ## Properties
 
 Name | Type | Description | Notes

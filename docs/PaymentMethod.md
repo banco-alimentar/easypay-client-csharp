@@ -1,4 +1,4 @@
-# Easypay.Model.PaymentMethod
+# Easypay.Rest.Client.Model.PaymentMethod
 ## Properties
 
 Name | Type | Description | Notes

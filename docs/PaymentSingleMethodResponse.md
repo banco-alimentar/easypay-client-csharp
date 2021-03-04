@@ -1,4 +1,4 @@
-# Easypay.Model.PaymentSingleMethodResponse
+# Easypay.Rest.Client.Model.PaymentSingleMethodResponse
 ## Properties
 
 Name | Type | Description | Notes

@@ -1,4 +1,4 @@
-# Easypay.Model.SddMandate
+# Easypay.Rest.Client.Model.SddMandate
 Only required if 'method' is 'dd'
 ## Properties
 

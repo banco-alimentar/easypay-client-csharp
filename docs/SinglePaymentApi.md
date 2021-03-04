@@ -1,4 +1,4 @@
-# Easypay.Api.SinglePaymentApi
+# Easypay.Rest.Client.Api.SinglePaymentApi
 
 All URIs are relative to *https://api.prod.easypay.pt/2.0*
 
@@ -19,9 +19,9 @@ Full report with all the single payments from your Account Id
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
-using Easypay.Api;
-using Easypay.Client;
-using Easypay.Model;
+using Easypay.Rest.Client.Api;
+using Easypay.Rest.Client.Client;
+using Easypay.Rest.Client.Model;
 
 namespace Example
 {

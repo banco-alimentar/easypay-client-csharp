@@ -1,4 +1,4 @@
-# Easypay.Model.PropertiesHasCurrency
+# Easypay.Rest.Client.Model.PropertiesHasCurrency
 ## Properties
 
 Name | Type | Description | Notes

@@ -1,4 +1,4 @@
-# Easypay.Model.SddMandateIdentification
+# Easypay.Rest.Client.Model.SddMandateIdentification
 ## Properties
 
 Name | Type | Description | Notes
