@@ -1,4 +1,4 @@
-name: EasyPay (.Net) CI
+name: EasyPay (.Net) CD
 
 on:
   push:
