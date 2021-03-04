@@ -1,16 +1,15 @@
-name: EasyPay (.Net)
+name: EasyPay (.Net) CI
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 env: 
   CONFIGURATION: Release
 
 jobs:
   build:
+    name: Build SDK
 
     runs-on: ubuntu-latest
 
