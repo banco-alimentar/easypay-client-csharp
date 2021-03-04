@@ -1,12 +1,21 @@
 name: EasyPay (.Net) Generate
 
-on: [push, pull_request]
+on:
+  workflow_dispatch:
+    inputs:
+      spec:
+        description: 'EasyPay OpenAPI Specification'
+        required: true
+        default: 'easypay-3.0.yaml'
+      note:
+        description: 'Spec Release Note'
+        required: false
+        default: 'Easypay spec pre-release'
 
 env: 
   CONFIGURATION: Release
   OPENAPI_GENERATOR_SPEC: ./openapi-specs/easypay-3.0.yaml
   OPENAPI_GENERATOR_NAME: csharp-netcore
-  #OPENAPI_GENERATOR_OUTPUT: .
   OPENAPI_VERSION: '5.0.1'
   RELEASE_NOTE: 'easypay C# SDK Pre-release'
   GIT_USER_ID: banco-alimentar
