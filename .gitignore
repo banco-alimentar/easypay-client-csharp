@@ -364,6 +364,10 @@ FodyWeavers.xsd
 #OpenAPI-Generator
 .openapi-generator
 
+#nbgv
+.store
+nbgv
+
 # Specific
 .old
 .backup
