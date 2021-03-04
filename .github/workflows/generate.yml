@@ -1,4 +1,4 @@
-name: EasyPay (.Net) CD
+name: EasyPay (.Net) Generate
 
 on: [push, pull_request]
 
@@ -65,12 +65,12 @@ jobs:
     - name: Install OpenApi-Generator
       working-directory: ./temp      
       run: |
-        mkdir -p ~/${{ runner.temp }}/openapitools
-        curl https://raw.githubusercontent.com/OpenAPITools/openapi-generator/master/bin/utils/openapi-generator-cli.sh > ~/${{ runner.temp }}/openapitools/openapi-generator-cli
-        chmod u+x ~/${{ runner.temp }}/openapitools/openapi-generator-cli
-        export PATH=$PATH:~/${{ runner.temp }}/openapitools/
+        mkdir -p ${{ runner.temp }}/openapitools
+        curl https://raw.githubusercontent.com/OpenAPITools/openapi-generator/master/bin/utils/openapi-generator-cli.sh > ${{ runner.temp }}/openapitools/openapi-generator-cli
+        chmod u+x ${{ runner.temp }}/openapitools/openapi-generator-cli
         export OPENAPI_GENERATOR_VERSION=5.0.1
-        openapi-generator-cli generate --additional-properties=packageVersion=${{ steps.nbgv.outputs.SemVer2 }} -i ${{ env.OPENAPI_GENERATOR_SPEC }} -g ${{ env.OPENAPI_GENERATOR_NAME }} -o ${{ env.OPENAPI_GENERATOR_OUTPUT }} -c ./openapi-specs/config.dotnet.json --release-note 'easypay C# SDK Pre-release' --git-user-id "banco-alimentar" --git-repo-id "easypay-client-csharp"
+        ls -laR ${{ runner.temp }}
+        ${{ runner.temp }}/openapitools/openapi-generator-cli generate --additional-properties=packageVersion=${{ steps.nbgv.outputs.SemVer2 }} -i ${{ env.OPENAPI_GENERATOR_SPEC }} -g ${{ env.OPENAPI_GENERATOR_NAME }} -o ${{ env.OPENAPI_GENERATOR_OUTPUT }} -c ./openapi-specs/config.dotnet.json --release-note 'easypay C# SDK Pre-release' --git-user-id "banco-alimentar" --git-repo-id "easypay-client-csharp"
  
     - name: Push sdk code
       shell: bash
