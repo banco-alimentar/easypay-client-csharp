@@ -53,11 +53,19 @@ jobs:
     - name: Generate C# SDK with OpenApi-Generator
       run: ${{ runner.temp }}/openapitools/openapi-generator-cli generate --additional-properties=packageVersion=${{ steps.nbgv.outputs.Version }} -i ${{ env.OPENAPI_GENERATOR_SPEC }} -g ${{ env.OPENAPI_GENERATOR_NAME }} -c ./openapi-specs/config.dotnet.json --release-note "${{ env.RELEASE_NOTE }}" --git-user-id "${{ env.GIT_USER_ID }}" --git-repo-id "${{ env.GIT_REPO_ID }}"
 
-    - name: Push sdk code
-      run: |
-        chmod u+x git_push.sh
-        git update-index --chmod +x 
-        ./git_push.sh "${{ env.GIT_USER_ID }}" "${{ env.GIT_REPO_ID }}" "${{ env.RELEASE_NOTE }}" "github.com"
+    # - name: Push sdk code
+    #   run: |
+    #     chmod u+x git_push.sh
+    #     git update-index --chmod +x 
+    #     ./git_push.sh "${{ env.GIT_USER_ID }}" "${{ env.GIT_REPO_ID }}" "${{ env.RELEASE_NOTE }}" "github.com"
+
+    - name: Push SDK generated code
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
+        force: true
+        tags: 'Generated from Spec ${{ github.event.inputs.spec }}'
 
     - name: Create Package 
       run: dotnet pack --configuration ${{ env.CONFIGURATION }} -o packages
