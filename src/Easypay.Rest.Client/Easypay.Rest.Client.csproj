@@ -12,12 +12,12 @@
     <Description>A library generated from a OpenAPI doc</Description>
     <Copyright>No Copyright</Copyright>
     <RootNamespace>Easypay.Rest.Client</RootNamespace>
-    <Version>0.0.1</Version>
+    <Version>0.0.1.22</Version>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Easypay.Rest.Client.xml</DocumentationFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/banco-alimentar/easypay-client-csharp.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>easypay C# SDK Pre-releas</PackageReleaseNotes>
+    <PackageReleaseNotes>easypay C# SDK Pre-release</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
