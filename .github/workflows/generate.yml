@@ -11,6 +11,13 @@ on:
         description: 'Spec Release Note'
         required: false
         default: 'Easypay spec pre-release'
+  # push:
+  #   branches: [ master ]
+  #   tags:
+  #     - 'v[0-9]+.[0-9]+.[0-9]+*'
+  #   paths:
+  #   - 'openapi-specs/*.yaml'
+  #   - 'openapi-specs/*.yml'
 
 env: 
   CONFIGURATION: Release
@@ -53,11 +60,6 @@ jobs:
     - name: Generate C# SDK with OpenApi-Generator
       run: ${{ runner.temp }}/openapitools/openapi-generator-cli generate --additional-properties=packageVersion=${{ steps.nbgv.outputs.Version }} -i ${{ env.OPENAPI_GENERATOR_SPEC }} -g ${{ env.OPENAPI_GENERATOR_NAME }} -c ./openapi-specs/config.dotnet.json --release-note "${{ env.RELEASE_NOTE }}" --git-user-id "${{ env.GIT_USER_ID }}" --git-repo-id "${{ env.GIT_REPO_ID }}"
 
-
-    - name: (TEMP) Check Proj Version
-      run: |
-        cat ./src/Easypay.Rest.Client/Easypay.Rest.Client.csproj
-
     - name: Commit changes
       uses: EndBug/add-and-commit@v7
       with:
@@ -66,33 +68,12 @@ jobs:
         message: '${{ env.RELEASE_NOTE }}'
         add: '*'
 
-    # - name: Commit files
-    #   run: |
-    #     git config --local user.email "easypay-github-actions[bot]@noreply.easypay.pt"
-    #     git config --local user.name "easypay-github-actions[bot]"
-    #     git commit -m "${{ env.RELEASE_NOTE }}" -a
-
     - name: Push SDK generated code
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: ${{ github.ref }}
         force: true
-
-    - name: Create Package 
-      run: dotnet pack --configuration ${{ env.CONFIGURATION }} -o packages
-    - name: Push packages to NuGet.org
-      run: |
-        dotnet nuget push ./packages/Easypay.*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
-    - name: Create Release
-      uses: actions/create-release@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: true
-        prerelease: false
 
 
 

@@ -5,9 +5,6 @@ on:
     branches: [ master ]
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
-    paths:
-    - 'openapi-specs/*.yaml'
-    - 'openapi-specs/*.yml'
 
 env: 
   CONFIGURATION: Release
@@ -20,21 +17,28 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Fetch all history for all tags and branches
-      run: git fetch --prune --unshallow
+      with:
+        fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
     - name: Install NBGV tool
-      run: dotnet tool install --tool-path . nbgv
+      uses: dotnet/nbgv@master
+      id: nbgv
+      with:
+        setAllVars: true
+
     - name: Set Version
       run: ./nbgv cloud
+
     - name: Create Package 
       run: dotnet pack --configuration ${{ env.CONFIGURATION }} -o packages
     - name: Push packages to NuGet.org
       run: |
         dotnet nuget push ./packages/Easypay.*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+
     - name: Create Release
       uses: actions/create-release@master
       env:
@@ -44,6 +48,5 @@ jobs:
         release_name: Release ${{ github.ref }}
         draft: true
         prerelease: false
-
 
 
