@@ -144,7 +144,8 @@ namespace Easypay.Rest.Client.Client
             }
             catch (Exception e)
             {
-                throw new ApiException(500, e.Message);
+                return null;
+                //throw new ApiException(500, e.Message);
             }
         }
 
