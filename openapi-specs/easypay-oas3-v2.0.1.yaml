@@ -1,6 +1,6 @@
 openapi: '3.0.3'
 info:
-  version: '2.0'
+  version: '2.0.1'
   title: Easypay API
   description: EasyPay - API allows you to query payment meta-data, receive payment notifications and generate payment references. Two distinct 
     environments - [Sandbox environment](https://api.test.easypay.pt/docs) and [Production environment](https://api.prod.easypay.pt/docs). 
@@ -173,20 +173,7 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Payment_Single_Base'
-                - $ref: '#/components/schemas/Payment_Single_Method_Request'
-                - $ref: '#/components/schemas/Properties_Has_SddMandate'
-                - $ref: '#/components/schemas/Payment_Capture'
-              properties:
-                data:
-                  type: string
-                  enum:
-                    - sale
-                    - authorisation
-              required:
-                - value
-                - method
+              $ref: '#/components/schemas/paymentSingleRequestBody'
       responses:
         '201':
           description: Success
@@ -298,14 +285,6 @@ components:
               example: 22ea3cc9-424b-489a-91b7-8955f643dc93
       required:
         - value
-    Properties_Has_Descriptive:
-      type: object
-      properties:
-        descriptive:
-          type: string
-          maxLength: 255
-          description: This will appear in the bank statement/mbway application
-          example: Descriptive Example
     Properties_Has_CustomerID:
       type: object
       properties:
@@ -379,6 +358,15 @@ components:
                 last:
                   type: string
                   example: 'https://......?page=4'
+    paymentSingleRequestBody:
+      allOf:
+      - $ref: '#/components/schemas/Payment_Single_Base'
+      - $ref: '#/components/schemas/Payment_Single_Method_Request'
+      - $ref: '#/components/schemas/Properties_Has_SddMandate'
+      - $ref: '#/components/schemas/Payment_Capture'
+      - type: object
+        required:
+        - value
     Payment_Single:
       type: object
       title: payment
@@ -428,57 +416,6 @@ components:
           type: string
           format: mm/yy
           example: 01/22
-    Properties_Has_Key:
-      type: object
-      properties:
-        key:
-          type: string
-          maxLength: 50
-          description: Merchant identification key
-          example: Example Key
-    SddMandate_Details:
-      type: object
-      properties:
-        iban:
-          type: string
-          maxLength: 34
-          example: PT50002700000001234567833
-        key:
-          type: string
-          maxLength: 255
-          description: Custom string controlled by our clients
-          example: Key Example
-        name:
-          type: string
-          maxLength: 100
-          example: Name Example
-        email:
-          type: string
-          maxLength: 50
-          example: customer@example.com
-        phone:
-          type: string
-          maxLength: 20
-          example: '911234567'
-        account_holder:
-          type: string
-          maxLength: 100
-          description: Bank account holder name
-          example: Acount Name Example
-        country_code:
-          type: string
-          description: Bank account country code
-          example: PT
-        max_num_debits:
-          type: string
-          description: 'Optional: Max number of debits described in SDD Mandate'
-          example: '12'
-      required:
-        - iban
-        - name
-        - email
-        - phone
-        - account_holder
     Payment_Single_Method_Available:
       type: string
       enum:
@@ -527,6 +464,14 @@ components:
           enum:
             - sale
             - authorisation
+    Properties_Has_Key:
+      type: object
+      properties:
+        key:
+          type: string
+          maxLength: 50
+          description: Merchant identification key
+          example: Example Key
     Payment_Single_Base:
       type: object
       allOf:
@@ -543,15 +488,28 @@ components:
       properties:
         sdd_mandate:
           $ref: '#/components/schemas/SddMandate'
+    Properties_Has_Descriptive:
+      type: object
+      properties:
+        descriptive:
+          type: string
+          maxLength: 255
+          description: This will appear in the bank statement/mbway application
+          example: Descriptive Example
     Payment_Capture:
       type: object
       properties:
         capture:
           type: object
+          required:
+            - descriptive
           description: Only required if 'type' is 'sale'
-          allOf:
-            - $ref: '#/components/schemas/Properties_Has_Descriptive'
           properties:
+            descriptive:
+              type: string
+              maxLength: 255
+              description: This will appear in the bank statement/mbway application
+              example: Descriptive Example
             transaction_key:
               type: string
               maxLength: 50
@@ -573,8 +531,12 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Splits_Details'
-          required:
-            - descriptive
+    SddMandate:
+      type: object
+      description: Only required if 'method' is 'dd'
+      allOf:
+        - $ref: '#/components/schemas/SddMandate_Identification'
+        - $ref: '#/components/schemas/SddMandate_Details'
     SddMandate_Identification:
       type: object
       properties:
@@ -582,12 +544,49 @@ components:
           type: string
           description: Optional - unique identifier from previous created mandates
           example: '12345678901'
-    SddMandate:
+    SddMandate_Details:
       type: object
-      description: Only required if 'method' is 'dd'
-      allOf:
-        - $ref: '#/components/schemas/SddMandate_Identification'
-        - $ref: '#/components/schemas/SddMandate_Details'
+      properties:
+        iban:
+          type: string
+          maxLength: 34
+          example: PT50002700000001234567833
+        key:
+          type: string
+          maxLength: 255
+          description: Custom string controlled by our clients
+          example: Key Example
+        name:
+          type: string
+          maxLength: 100
+          example: Name Example
+        email:
+          type: string
+          maxLength: 50
+          example: customer@example.com
+        phone:
+          type: string
+          maxLength: 20
+          example: '911234567'
+        account_holder:
+          type: string
+          maxLength: 100
+          description: Bank account holder name
+          example: Acount Name Example
+        country_code:
+          type: string
+          description: Bank account country code
+          example: PT
+        max_num_debits:
+          type: string
+          description: 'Optional: Max number of debits described in SDD Mandate'
+          example: '12'
+      required:
+        - iban
+        - name
+        - email
+        - phone
+        - account_holder
     Properties_Has_CreatedAt:
       type: object
       properties:

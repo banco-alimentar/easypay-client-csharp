@@ -56,10 +56,22 @@ namespace Easypay.Rest.Client.Test.Api
         }
 
         /// <summary>
-        /// Test SingleGet
+        /// Test CreateSinglePayment
         /// </summary>
         [Fact]
-        public void SingleGetTest()
+        public void CreateSinglePaymentTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //PaymentSingleRequestBody paymentSingleRequestBody = null;
+            //var response = instance.CreateSinglePayment(paymentSingleRequestBody);
+            //Assert.IsType<StatusDetails>(response);
+        }
+
+        /// <summary>
+        /// Test ListSinglePayments
+        /// </summary>
+        [Fact]
+        public void ListSinglePaymentsTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
             //int? page = null;
@@ -72,7 +84,7 @@ namespace Easypay.Rest.Client.Test.Api
             //string key = null;
             //double? value = null;
             //string createdAt = null;
-            //var response = instance.SingleGet(page, recordsPerPage, type, expirationTime, method, customer, id, key, value, createdAt);
+            //var response = instance.ListSinglePayments(page, recordsPerPage, type, expirationTime, method, customer, id, key, value, createdAt);
             //Assert.IsType<PropertiesHasListMetaData>(response);
         }
     }
