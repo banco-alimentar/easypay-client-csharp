@@ -37,7 +37,7 @@ jobs:
       run: dotnet pack --configuration ${{ env.CONFIGURATION }} -o packages
     - name: Push packages to NuGet.org
       run: |
-        dotnet nuget push ./packages/Easypay.*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+        dotnet nuget push ./packages/Easypay.*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
 
     - name: Create Release
       uses: actions/create-release@master
