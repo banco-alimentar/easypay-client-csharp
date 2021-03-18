@@ -373,3 +373,4 @@ nbgv
 .old
 .backup
 .resources
+*.cfg
