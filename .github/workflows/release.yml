@@ -41,7 +41,7 @@ jobs:
         setAllVars: true
 
     - name: Set Version
-      run: ./nbgv cloud
+      run: nbgv cloud
 
     - name: Create Package 
       run: dotnet pack --configuration ${{ env.CONFIGURATION }} -o packages
