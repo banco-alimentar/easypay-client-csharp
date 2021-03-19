@@ -27,19 +27,45 @@ using OpenAPIDateConverter = Easypay.Rest.Client.Client.OpenAPIDateConverter;
 namespace Easypay.Rest.Client.Model
 {
     /// <summary>
-    /// PaymentSingleMethodResponse
+    /// PaymentSingleResponse
     /// </summary>
-    [DataContract(Name = "Payment_Single_Method_Response")]
-    public partial class PaymentSingleMethodResponse : IEquatable<PaymentSingleMethodResponse>, IValidatableObject
+    [DataContract(Name = "paymentSingleResponse")]
+    public partial class PaymentSingleResponse : IEquatable<PaymentSingleResponse>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentSingleMethodResponse" /> class.
+        /// Initializes a new instance of the <see cref="PaymentSingleResponse" /> class.
         /// </summary>
+        /// <param name="status">status.</param>
+        /// <param name="message">message.</param>
+        /// <param name="id">id.</param>
         /// <param name="method">method.</param>
-        public PaymentSingleMethodResponse(PaymentMethod method = default(PaymentMethod))
+        /// <param name="customer">customer.</param>
+        public PaymentSingleResponse(string status = default(string), Collection<string> message = default(Collection<string>), Guid id = default(Guid), PaymentMethod method = default(PaymentMethod), PropertiesHasID customer = default(PropertiesHasID))
         {
+            this.Status = status;
+            this.Message = message;
+            this.Id = id;
             this.Method = method;
+            this.Customer = customer;
         }
+
+        /// <summary>
+        /// Gets or Sets Status
+        /// </summary>
+        [DataMember(Name = "status", EmitDefaultValue = false)]
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Message
+        /// </summary>
+        [DataMember(Name = "message", EmitDefaultValue = false)]
+        public Collection<string> Message { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Id
+        /// </summary>
+        [DataMember(Name = "id", EmitDefaultValue = false)]
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Method
@@ -48,14 +74,24 @@ namespace Easypay.Rest.Client.Model
         public PaymentMethod Method { get; set; }
 
         /// <summary>
+        /// Gets or Sets Customer
+        /// </summary>
+        [DataMember(Name = "customer", EmitDefaultValue = false)]
+        public PropertiesHasID Customer { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class PaymentSingleMethodResponse {\n");
+            sb.Append("class PaymentSingleResponse {\n");
+            sb.Append("  Status: ").Append(Status).Append("\n");
+            sb.Append("  Message: ").Append(Message).Append("\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Method: ").Append(Method).Append("\n");
+            sb.Append("  Customer: ").Append(Customer).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -76,24 +112,45 @@ namespace Easypay.Rest.Client.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as PaymentSingleMethodResponse);
+            return this.Equals(input as PaymentSingleResponse);
         }
 
         /// <summary>
-        /// Returns true if PaymentSingleMethodResponse instances are equal
+        /// Returns true if PaymentSingleResponse instances are equal
         /// </summary>
-        /// <param name="input">Instance of PaymentSingleMethodResponse to be compared</param>
+        /// <param name="input">Instance of PaymentSingleResponse to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(PaymentSingleMethodResponse input)
+        public bool Equals(PaymentSingleResponse input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
+                    this.Status == input.Status ||
+                    (this.Status != null &&
+                    this.Status.Equals(input.Status))
+                ) && 
+                (
+                    this.Message == input.Message ||
+                    this.Message != null &&
+                    input.Message != null &&
+                    this.Message.SequenceEqual(input.Message)
+                ) && 
+                (
+                    this.Id == input.Id ||
+                    (this.Id != null &&
+                    this.Id.Equals(input.Id))
+                ) && 
+                (
                     this.Method == input.Method ||
                     (this.Method != null &&
                     this.Method.Equals(input.Method))
+                ) && 
+                (
+                    this.Customer == input.Customer ||
+                    (this.Customer != null &&
+                    this.Customer.Equals(input.Customer))
                 );
         }
 
@@ -106,8 +163,16 @@ namespace Easypay.Rest.Client.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
+                if (this.Status != null)
+                    hashCode = hashCode * 59 + this.Status.GetHashCode();
+                if (this.Message != null)
+                    hashCode = hashCode * 59 + this.Message.GetHashCode();
+                if (this.Id != null)
+                    hashCode = hashCode * 59 + this.Id.GetHashCode();
                 if (this.Method != null)
                     hashCode = hashCode * 59 + this.Method.GetHashCode();
+                if (this.Customer != null)
+                    hashCode = hashCode * 59 + this.Customer.GetHashCode();
                 return hashCode;
             }
         }
