@@ -1,6 +1,6 @@
 openapi: '3.0.3'
 info:
-  version: '2.0.1'
+  version: '2.0.2'
   title: Easypay API
   description: EasyPay - API allows you to query payment meta-data, receive payment notifications and generate payment references. Two distinct 
     environments - [Sandbox environment](https://api.test.easypay.pt/docs) and [Production environment](https://api.prod.easypay.pt/docs). 
@@ -180,37 +180,34 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/StatusDetails'
-                - $ref: '#/components/schemas/Response_MinimalOutput_Single'
+                $ref: '#/components/schemas/paymentSingleResponse'
               example:
-                response:
-                  status: ok
-                  message: Your request was successfully created
-                  id: 4c67e74b-a256-4e0a-965d-97bf5d01bd50
-                  method:
-                    type: mb
-                    status: pending
-                    entity: 10611
-                    reference: 987654321
-                    url: https://www.easypay.pt/_s/c11.php?e=10611&r=987654321&v=19&t_key=example+key&c=EN&l=EN
-                    last_four: 1234
-                    card_type: VISA
-                    expiration_date: 01/22
-                    alias: 626E6AA2224D017917D839D4D39296B49441A1D10DA7E8DB6E7E1A4356DDE75429531BEB32190C6D736FA12C7A116CA5F3FCAEE72570406F51371A0CB6E14B6B
-                    sdd_mandate:
-                      id: 12345678901
-                      billing_entity: PT16103627
-                      iban: PT50002700000001234567833
-                      key: Key Example
-                      name: Name Example
-                      email: customer@example.com
-                      phone: 911234567
-                      account_holder: Account Name Example
-                      country_code: PT
-                      max_num_debits: 12
-                  customer:
-                    id: 22ea3cc9-424b-489a-91b7-8955f643dc93
+                status: ok
+                message: Your request was successfully created
+                id: 4c67e74b-a256-4e0a-965d-97bf5d01bd50
+                method:
+                  type: mb
+                  status: pending
+                  entity: 10611
+                  reference: 987654321
+                  url: https://www.easypay.pt/_s/c11.php?e=10611&r=987654321&v=19&t_key=example+key&c=EN&l=EN
+                  last_four: 1234
+                  card_type: VISA
+                  expiration_date: 01/22
+                  alias: 626E6AA2224D017917D839D4D39296B49441A1D10DA7E8DB6E7E1A4356DDE75429531BEB32190C6D736FA12C7A116CA5F3FCAEE72570406F51371A0CB6E14B6B
+                  sdd_mandate:
+                    id: 12345678901
+                    billing_entity: PT16103627
+                    iban: PT50002700000001234567833
+                    key: Key Example
+                    name: Name Example
+                    email: customer@example.com
+                    phone: 911234567
+                    account_holder: Account Name Example
+                    country_code: PT
+                    max_num_debits: 12
+                customer:
+                  id: 22ea3cc9-424b-489a-91b7-8955f643dc93
         '400':
           $ref: '#/components/responses/Response_Http_Codes_400'
         '403':
@@ -358,6 +355,11 @@ components:
                 last:
                   type: string
                   example: 'https://......?page=4'
+    paymentSingleResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/StatusDetails'
+      - $ref: '#/components/schemas/Response_MinimalOutput_Single'
     paymentSingleRequestBody:
       allOf:
       - $ref: '#/components/schemas/Payment_Single_Base'

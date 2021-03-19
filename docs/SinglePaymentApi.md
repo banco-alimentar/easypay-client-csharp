@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 <a name="createsinglepayment"></a>
 # **CreateSinglePayment**
-> StatusDetails CreateSinglePayment (PaymentSingleRequestBody paymentSingleRequestBody)
+> PaymentSingleResponse CreateSinglePayment (PaymentSingleRequestBody paymentSingleRequestBody)
 
 Create single payment
 
@@ -47,7 +47,7 @@ namespace Example
             try
             {
                 // Create single payment
-                StatusDetails result = apiInstance.CreateSinglePayment(paymentSingleRequestBody);
+                PaymentSingleResponse result = apiInstance.CreateSinglePayment(paymentSingleRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**StatusDetails**](StatusDetails.md)
+[**PaymentSingleResponse**](PaymentSingleResponse.md)
 
 ### Authorization
 
