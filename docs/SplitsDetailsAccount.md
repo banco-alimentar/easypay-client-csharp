@@ -1,5 +1,6 @@
 # Easypay.Rest.Client.Model.SplitsDetailsAccount
 Account owner of this split
+
 ## Properties
 
 Name | Type | Description | Notes

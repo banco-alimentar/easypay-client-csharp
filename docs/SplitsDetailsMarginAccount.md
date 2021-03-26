@@ -1,5 +1,6 @@
 # Easypay.Rest.Client.Model.SplitsDetailsMarginAccount
 Account used for a margin from this split
+
 ## Properties
 
 Name | Type | Description | Notes
