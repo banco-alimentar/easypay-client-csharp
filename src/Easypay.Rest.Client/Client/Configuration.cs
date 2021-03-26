@@ -32,7 +32,7 @@ namespace Easypay.Rest.Client.Client
         /// Version of the package.
         /// </summary>
         /// <value>Version of the package.</value>
-        public const string Version = "0.0.1.24";
+        public const string Version = "0.0.1.25";
 
         /// <summary>
         /// Identifier for ISO 8601 DateTime Format
@@ -107,7 +107,7 @@ namespace Easypay.Rest.Client.Client
         public Configuration()
         {
             Proxy = null;
-            UserAgent = "OpenAPI-Generator/0.0.1.24/csharp";
+            UserAgent = "OpenAPI-Generator/0.0.1.25/csharp";
             BasePath = "https://api.prod.easypay.pt/2.0";
             DefaultHeaders = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
@@ -458,7 +458,7 @@ namespace Easypay.Rest.Client.Client
             report += "    OS: " + System.Environment.OSVersion + "\n";
             report += "    .NET Framework Version: " + System.Environment.Version  + "\n";
             report += "    Version of the API: 2.0.2\n";
-            report += "    SDK Package Version: 0.0.1.24\n";
+            report += "    SDK Package Version: 0.0.1.25\n";
 
             return report;
         }
