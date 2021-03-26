@@ -1,0 +1,1737 @@
+openapi: '3.0.3'
+info:
+  version: '2.0.2'
+  title: Easypay API
+  description: EasyPay - API
+  termsOfService: https://www.easypay.pt/pt/termos-e-condicoes/
+  contact:
+    name: Easypay Documentation
+    url: https://www.easypay.pt
+    email: tec@easypay.pt
+servers:
+  - url: https://api.prod.easypay.pt/2.0
+    description: Production environment
+  - url: https://api.test.easypay.pt/2.0
+    description: Sandbox environment
+paths:
+  /single:
+    post:
+      description: Create single payment
+      operationId: CreateSinglePayment
+      tags:
+        - Single Payment
+      summary: Create single payment
+      requestBody:
+        description: Payment configuration object to generate a payment
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SinglePaymentRequest'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SinglePaymentResponse'
+        '400':
+          $ref: '#/components/responses/Response_Http_Codes_400'
+        '403':
+          $ref: '#/components/responses/Response_Http_Codes_403'
+        '429':
+          $ref: '#/components/responses/Response_Http_Codes_429'
+        '500':
+          $ref: '#/components/responses/Response_Http_Codes_500'
+    get:
+      description: Full report with all the single payments from your Account Id
+      operationId: ListSinglePayments
+      tags:
+        - Single Payment
+      summary: Lists single payments
+      parameters:
+        - $ref: '#/components/parameters/Request_Parameters_Page'
+        - $ref: '#/components/parameters/Request_Parameters_Records_Per_Page'
+        - $ref: '#/components/parameters/Request_Parameters_Type'
+        - $ref: '#/components/parameters/Request_Parameters_Expiration_Time'
+        - $ref: '#/components/parameters/Request_Parameters_Method'
+        - $ref: '#/components/parameters/Request_Parameters_Customer'
+        - $ref: '#/components/parameters/Request_Parameters_Id'
+        - $ref: '#/components/parameters/Request_Parameters_Key'
+        - $ref: '#/components/parameters/Request_Parameters_Value'
+        - $ref: '#/components/parameters/Request_Parameters_Created_At'
+      responses:
+      
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSinglePaymentResponse'
+        '403':
+          $ref: '#/components/responses/Response_Http_Codes_403'
+        '429':
+          $ref: '#/components/responses/Response_Http_Codes_429'
+        '500':
+          $ref: '#/components/responses/Response_Http_Codes_500'
+  /single/{id}:
+    get:
+      description: Shows single payment details
+      operationId: GetSinglePayment
+      tags:
+        - Single Payment
+      summary: Shows single payment details
+      parameters:
+        - name: id
+          in: path
+          description: Resource Identification
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SinglePaymentWithTransactionsResponse'
+        '401':
+          $ref: '#/components/responses/Response_Http_Codes_401'
+        '403':
+          $ref: '#/components/responses/Response_Http_Codes_403'
+        '404':
+          $ref: '#/components/responses/Response_Http_Codes_404'
+        '429':
+          $ref: '#/components/responses/Response_Http_Codes_429'
+        '500':
+          $ref: '#/components/responses/Response_Http_Codes_500'
+    delete:
+      description: Deletes single payment
+      operationId: DeleteSinglePayment
+      tags:
+        - Single Payment
+      summary: Deletes single payment
+      parameters:
+        - name: id
+          in: path
+          description: Resource Identification
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          $ref: '#/components/responses/Response_Http_Codes_204'
+        '400':
+          $ref: '#/components/responses/Response_Http_Codes_400'
+        '401':
+          $ref: '#/components/responses/Response_Http_Codes_401'
+        '403':
+          $ref: '#/components/responses/Response_Http_Codes_403'
+        '404':
+          $ref: '#/components/responses/Response_Http_Codes_404'
+        '429':
+          $ref: '#/components/responses/Response_Http_Codes_429'
+        '500':
+          $ref: '#/components/responses/Response_Http_Codes_500'
+    patch:
+      description: Updates single payment details
+      operationId: UpdateSinglePayment
+      tags:
+          - Single Payment
+      summary: Updates single payment details
+      parameters:
+        - name: id
+          in: path
+          description: Resource Identification
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Single Payment object to edit existing one
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SinglePaymentUpdateRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SinglePaymentUpdateResponse'
+        '304':
+          $ref: '#/components/responses/Response_Http_Codes_304'
+        '400':
+          $ref: '#/components/responses/Response_Http_Codes_400'
+        '401':
+          $ref: '#/components/responses/Response_Http_Codes_401'
+        '403':
+          $ref: '#/components/responses/Response_Http_Codes_403'
+        '404':
+          $ref: '#/components/responses/Response_Http_Codes_404'
+        '429':
+          $ref: '#/components/responses/Response_Http_Codes_429'
+        '500':
+          $ref: '#/components/responses/Response_Http_Codes_500'
+  /your-generic-notification-endpoint:
+    post:
+      description: Generic Notification
+      operationId: GenericNotification
+      tags:
+        - Notification
+      summary: Generic notifications will be sent with this json
+      requestBody:
+        description: We will send you this json in our notifications
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericNotificationRequest'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusDetails'
+        '400':
+          $ref: '#/components/responses/Response_Http_Codes_400'
+        '403':
+          $ref: '#/components/responses/Response_Http_Codes_403'
+        '429':
+          $ref: '#/components/responses/Response_Http_Codes_429'
+        '500':
+          $ref: '#/components/responses/Response_Http_Codes_500'
+  /your-authorisation-notification-endpoint:
+    post:
+      description: Authorisation Notification
+      operationId: AuthorisationNotification
+      tags:
+        - Notification
+      summary: Authorisation notifications will be sent with this json
+      requestBody:
+        description: We will send you this json in our notification
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorisationNotificationRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusDetails'
+        '400':
+          $ref: '#/components/responses/Response_Http_Codes_400'
+        '403':
+          $ref: '#/components/responses/Response_Http_Codes_403'
+        '429':
+          $ref: '#/components/responses/Response_Http_Codes_429'
+        '500':
+          $ref: '#/components/responses/Response_Http_Codes_500'
+  /your-transaction-notification-endpoint:
+    post:
+      description: Transaction Notification
+      operationId: TransactionNotification
+      tags:
+        - Notification
+      summary: Transaction notification will be sent with this json
+      requestBody:
+        description: We will send you this json in our notification
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionNotificationRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusDetails'
+        '400':
+          $ref: '#/components/responses/Response_Http_Codes_400'
+        '403':
+          $ref: '#/components/responses/Response_Http_Codes_403'
+        '429':
+          $ref: '#/components/responses/Response_Http_Codes_429'
+        '500':
+          $ref: '#/components/responses/Response_Http_Codes_500'
+  /config:
+    get:
+      description: Get Account Config
+      operationId: GetAccountConfig
+      tags:
+        - Config
+      summary: Get Account Config
+      responses:
+        '200':
+          $ref: '#/components/responses/Response_Config_Details'
+        '403':
+          $ref: '#/components/responses/Response_Http_Codes_403'
+        '429':
+          $ref: '#/components/responses/Response_Http_Codes_429'
+        '500':
+          $ref: '#/components/responses/Response_Http_Codes_500'
+
+    patch:
+      description: SetAccount Config
+      operationId: SetAccountConfig
+      tags:
+        - Config
+      summary: Set the Payment configuration to generate payments
+      requestBody:
+        description: Payment configuration object to generate a payment
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountConfigRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/Response_Config_Details'
+        '400':
+          $ref: '#/definitions/Response_Http_Codes_400'
+        '403':
+          $ref: '#/definitions/Response_Http_Codes_403'
+        '429':
+          $ref: '#/definitions/Response_Http_Codes_429'
+        '500':
+          $ref: '#/definitions/Response_Http_Codes_500'
+components:
+  # Reusable schemas (data models)
+  schemas:
+    SinglePaymentUpdateRequest:
+      type: object
+      properties:
+        expiration_time:
+          type: string
+          format: 'Y-m-d H:i'
+          description: Optional
+          example: '2017-12-12 16:05'
+        currency:
+          type: string
+          default: EUR
+          example: EUR
+          enum: [EUR, BRL]
+        customer:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: Optional - uuid from previous created customers
+              example: 22ea3cc9-424b-489a-91b7-8955f643dc93
+            name:
+              type: string
+              maxLength: 255
+              example: Customer Example
+              description: Required if 'method' is 'mbw'
+            email:
+              type: string
+              maxLength: 70
+              example: customer@example.com
+            phone:
+              type: string
+              maxLength: 15
+              example: '911234567'
+              description: Required if 'method' is 'mbw'
+            phone_indicative:
+              type: string
+              maxLength: 5
+              default: '+351'
+            fiscal_number:
+              type: string
+              maxLength: 20
+              description: Fiscal Number must be prefixed with country code
+              example: PT123456789
+            key:
+              type: string
+              maxLength: 255
+              example: Key Example
+            language:
+              type: string
+              default: PT
+              example: PT
+              description: ISO Alpha-2 code
+        key:
+          type: string
+          maxLength: 50
+          description: Merchant identification key
+          example: Example Key
+        value:
+          type: number
+          minimum: 0.5
+          format: double
+          description: Value will be rounded to 2 decimals
+          example: 17.5
+        type:
+          type: string
+          example: sale
+          default: sale
+          description: Optional - only applicable to method cc or mbw
+          enum: [sale, authorisation]
+        method:
+          type: string
+          enum: [mb, cc, mbw, dd, bb]
+        account:
+          description: Optional - only applicable to multi-account clients
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: Account Uuid to credit the captured funds
+              example: 22ea3cc9-424b-489a-91b7-8955f643dc93
+        sdd_mandate:
+          type: object
+          required:
+            - iban
+            - name
+            - email
+            - phone
+            - account_holder
+          properties:
+            id:
+              type: string
+              description: Optional - unique identifier from previous created mandates
+              example: '12345678901'
+            iban:
+              type: string
+              maxLength: 34
+              example: PT50002700000001234567833
+            key:
+              type: string
+              maxLength: 255
+              description: Custom string controlled by our clients
+              example: Key Example
+            name:
+              type: string
+              maxLength: 100
+              example: Name Example
+            email:
+              type: string
+              maxLength: 50
+              example: customer@example.com
+            phone:
+              type: string
+              maxLength: 20
+              example: '911234567'
+            account_holder:
+              type: string
+              maxLength: 100
+              description: Bank account holder name
+              example: Acount Name Example
+            country_code:
+              type: string
+              description: Bank account country code
+              example: PT
+            max_num_debits:
+              type: string
+              description: 'Optional: Max number of debits described in SDD Mandate'
+              example: '12'
+    UpdatedSinglePayment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 4c67e74b-a256-4e0a-965d-97bf5d01bd50
+        expiration_time:
+          type: string
+          format: 'Y-m-d H:i'
+          description: Optional
+          example: '2017-12-12 16:05'
+        currency:
+          type: string
+          default: EUR
+          example: EUR
+          enum:
+            - EUR
+            - BRL
+        customer:
+          $ref: '#/components/schemas/Customer'
+        key:
+          type: string
+          maxLength: 50
+          description: Merchant identification key
+          example: Example Key
+        value:
+          type: number
+          minimum: 0.5
+          format: double
+          description: Value will be rounded to 2 decimals
+          example: 17.5
+        type:
+          type: string
+          example: sale
+          default: sale
+          description: Optional - only applicable to method cc or mbw
+          enum: [sale, authorisation]
+        method:
+          type: object
+          properties:
+            type:
+              type: string
+              example: sale
+              default: sale
+              description: Optional - only applicable to method cc or mbw
+              enum: [sale, authorisation]
+            status:
+              type: string
+              enum: [success, waiting, pending, active, deleted]
+            entity:
+              type: integer
+              example: '10611'
+            reference:
+              type: string
+              example: '987654321'
+            url:
+              type: string
+              format: url
+              example: >-
+                https://www.easypay.pt/_s/c11.php?e=10611&r=987654321&v=19&t_key=example+key&c=EN&l=EN
+        payment_status:
+          type: string
+          description: Status of the single payment
+          example: Paid
+        paid_at:
+          type: string
+          format: 'Y-m-d H:i:s'
+          description: Date when the single payment was paid
+          example: '2017-12-12 16:05:02'
+        created_at:
+          type: string
+          format: 'Y-m-d H:i:s'
+          description: Date when payment was created
+          example: '2017-12-12 16:05:02'
+    SinglePaymentUpdateResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/StatusDetails'
+        - $ref: '#/components/schemas/UpdatedSinglePayment'
+    Properties_Has_ListMetaData:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            page:
+              type: object
+              properties:
+                current:
+                  type: integer
+                  example: 2
+                total:
+                  type: integer
+                  example: 4
+            records:
+              type: object
+              properties:
+                total:
+                  type: integer
+                  example: 50
+                per_page:
+                  type: integer
+                  example: 15
+            links:
+              type: object
+              properties:
+                first:
+                  type: string
+                  example: 'https://......?page=1'
+                prev:
+                  type: string
+                  example: 'https://......?page=1'
+                next:
+                  type: string
+                  example: 'https://......?page=3'
+                last:
+                  type: string
+                  example: 'https://......?page=4'
+    Payment_Single:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 4c67e74b-a256-4e0a-965d-97bf5d01bd50
+        expiration_time:
+          type: string
+          format: 'Y-m-d H:i'
+          description: Optional
+          example: '2017-12-12 16:05'
+        currency:
+          type: string
+          default: EUR
+          example: EUR
+          enum:
+            - EUR
+            - BRL
+        customer:
+          $ref: '#/components/schemas/Customer'
+        key:
+          type: string
+          maxLength: 50
+          description: Merchant identification key
+          example: Example Key
+        value:
+          type: number
+          minimum: 0.5
+          format: double
+          description: Value will be rounded to 2 decimals
+          example: 17.5
+        type:
+          type: string
+          example: sale
+          default: sale
+          description: Optional - only applicable to method cc or mbw
+          enum: [sale, authorisation]
+        method:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [mb, cc, mbw, dd, bb]
+            sdd_mandate:
+              type: object
+              required:
+                - iban
+                - name
+                - email
+                - phone
+                - account_holder
+              properties:
+                id:
+                  type: string
+                  description: Optional - unique identifier from previous created mandates
+                  example: '12345678901'
+                iban:
+                  type: string
+                  maxLength: 34
+                  example: PT50002700000001234567833
+                key:
+                  type: string
+                  maxLength: 255
+                  description: Custom string controlled by our clients
+                  example: Key Example
+                name:
+                  type: string
+                  maxLength: 100
+                  example: Name Example
+                email:
+                  type: string
+                  maxLength: 50
+                  example: customer@example.com
+                phone:
+                  type: string
+                  maxLength: 20
+                  example: '911234567'
+                account_holder:
+                  type: string
+                  maxLength: 100
+                  description: Bank account holder name
+                  example: Acount Name Example
+                country_code:
+                  type: string
+                  description: Bank account country code
+                  example: PT
+                max_num_debits:
+                  type: string
+                  description: 'Optional: Max number of debits described in SDD Mandate'
+                  example: '12'
+            entity:
+              type: integer
+              example: '10611'
+            reference:
+              type: string
+              example: '987654321'
+            url:
+              type: string
+              format: url
+              example: >-
+                https://www.easypay.pt/_s/c11.php?e=10611&r=987654321&v=19&t_key=example+key&c=EN&l=EN
+            last_four:
+              type: string
+              description: Last 4 digits of the  submitted Credit Card
+              example: '1234'
+            card_type:
+              type: string
+              description: 'MasterCard, VISA'
+              example: VISA
+            expiration_date:
+              type: string
+              format: mm/yy
+              example: 01/22
+            status:
+              type: string
+              enum: [success, waiting, pending, active, deleted]
+            alias:
+              type: string
+              description: MBWAY Alias (only for mobile implementation using MBWAY SDK)
+              example: 626E6AA2224D017917D839D4D39296B49441A1D10DA7E8DB6E7E1A4356DDE75429531BEB32190C6D736FA12C7A116CA5F3FCAEE72570406F51371A0CB6E14B6B        
+        payment_status:
+          type: string
+          description: Status of the single payment
+          example: Paid
+        paid_at:
+          type: string
+          format: 'Y-m-d H:i:s'
+          description: Date when the single payment was paid
+          example: '2017-12-12 16:05:02'
+        created_at:
+          type: string
+          format: 'Y-m-d H:i:s'
+          description: Date when payment was created
+          example: '2017-12-12 16:05:02'
+    ListSinglePaymentResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Properties_Has_ListMetaData'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Payment_Single'
+    SinglePaymentRequest:
+      type: object
+      properties:
+        type:
+          type: string
+          default: sale
+          description: Optional - only applicable to method cc or mbw
+          enum: [sale, authorisation]
+        expiration_time:
+          type: string
+          format: 'Y-m-d H:i'
+          description: Optional
+          example: '2017-12-12 16:05'
+        currency:
+          type: string
+          default: EUR
+          example: EUR
+          enum: [EUR, BRL]
+        customer:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: Optional - uuid from previous created customers
+              example: 22ea3cc9-424b-489a-91b7-8955f643dc93
+            name:
+              type: string
+              maxLength: 255
+              example: Customer Example
+              description: Required if 'method' is 'mbw'
+            email:
+              type: string
+              maxLength: 70
+              example: customer@example.com
+            phone:
+              type: string
+              maxLength: 15
+              example: '911234567'
+              description: Required if 'method' is 'mbw'
+            phone_indicative:
+              type: string
+              maxLength: 5
+              default: '+351'
+            fiscal_number:
+              type: string
+              maxLength: 20
+              description: Fiscal Number must be prefixed with country code
+              example: PT123456789
+            key:
+              type: string
+              maxLength: 255
+              example: Key Example
+            language:
+              type: string
+              default: PT
+              example: PT
+              description: ISO Alpha-2 code
+        key:
+          type: string
+          maxLength: 50
+          description: Merchant identification key
+          example: Example Key
+        value:
+          type: number
+          minimum: 0.5
+          format: double
+          description: Value will be rounded to 2 decimals
+          example: 17.5
+        method:
+          type: string
+          enum: [mb, cc, mbw, dd, bb]
+        sdd_mandate:
+          type: object
+          required:
+            - iban
+            - name
+            - email
+            - phone
+            - account_holder
+          properties:
+            id:
+              type: string
+              description: Optional - unique identifier from previous created mandates
+              example: '12345678901'
+            iban:
+              type: string
+              maxLength: 34
+              example: PT50002700000001234567833
+            key:
+              type: string
+              maxLength: 255
+              description: Custom string controlled by our clients
+              example: Key Example
+            name:
+              type: string
+              maxLength: 100
+              example: Name Example
+            email:
+              type: string
+              maxLength: 50
+              example: customer@example.com
+            phone:
+              type: string
+              maxLength: 20
+              example: '911234567'
+            account_holder:
+              type: string
+              maxLength: 100
+              description: Bank account holder name
+              example: Acount Name Example
+            country_code:
+              type: string
+              description: Bank account country code
+              example: PT
+            max_num_debits:
+              type: string
+              description: 'Optional: Max number of debits described in SDD Mandate'
+              example: '12'
+        capture:
+          type: object
+          description: Only required if 'type' is 'sale'
+          required:
+            - descriptive
+          properties:
+            descriptive:
+              type: string
+              maxLength: 255
+              description: This will appear in the bank statement/mbway application
+              example: Descriptive Example
+            transaction_key:
+              type: string
+              maxLength: 50
+              description: Your internal key identifying this capture
+            capture_date:
+              type: string
+              format: Y-m-d
+            account:
+              description: Optional - only applicable to multi-account clients
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                  description: Account Uuid to credit the captured funds
+                  example: 22ea3cc9-424b-489a-91b7-8955f643dc93
+            splits:
+              description: 'Optional: only used for split payments'
+              type: array
+              items:
+                $ref: '#/components/schemas/Splits_Details'
+    Splits_Details:
+      type: object
+      required:
+        - value
+      properties:
+        split_key:
+          type: string
+          maxLength: 50
+          description: Your internal key identifying this split
+        split_descriptive:
+          type: string
+          maxLength: 255
+          description: A small observation for this split
+          example: Descriptive Example
+        value:
+          description: 'Total split funds, rounded with 2 decimals'
+          type: number
+          minimum: 0
+          exclusiveMinimum: true
+          format: double
+          example: 1
+        account:
+          description: Account owner of this split
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: Account Uuid to credit the split funds
+              example: 22ea3cc9-424b-489a-91b7-8955f643dc93
+        margin_value:
+          description: 'Total margin funds, rounded with 2 decimals'
+          minimum: 0
+          exclusiveMinimum: true
+          type: number
+          format: double
+          example: 0.1
+        margin_account:
+          description: Account used for a margin from this split
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: Account Uuid to credit the margin funds
+              example: 22ea3cc9-424b-489a-91b7-8955f643dc93
+    SinglePaymentResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/StatusDetails'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 4c67e74b-a256-4e0a-965d-97bf5d01bd50
+            method:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum: [mb, cc, mbw, dd, bb]
+                sdd_mandate:
+                  type: object
+                  required:
+                    - iban
+                    - name
+                    - email
+                    - phone
+                    - account_holder
+                  properties:
+                    id:
+                      type: string
+                      description: Optional - unique identifier from previous created mandates
+                      example: '12345678901'
+                    iban:
+                      type: string
+                      maxLength: 34
+                      example: PT50002700000001234567833
+                    key:
+                      type: string
+                      maxLength: 255
+                      description: Custom string controlled by our clients
+                      example: Key Example
+                    name:
+                      type: string
+                      maxLength: 100
+                      example: Name Example
+                    email:
+                      type: string
+                      maxLength: 50
+                      example: customer@example.com
+                    phone:
+                      type: string
+                      maxLength: 20
+                      example: '911234567'
+                    account_holder:
+                      type: string
+                      maxLength: 100
+                      description: Bank account holder name
+                      example: Acount Name Example
+                    country_code:
+                      type: string
+                      description: Bank account country code
+                      example: PT
+                    max_num_debits:
+                      type: string
+                      description: 'Optional: Max number of debits described in SDD Mandate'
+                      example: '12'
+                entity:
+                  type: integer
+                  example: '10611'
+                reference:
+                  type: string
+                  example: '987654321'
+                url:
+                  type: string
+                  format: url
+                  example: >-
+                    https://www.easypay.pt/_s/c11.php?e=10611&r=987654321&v=19&t_key=example+key&c=EN&l=EN
+                last_four:
+                  type: string
+                  description: Last 4 digits of the  submitted Credit Card
+                  example: '1234'
+                card_type:
+                  type: string
+                  description: 'MasterCard, VISA'
+                  example: VISA
+                expiration_date:
+                  type: string
+                  format: mm/yy
+                  example: 01/22
+                status:
+                  type: string
+                  enum: [success, waiting, pending, active, deleted]
+                alias:
+                  type: string
+                  description: MBWAY Alias (only for mobile implementation using MBWAY SDK)
+                  example: 626E6AA2224D017917D839D4D39296B49441A1D10DA7E8DB6E7E1A4356DDE75429531BEB32190C6D736FA12C7A116CA5F3FCAEE72570406F51371A0CB6E14B6B
+    SinglePaymentWithTransactionsResponse:
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment_Single_Transaction'
+        type:
+          type: string
+          default: sale
+          description: Optional - only applicable to method cc or mbw
+          enum: [sale, authorisation]
+        id:
+          type: string
+          format: uuid
+          example: 4c67e74b-a256-4e0a-965d-97bf5d01bd50
+        expiration_time:
+          type: string
+          format: 'Y-m-d H:i'
+          example: '2022-01-01 10:20'
+        currency:
+          type: string
+          default: EUR
+          example: EUR
+          enum: [EUR, BRL]
+        customer:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: Optional - uuid from previous created customers
+              example: 22ea3cc9-424b-489a-91b7-8955f643dc93
+            name:
+              type: string
+              maxLength: 255
+              example: Customer Example
+              description: Required if 'method' is 'mbw'
+            email:
+              type: string
+              maxLength: 70
+              example: customer@example.com
+            phone:
+              type: string
+              maxLength: 15
+              example: '911234567'
+              description: Required if 'method' is 'mbw'
+            phone_indicative:
+              type: string
+              maxLength: 5
+              default: '+351'
+            fiscal_number:
+              type: string
+              maxLength: 20
+              description: Fiscal Number must be prefixed with country code
+              example: PT123456789
+            key:
+              type: string
+              maxLength: 255
+              example: Key Example
+            language:
+              type: string
+              default: PT
+              example: PT
+              description: ISO Alpha-2 code
+        key:
+          type: string
+          maxLength: 50
+          description: Merchant identification key
+          example: Example Key
+        value:
+          type: number
+          minimum: 0.5
+          format: double
+          description: Value will be rounded to 2 decimals
+          example: 17.5
+        method:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [mb, cc, mbw, dd, bb]
+            sdd_mandate:
+              type: object
+              required:
+                - iban
+                - name
+                - email
+                - phone
+                - account_holder
+              properties:
+                id:
+                  type: string
+                  description: Optional - unique identifier from previous created mandates
+                  example: '12345678901'
+                iban:
+                  type: string
+                  maxLength: 34
+                  example: PT50002700000001234567833
+                key:
+                  type: string
+                  maxLength: 255
+                  description: Custom string controlled by our clients
+                  example: Key Example
+                name:
+                  type: string
+                  maxLength: 100
+                  example: Name Example
+                email:
+                  type: string
+                  maxLength: 50
+                  example: customer@example.com
+                phone:
+                  type: string
+                  maxLength: 20
+                  example: '911234567'
+                account_holder:
+                  type: string
+                  maxLength: 100
+                  description: Bank account holder name
+                  example: Acount Name Example
+                country_code:
+                  type: string
+                  description: Bank account country code
+                  example: PT
+                max_num_debits:
+                  type: string
+                  description: 'Optional: Max number of debits described in SDD Mandate'
+                  example: '12'
+            entity:
+              type: integer
+              example: '10611'
+            reference:
+              type: string
+              example: '987654321'
+            url:
+              type: string
+              format: url
+              example: >-
+                https://www.easypay.pt/_s/c11.php?e=10611&r=987654321&v=19&t_key=example+key&c=EN&l=EN
+            last_four:
+              type: string
+              description: Last 4 digits of the  submitted Credit Card
+              example: '1234'
+            card_type:
+              type: string
+              description: 'MasterCard, VISA'
+              example: VISA
+            expiration_date:
+              type: string
+              format: mm/yy
+              example: 01/22
+            status:
+              type: string
+              enum: [success, waiting, pending, active, deleted]
+            alias:
+              type: string
+              description: MBWAY Alias (only for mobile implementation using MBWAY SDK)
+              example: 626E6AA2224D017917D839D4D39296B49441A1D10DA7E8DB6E7E1A4356DDE75429531BEB32190C6D736FA12C7A116CA5F3FCAEE72570406F51371A0CB6E14B6B
+        payment_status:
+          type: string
+          description: Status of the single payment
+          example: Paid
+        paid_at:
+          type: string
+          format: 'Y-m-d H:i:s'
+          description: Date when the single payment was paid
+          example: '2017-12-12 16:05:02'
+        created_at:
+          type: string
+          format: 'Y-m-d H:i:s'
+          description: Date when payment was created
+          example: '2017-12-12 16:05:02'
+    Payment_Single_Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 3ce815ab-c16a-4b83-88ed-16f260cdf047
+        key:
+          type: string
+          description: >-
+            Any value that will help the merchant manage the transaction on his
+            database
+          example: Example Key
+        date:
+          type: string
+          format: 'Y-m-d H:i:s'
+          example: '2022-01-01 10:20:30'
+        values:
+          type: object
+          properties:
+            requested:
+              type: number
+              format: double
+              example: 15.63
+            paid:
+              type: number
+              format: double
+              example: 15.63
+            fixed_fee:
+              type: number
+              format: double
+              example: 0.3
+            variable_fee:
+              type: number
+              format: double
+              example: 3.3
+            tax:
+              type: number
+              format: double
+              example: 2.03
+            transfer:
+              type: number
+              format: double
+              example: 10
+        transfer_date:
+          type: string
+          format: date
+          example: '2022-12-12'
+        document_number:
+          type: string
+          example: CLIENTIDTEST2345678201808010900
+          description: Unique document number used for Easypay Invoice
+        method:
+          type: string
+          enum: [mb, cc, mbw, dd, bb, moto]
+        descriptive:
+          type: string
+          maxLength: 255
+          description: This will appear in the bank statement/mbway application
+          example: Descriptive Example
+    StatusDetails:
+      type: object
+      properties:
+        status:
+          type: string
+          example: ok
+        message:
+          type: array
+          items:
+            type: string
+            example: Your request was successfully created
+    StatusFailed:
+      type: object
+      properties:
+        status:
+          type: string
+          example: error
+        message:
+          type: array
+          items:
+            type: string
+            example: Custom error message
+    GenericNotificationRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: ID of the related notified resource
+        key:
+          type: string
+          description: Merchant identification key
+        type:
+          type: string
+          enum: [authorisation,capture,frequent_create,void,refund,chargeback,subscription_create,subscription_capture]
+        status:
+          type: string
+          enum: [failed,success]
+        messages:
+          type: array
+          items:
+            type: string
+            example: Your request was successfully created
+        date:
+          type: string
+          format: 'Y-m-d H:i:s'
+          example: '2022-01-01 10:20:30'
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Optional - uuid from previous created customers
+          example: 22ea3cc9-424b-489a-91b7-8955f643dc93
+        name:
+          type: string
+          maxLength: 255
+          example: Customer Example
+          description: Required if 'method' is 'mbw'
+        email:
+          type: string
+          maxLength: 70
+          example: customer@example.com
+        phone:
+          type: string
+          maxLength: 15
+          example: '911234567'
+          description: Required if 'method' is 'mbw'
+        phone_indicative:
+          type: string
+          maxLength: 5
+          default: '+351'
+        fiscal_number:
+          type: string
+          maxLength: 20
+          description: Fiscal Number must be prefixed with country code
+          example: PT123456789
+        key:
+          type: string
+          maxLength: 255
+          example: Key Example
+        language:
+          type: string
+          default: PT
+          example: PT
+          description: ISO Alpha-2 code
+    AuthorisationNotificationRequest:
+      type: object
+      properties:
+        account:
+          type: object
+          properties:
+            ids:
+              type: string
+              format: uuid
+              example: 4c67e74b-a256-4e0a-965d-97bf5d01bd50
+        id:
+          type: string
+          format: uuid
+          example: 8264433a-44eb-4163-bafb-f5fa137494f2
+        value:
+          type: number
+          format: double
+          example: 1
+        currency:
+          type: string
+          default: EUR
+          example: EUR
+        key:
+          type: string
+          description: Merchant identification key
+          example: Example Key
+        expiration_time:
+          type: string
+          format: 'Y-m-d H:i'
+          example: '2022-01-01 10:20'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        method:
+          type: string
+          example: mb
+        authorisation:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 4c67e74b-a256-4e0a-965d-97bf5d01bd50
+    TransactionNotificationRequest:  
+      type: object
+      properties:
+        account:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 4c67e74b-a256-4e0a-965d-97bf5d01bd50
+        id:
+          type: string
+          format: uuid
+          example: 8264433a-44eb-4163-bafb-f5fa137494f2
+        value:
+          type: number
+          format: double
+          example: 1
+        currency:
+          type: string
+          default: EUR
+          example: EUR
+        key:
+          type: string
+          description: Merchant identification key
+          example: Example Key
+        expiration_time:
+          type: string
+          format: 'Y-m-d H:i'
+          example: '2022-01-01 10:20'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        method:
+          type: string
+          example: mb
+        transaction:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 3ce815ab-c16a-4b83-88ed-16f260cdf047
+            key:
+              type: string
+              description: >-
+                Any value that will help the merchant manage the transaction on his
+                database
+              example: Example Key
+            date:
+              type: string
+              format: 'Y-m-d H:i:s'
+              example: '2022-01-01 10:20:30'
+            values:
+              type: object
+              properties:
+                requested:
+                  type: number
+                  format: double
+                  example: 15.63
+                paid:
+                  type: number
+                  format: double
+                  example: 15.63
+                fixed_fee:
+                  type: number
+                  format: double
+                  example: 0.3
+                variable_fee:
+                  type: number
+                  format: double
+                  example: 3.3
+                tax:
+                  type: number
+                  format: double
+                  example: 2.03
+                transfer:
+                  type: number
+                  format: double
+                  example: 10
+            transfer_date:
+              type: string
+              format: date
+              example: '2022-12-12'
+            document_number:
+              type: string
+              example: CLIENTIDTEST2345678201808010900
+              description: Unique document number used for Easypay Invoice
+    ConfigDetailsResponse:
+      type: object
+      properties:
+        generic:
+          type: string
+          default: 'https://www.easypay.pt/generic'
+          description: URL for generic notification
+        authorisation:
+          type: string
+          default: 'https://www.easypay.pt/authorisation'
+          description: URL for authorisation notification
+        transaction:
+          type: string
+          default: 'https://www.easypay.pt/transaction'
+          description: URL for transaction notification
+        visa_fwd:
+          type: string
+          default: 'https://www.easypay.pt/visa_fwd'
+          description: URL for redirect clients on credit card forward
+        visa_detail:
+          type: string
+          default: 'https://www.easypay.pt/visa_detail'
+          description: URL for credit card payment detail
+        account:
+          type: string
+          default: b2080452-bad1-4455-8ae7-9f5ea552a274
+          description: easypay account UUID
+        payment_methods:
+          type: array
+          description: payment methods allowed
+          items:
+            type: string
+            example: mb
+            description: payment method
+    AccountConfigRequest:
+      type: object
+      properties:
+        generic:
+          type: string
+          default: 'https://www.easypay.pt/generic'
+          description: URL for generic notification
+        authorisation:
+          type: string
+          default: 'https://www.easypay.pt/authorisation'
+          description: URL for authorisation notification
+        transaction:
+          type: string
+          default: 'https://www.easypay.pt/transaction'
+          description: URL for transaction notification
+        visa_fwd:
+          type: string
+          default: 'https://www.easypay.pt/visa_fwd'
+          description: URL for redirect clients on credit card forward
+        visa_detail:
+          type: string
+          default: 'https://www.easypay.pt/visa_detail'
+          description: URL for credit card payment detail
+  # Reusable path, query, header and cookie parameters
+  parameters:
+    Request_Parameters_Page:
+      name: page
+      in: query
+      description: Page Number
+      required: false
+      schema: 
+        type: integer
+        format: int32
+      example: '2'
+    Request_Parameters_Records_Per_Page:  
+      name: records_per_page
+      in: query
+      description: 'Limit records per page (Max: 100)'
+      schema: 
+        type: integer
+        format: int32
+      example: '2'
+    Request_Parameters_Type:
+      name: type
+      in: query
+      description: Filter by type
+      schema: 
+        type: string
+      example: sale
+    Request_Parameters_Expiration_Time:
+      name: expiration_time
+      in: query
+      description: Filter by expiration time interval (max 30 days)
+      schema: 
+        type: string
+      example: 'interval(2019-07-01 00:00,2019-07-01 23:59)'
+    Request_Parameters_Method:
+      name: method
+      in: query
+      description: Filter by method
+      schema: 
+        type: string
+        enum: [mb, cc, mbw, dd, bb]
+      example: cc
+    Request_Parameters_Customer:
+      name: customer
+      in: query
+      description: Filter by customer key
+      schema: 
+        type: string
+      example: Key Example
+    Request_Parameters_Id:
+      name: id
+      in: query
+      description: Resource Identification
+      schema:
+        type: string
+        format: uuid
+      example: b100175d-e347-4501-8388-5d4b00b8551b
+    Request_Parameters_Key:
+      name: key
+      in: query
+      description: Filter by single key
+      schema: 
+        type: string
+      example: Single Key Example
+    Request_Parameters_Value:
+      name: value
+      in: query
+      description: Filter by value
+      schema: 
+        type: number
+        format: double
+      example: 17.5
+    Request_Parameters_Created_At:
+      name: created_at
+      in: query
+      description: Filter by created datetime interval (max 30 days)
+      schema: 
+        type: string
+      example: 'interval(2019-07-01 00:00,2019-07-01 23:59)'
+  # Reusable request bodies
+  # requestBodies:
+  # Reusable responses, such as 401 Unauthorized or 400 Bad Request
+  responses:
+    Response_Http_Codes_401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_304:
+      description: Not Modified
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_429:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_413:
+      description: Request Entity Too Large
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_404:
+      description: Resource Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_500:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_412:
+      description: Precondition Failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_428:
+      description: Precondition Required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_422:
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusFailed'
+          example:
+              status: error
+              message: 
+                - Custom error message
+    Response_Http_Codes_204:
+      description: No content
+    Response_Config_Details:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConfigDetailsResponse'
+  # Security scheme definitions (see Authentication)
+  securitySchemes:
+    accountId:
+      type: apiKey
+      in: header
+      name: AccountId
+      description: This is the identification for the Easypay Client Account
+    apiKey:
+      type: apiKey
+      in: header
+      name: ApiKey
+      description: This is the counter key for the used Account Id
+  # Reusable response headers
+  # headers:
+  # Reusable examples
+  # examples:
+  # Reusable links
+  # links:
+  # Reusable callbacks
+  # callbacks: 
+security:
+  - accountId: []
+    apiKey: []
+tags:
+  - name: Single Payment
+    description: Payments used on a one time purchase
+  - name: Notification
+    description: >-
+      On <a href='https://backoffice.easypay.pt' class='item'>Easypay
+      Backoffice</a> please configure your url's for each type of notification
+      on menu: <i><b>Web Services->Configuration API 2.0->Notifications</b></i>
+      and check the your notification history log on menu: <i><b>Web
+      Services->Notifications API 2.0</b></i>. <br>There is also a configuration
+      to include a security header (x-easypay-code) on all notifications. <br>
+      Our system default notification payloads can be customized to any format
+      if needed.
+  - name: Config
+    description: Account URL configuration for notifications and credit card transactions

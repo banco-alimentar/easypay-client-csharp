@@ -1,7 +1,7 @@
 /*
  * Easypay API
  *
- * EasyPay - API allows you to query payment meta-data, receive payment notifications and generate payment references. Two distinct environments - [Sandbox environment](https://api.test.easypay.pt/docs) and [Production environment](https://api.prod.easypay.pt/docs).
+ * EasyPay - API
  *
  * The version of the OpenAPI document: 2.0.2
  * Contact: tec@easypay.pt
@@ -34,9 +34,9 @@ namespace Easypay.Rest.Client.Api
         /// Create single payment
         /// </remarks>
         /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="paymentSingleRequestBody">Payment configuration object to generate a payment</param>
-        /// <returns>PaymentSingleResponse</returns>
-        PaymentSingleResponse CreateSinglePayment(PaymentSingleRequestBody paymentSingleRequestBody);
+        /// <param name="singlePaymentRequest">Payment configuration object to generate a payment</param>
+        /// <returns>SinglePaymentResponse</returns>
+        SinglePaymentResponse CreateSinglePayment(SinglePaymentRequest singlePaymentRequest);
 
         /// <summary>
         /// Create single payment
@@ -45,9 +45,51 @@ namespace Easypay.Rest.Client.Api
         /// Create single payment
         /// </remarks>
         /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="paymentSingleRequestBody">Payment configuration object to generate a payment</param>
-        /// <returns>ApiResponse of PaymentSingleResponse</returns>
-        ApiResponse<PaymentSingleResponse> CreateSinglePaymentWithHttpInfo(PaymentSingleRequestBody paymentSingleRequestBody);
+        /// <param name="singlePaymentRequest">Payment configuration object to generate a payment</param>
+        /// <returns>ApiResponse of SinglePaymentResponse</returns>
+        ApiResponse<SinglePaymentResponse> CreateSinglePaymentWithHttpInfo(SinglePaymentRequest singlePaymentRequest);
+        /// <summary>
+        /// Deletes single payment
+        /// </summary>
+        /// <remarks>
+        /// Deletes single payment
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <returns></returns>
+        void DeleteSinglePayment(Guid id);
+
+        /// <summary>
+        /// Deletes single payment
+        /// </summary>
+        /// <remarks>
+        /// Deletes single payment
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <returns>ApiResponse of Object(void)</returns>
+        ApiResponse<Object> DeleteSinglePaymentWithHttpInfo(Guid id);
+        /// <summary>
+        /// Shows single payment details
+        /// </summary>
+        /// <remarks>
+        /// Shows single payment details
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <returns>SinglePaymentWithTransactionsResponse</returns>
+        SinglePaymentWithTransactionsResponse GetSinglePayment(Guid id);
+
+        /// <summary>
+        /// Shows single payment details
+        /// </summary>
+        /// <remarks>
+        /// Shows single payment details
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <returns>ApiResponse of SinglePaymentWithTransactionsResponse</returns>
+        ApiResponse<SinglePaymentWithTransactionsResponse> GetSinglePaymentWithHttpInfo(Guid id);
         /// <summary>
         /// Lists single payments
         /// </summary>
@@ -61,12 +103,12 @@ namespace Easypay.Rest.Client.Api
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
-        /// <param name="id">Filter by id (optional)</param>
+        /// <param name="id">Resource Identification (optional)</param>
         /// <param name="key">Filter by single key (optional)</param>
         /// <param name="value">Filter by value (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
-        /// <returns>PropertiesHasListMetaData</returns>
-        PropertiesHasListMetaData ListSinglePayments(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), PaymentSingleMethodAvailable? method = default(PaymentSingleMethodAvailable?), string customer = default(string), string id = default(string), string key = default(string), double? value = default(double?), string createdAt = default(string));
+        /// <returns>ListSinglePaymentResponse</returns>
+        ListSinglePaymentResponse ListSinglePayments(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), string method = default(string), string customer = default(string), Guid? id = default(Guid?), string key = default(string), double? value = default(double?), string createdAt = default(string));
 
         /// <summary>
         /// Lists single payments
@@ -81,12 +123,35 @@ namespace Easypay.Rest.Client.Api
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
-        /// <param name="id">Filter by id (optional)</param>
+        /// <param name="id">Resource Identification (optional)</param>
         /// <param name="key">Filter by single key (optional)</param>
         /// <param name="value">Filter by value (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
-        /// <returns>ApiResponse of PropertiesHasListMetaData</returns>
-        ApiResponse<PropertiesHasListMetaData> ListSinglePaymentsWithHttpInfo(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), PaymentSingleMethodAvailable? method = default(PaymentSingleMethodAvailable?), string customer = default(string), string id = default(string), string key = default(string), double? value = default(double?), string createdAt = default(string));
+        /// <returns>ApiResponse of ListSinglePaymentResponse</returns>
+        ApiResponse<ListSinglePaymentResponse> ListSinglePaymentsWithHttpInfo(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), string method = default(string), string customer = default(string), Guid? id = default(Guid?), string key = default(string), double? value = default(double?), string createdAt = default(string));
+        /// <summary>
+        /// Updates single payment details
+        /// </summary>
+        /// <remarks>
+        /// Updates single payment details
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="singlePaymentUpdateRequest">Single Payment object to edit existing one</param>
+        /// <returns>SinglePaymentUpdateResponse</returns>
+        SinglePaymentUpdateResponse UpdateSinglePayment(Guid id, SinglePaymentUpdateRequest singlePaymentUpdateRequest);
+
+        /// <summary>
+        /// Updates single payment details
+        /// </summary>
+        /// <remarks>
+        /// Updates single payment details
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="singlePaymentUpdateRequest">Single Payment object to edit existing one</param>
+        /// <returns>ApiResponse of SinglePaymentUpdateResponse</returns>
+        ApiResponse<SinglePaymentUpdateResponse> UpdateSinglePaymentWithHttpInfo(Guid id, SinglePaymentUpdateRequest singlePaymentUpdateRequest);
         #endregion Synchronous Operations
     }
 
@@ -103,10 +168,10 @@ namespace Easypay.Rest.Client.Api
         /// Create single payment
         /// </remarks>
         /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="paymentSingleRequestBody">Payment configuration object to generate a payment</param>
+        /// <param name="singlePaymentRequest">Payment configuration object to generate a payment</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PaymentSingleResponse</returns>
-        System.Threading.Tasks.Task<PaymentSingleResponse> CreateSinglePaymentAsync(PaymentSingleRequestBody paymentSingleRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <returns>Task of SinglePaymentResponse</returns>
+        System.Threading.Tasks.Task<SinglePaymentResponse> CreateSinglePaymentAsync(SinglePaymentRequest singlePaymentRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Create single payment
@@ -115,10 +180,56 @@ namespace Easypay.Rest.Client.Api
         /// Create single payment
         /// </remarks>
         /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="paymentSingleRequestBody">Payment configuration object to generate a payment</param>
+        /// <param name="singlePaymentRequest">Payment configuration object to generate a payment</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PaymentSingleResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PaymentSingleResponse>> CreateSinglePaymentWithHttpInfoAsync(PaymentSingleRequestBody paymentSingleRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <returns>Task of ApiResponse (SinglePaymentResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<SinglePaymentResponse>> CreateSinglePaymentWithHttpInfoAsync(SinglePaymentRequest singlePaymentRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Deletes single payment
+        /// </summary>
+        /// <remarks>
+        /// Deletes single payment
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task DeleteSinglePaymentAsync(Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Deletes single payment
+        /// </summary>
+        /// <remarks>
+        /// Deletes single payment
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteSinglePaymentWithHttpInfoAsync(Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Shows single payment details
+        /// </summary>
+        /// <remarks>
+        /// Shows single payment details
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of SinglePaymentWithTransactionsResponse</returns>
+        System.Threading.Tasks.Task<SinglePaymentWithTransactionsResponse> GetSinglePaymentAsync(Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Shows single payment details
+        /// </summary>
+        /// <remarks>
+        /// Shows single payment details
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (SinglePaymentWithTransactionsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<SinglePaymentWithTransactionsResponse>> GetSinglePaymentWithHttpInfoAsync(Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Lists single payments
         /// </summary>
@@ -132,13 +243,13 @@ namespace Easypay.Rest.Client.Api
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
-        /// <param name="id">Filter by id (optional)</param>
+        /// <param name="id">Resource Identification (optional)</param>
         /// <param name="key">Filter by single key (optional)</param>
         /// <param name="value">Filter by value (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PropertiesHasListMetaData</returns>
-        System.Threading.Tasks.Task<PropertiesHasListMetaData> ListSinglePaymentsAsync(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), PaymentSingleMethodAvailable? method = default(PaymentSingleMethodAvailable?), string customer = default(string), string id = default(string), string key = default(string), double? value = default(double?), string createdAt = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <returns>Task of ListSinglePaymentResponse</returns>
+        System.Threading.Tasks.Task<ListSinglePaymentResponse> ListSinglePaymentsAsync(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), string method = default(string), string customer = default(string), Guid? id = default(Guid?), string key = default(string), double? value = default(double?), string createdAt = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Lists single payments
@@ -153,13 +264,38 @@ namespace Easypay.Rest.Client.Api
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
-        /// <param name="id">Filter by id (optional)</param>
+        /// <param name="id">Resource Identification (optional)</param>
         /// <param name="key">Filter by single key (optional)</param>
         /// <param name="value">Filter by value (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PropertiesHasListMetaData)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PropertiesHasListMetaData>> ListSinglePaymentsWithHttpInfoAsync(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), PaymentSingleMethodAvailable? method = default(PaymentSingleMethodAvailable?), string customer = default(string), string id = default(string), string key = default(string), double? value = default(double?), string createdAt = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <returns>Task of ApiResponse (ListSinglePaymentResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ListSinglePaymentResponse>> ListSinglePaymentsWithHttpInfoAsync(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), string method = default(string), string customer = default(string), Guid? id = default(Guid?), string key = default(string), double? value = default(double?), string createdAt = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <summary>
+        /// Updates single payment details
+        /// </summary>
+        /// <remarks>
+        /// Updates single payment details
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="singlePaymentUpdateRequest">Single Payment object to edit existing one</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of SinglePaymentUpdateResponse</returns>
+        System.Threading.Tasks.Task<SinglePaymentUpdateResponse> UpdateSinglePaymentAsync(Guid id, SinglePaymentUpdateRequest singlePaymentUpdateRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Updates single payment details
+        /// </summary>
+        /// <remarks>
+        /// Updates single payment details
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="singlePaymentUpdateRequest">Single Payment object to edit existing one</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (SinglePaymentUpdateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<SinglePaymentUpdateResponse>> UpdateSinglePaymentWithHttpInfoAsync(Guid id, SinglePaymentUpdateRequest singlePaymentUpdateRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -284,11 +420,11 @@ namespace Easypay.Rest.Client.Api
         /// Create single payment Create single payment
         /// </summary>
         /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="paymentSingleRequestBody">Payment configuration object to generate a payment</param>
-        /// <returns>PaymentSingleResponse</returns>
-        public PaymentSingleResponse CreateSinglePayment(PaymentSingleRequestBody paymentSingleRequestBody)
+        /// <param name="singlePaymentRequest">Payment configuration object to generate a payment</param>
+        /// <returns>SinglePaymentResponse</returns>
+        public SinglePaymentResponse CreateSinglePayment(SinglePaymentRequest singlePaymentRequest)
         {
-            Easypay.Rest.Client.Client.ApiResponse<PaymentSingleResponse> localVarResponse = CreateSinglePaymentWithHttpInfo(paymentSingleRequestBody);
+            Easypay.Rest.Client.Client.ApiResponse<SinglePaymentResponse> localVarResponse = CreateSinglePaymentWithHttpInfo(singlePaymentRequest);
             return localVarResponse.Data;
         }
 
@@ -296,13 +432,13 @@ namespace Easypay.Rest.Client.Api
         /// Create single payment Create single payment
         /// </summary>
         /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="paymentSingleRequestBody">Payment configuration object to generate a payment</param>
-        /// <returns>ApiResponse of PaymentSingleResponse</returns>
-        public Easypay.Rest.Client.Client.ApiResponse<PaymentSingleResponse> CreateSinglePaymentWithHttpInfo(PaymentSingleRequestBody paymentSingleRequestBody)
+        /// <param name="singlePaymentRequest">Payment configuration object to generate a payment</param>
+        /// <returns>ApiResponse of SinglePaymentResponse</returns>
+        public Easypay.Rest.Client.Client.ApiResponse<SinglePaymentResponse> CreateSinglePaymentWithHttpInfo(SinglePaymentRequest singlePaymentRequest)
         {
-            // verify the required parameter 'paymentSingleRequestBody' is set
-            if (paymentSingleRequestBody == null)
-                throw new Easypay.Rest.Client.Client.ApiException(400, "Missing required parameter 'paymentSingleRequestBody' when calling SinglePaymentApi->CreateSinglePayment");
+            // verify the required parameter 'singlePaymentRequest' is set
+            if (singlePaymentRequest == null)
+                throw new Easypay.Rest.Client.Client.ApiException(400, "Missing required parameter 'singlePaymentRequest' when calling SinglePaymentApi->CreateSinglePayment");
 
             Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
 
@@ -321,7 +457,7 @@ namespace Easypay.Rest.Client.Api
             var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            localVarRequestOptions.Data = paymentSingleRequestBody;
+            localVarRequestOptions.Data = singlePaymentRequest;
 
             // authentication (accountId) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
@@ -335,7 +471,7 @@ namespace Easypay.Rest.Client.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<PaymentSingleResponse>("/single", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<SinglePaymentResponse>("/single", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -350,12 +486,12 @@ namespace Easypay.Rest.Client.Api
         /// Create single payment Create single payment
         /// </summary>
         /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="paymentSingleRequestBody">Payment configuration object to generate a payment</param>
+        /// <param name="singlePaymentRequest">Payment configuration object to generate a payment</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PaymentSingleResponse</returns>
-        public async System.Threading.Tasks.Task<PaymentSingleResponse> CreateSinglePaymentAsync(PaymentSingleRequestBody paymentSingleRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        /// <returns>Task of SinglePaymentResponse</returns>
+        public async System.Threading.Tasks.Task<SinglePaymentResponse> CreateSinglePaymentAsync(SinglePaymentRequest singlePaymentRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Easypay.Rest.Client.Client.ApiResponse<PaymentSingleResponse> localVarResponse = await CreateSinglePaymentWithHttpInfoAsync(paymentSingleRequestBody, cancellationToken).ConfigureAwait(false);
+            Easypay.Rest.Client.Client.ApiResponse<SinglePaymentResponse> localVarResponse = await CreateSinglePaymentWithHttpInfoAsync(singlePaymentRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -363,14 +499,14 @@ namespace Easypay.Rest.Client.Api
         /// Create single payment Create single payment
         /// </summary>
         /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="paymentSingleRequestBody">Payment configuration object to generate a payment</param>
+        /// <param name="singlePaymentRequest">Payment configuration object to generate a payment</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PaymentSingleResponse)</returns>
-        public async System.Threading.Tasks.Task<Easypay.Rest.Client.Client.ApiResponse<PaymentSingleResponse>> CreateSinglePaymentWithHttpInfoAsync(PaymentSingleRequestBody paymentSingleRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        /// <returns>Task of ApiResponse (SinglePaymentResponse)</returns>
+        public async System.Threading.Tasks.Task<Easypay.Rest.Client.Client.ApiResponse<SinglePaymentResponse>> CreateSinglePaymentWithHttpInfoAsync(SinglePaymentRequest singlePaymentRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            // verify the required parameter 'paymentSingleRequestBody' is set
-            if (paymentSingleRequestBody == null)
-                throw new Easypay.Rest.Client.Client.ApiException(400, "Missing required parameter 'paymentSingleRequestBody' when calling SinglePaymentApi->CreateSinglePayment");
+            // verify the required parameter 'singlePaymentRequest' is set
+            if (singlePaymentRequest == null)
+                throw new Easypay.Rest.Client.Client.ApiException(400, "Missing required parameter 'singlePaymentRequest' when calling SinglePaymentApi->CreateSinglePayment");
 
 
             Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
@@ -391,7 +527,7 @@ namespace Easypay.Rest.Client.Api
             var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            localVarRequestOptions.Data = paymentSingleRequestBody;
+            localVarRequestOptions.Data = singlePaymentRequest;
 
             // authentication (accountId) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
@@ -406,11 +542,263 @@ namespace Easypay.Rest.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<PaymentSingleResponse>("/single", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<SinglePaymentResponse>("/single", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("CreateSinglePayment", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Deletes single payment Deletes single payment
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <returns></returns>
+        public void DeleteSinglePayment(Guid id)
+        {
+            DeleteSinglePaymentWithHttpInfo(id);
+        }
+
+        /// <summary>
+        /// Deletes single payment Deletes single payment
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <returns>ApiResponse of Object(void)</returns>
+        public Easypay.Rest.Client.Client.ApiResponse<Object> DeleteSinglePaymentWithHttpInfo(Guid id)
+        {
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
+
+            String[] _contentTypes = new String[] {
+            };
+
+            // to determine the Accept header
+            String[] _accepts = new String[] {
+                "application/json"
+            };
+
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("id", Easypay.Rest.Client.Client.ClientUtils.ParameterToString(id)); // path parameter
+
+            // authentication (accountId) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
+            }
+            // authentication (apiKey) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Delete<Object>("/single/{id}", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("DeleteSinglePayment", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Deletes single payment Deletes single payment
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task DeleteSinglePaymentAsync(Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            await DeleteSinglePaymentWithHttpInfoAsync(id, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes single payment Deletes single payment
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<Easypay.Rest.Client.Client.ApiResponse<Object>> DeleteSinglePaymentWithHttpInfoAsync(Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
+
+            String[] _contentTypes = new String[] {
+            };
+
+            // to determine the Accept header
+            String[] _accepts = new String[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("id", Easypay.Rest.Client.Client.ClientUtils.ParameterToString(id)); // path parameter
+
+            // authentication (accountId) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
+            }
+            // authentication (apiKey) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/single/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("DeleteSinglePayment", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Shows single payment details Shows single payment details
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <returns>SinglePaymentWithTransactionsResponse</returns>
+        public SinglePaymentWithTransactionsResponse GetSinglePayment(Guid id)
+        {
+            Easypay.Rest.Client.Client.ApiResponse<SinglePaymentWithTransactionsResponse> localVarResponse = GetSinglePaymentWithHttpInfo(id);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Shows single payment details Shows single payment details
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <returns>ApiResponse of SinglePaymentWithTransactionsResponse</returns>
+        public Easypay.Rest.Client.Client.ApiResponse<SinglePaymentWithTransactionsResponse> GetSinglePaymentWithHttpInfo(Guid id)
+        {
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
+
+            String[] _contentTypes = new String[] {
+            };
+
+            // to determine the Accept header
+            String[] _accepts = new String[] {
+                "application/json"
+            };
+
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("id", Easypay.Rest.Client.Client.ClientUtils.ParameterToString(id)); // path parameter
+
+            // authentication (accountId) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
+            }
+            // authentication (apiKey) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Get<SinglePaymentWithTransactionsResponse>("/single/{id}", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("GetSinglePayment", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Shows single payment details Shows single payment details
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of SinglePaymentWithTransactionsResponse</returns>
+        public async System.Threading.Tasks.Task<SinglePaymentWithTransactionsResponse> GetSinglePaymentAsync(Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Easypay.Rest.Client.Client.ApiResponse<SinglePaymentWithTransactionsResponse> localVarResponse = await GetSinglePaymentWithHttpInfoAsync(id, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Shows single payment details Shows single payment details
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (SinglePaymentWithTransactionsResponse)</returns>
+        public async System.Threading.Tasks.Task<Easypay.Rest.Client.Client.ApiResponse<SinglePaymentWithTransactionsResponse>> GetSinglePaymentWithHttpInfoAsync(Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
+
+            String[] _contentTypes = new String[] {
+            };
+
+            // to determine the Accept header
+            String[] _accepts = new String[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("id", Easypay.Rest.Client.Client.ClientUtils.ParameterToString(id)); // path parameter
+
+            // authentication (accountId) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
+            }
+            // authentication (apiKey) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.GetAsync<SinglePaymentWithTransactionsResponse>("/single/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("GetSinglePayment", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
@@ -427,14 +815,14 @@ namespace Easypay.Rest.Client.Api
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
-        /// <param name="id">Filter by id (optional)</param>
+        /// <param name="id">Resource Identification (optional)</param>
         /// <param name="key">Filter by single key (optional)</param>
         /// <param name="value">Filter by value (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
-        /// <returns>PropertiesHasListMetaData</returns>
-        public PropertiesHasListMetaData ListSinglePayments(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), PaymentSingleMethodAvailable? method = default(PaymentSingleMethodAvailable?), string customer = default(string), string id = default(string), string key = default(string), double? value = default(double?), string createdAt = default(string))
+        /// <returns>ListSinglePaymentResponse</returns>
+        public ListSinglePaymentResponse ListSinglePayments(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), string method = default(string), string customer = default(string), Guid? id = default(Guid?), string key = default(string), double? value = default(double?), string createdAt = default(string))
         {
-            Easypay.Rest.Client.Client.ApiResponse<PropertiesHasListMetaData> localVarResponse = ListSinglePaymentsWithHttpInfo(page, recordsPerPage, type, expirationTime, method, customer, id, key, value, createdAt);
+            Easypay.Rest.Client.Client.ApiResponse<ListSinglePaymentResponse> localVarResponse = ListSinglePaymentsWithHttpInfo(page, recordsPerPage, type, expirationTime, method, customer, id, key, value, createdAt);
             return localVarResponse.Data;
         }
 
@@ -448,12 +836,12 @@ namespace Easypay.Rest.Client.Api
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
-        /// <param name="id">Filter by id (optional)</param>
+        /// <param name="id">Resource Identification (optional)</param>
         /// <param name="key">Filter by single key (optional)</param>
         /// <param name="value">Filter by value (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
-        /// <returns>ApiResponse of PropertiesHasListMetaData</returns>
-        public Easypay.Rest.Client.Client.ApiResponse<PropertiesHasListMetaData> ListSinglePaymentsWithHttpInfo(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), PaymentSingleMethodAvailable? method = default(PaymentSingleMethodAvailable?), string customer = default(string), string id = default(string), string key = default(string), double? value = default(double?), string createdAt = default(string))
+        /// <returns>ApiResponse of ListSinglePaymentResponse</returns>
+        public Easypay.Rest.Client.Client.ApiResponse<ListSinglePaymentResponse> ListSinglePaymentsWithHttpInfo(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), string method = default(string), string customer = default(string), Guid? id = default(Guid?), string key = default(string), double? value = default(double?), string createdAt = default(string))
         {
             Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
 
@@ -524,7 +912,7 @@ namespace Easypay.Rest.Client.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<PropertiesHasListMetaData>("/single", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<ListSinglePaymentResponse>("/single", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -545,15 +933,15 @@ namespace Easypay.Rest.Client.Api
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
-        /// <param name="id">Filter by id (optional)</param>
+        /// <param name="id">Resource Identification (optional)</param>
         /// <param name="key">Filter by single key (optional)</param>
         /// <param name="value">Filter by value (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PropertiesHasListMetaData</returns>
-        public async System.Threading.Tasks.Task<PropertiesHasListMetaData> ListSinglePaymentsAsync(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), PaymentSingleMethodAvailable? method = default(PaymentSingleMethodAvailable?), string customer = default(string), string id = default(string), string key = default(string), double? value = default(double?), string createdAt = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        /// <returns>Task of ListSinglePaymentResponse</returns>
+        public async System.Threading.Tasks.Task<ListSinglePaymentResponse> ListSinglePaymentsAsync(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), string method = default(string), string customer = default(string), Guid? id = default(Guid?), string key = default(string), double? value = default(double?), string createdAt = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Easypay.Rest.Client.Client.ApiResponse<PropertiesHasListMetaData> localVarResponse = await ListSinglePaymentsWithHttpInfoAsync(page, recordsPerPage, type, expirationTime, method, customer, id, key, value, createdAt, cancellationToken).ConfigureAwait(false);
+            Easypay.Rest.Client.Client.ApiResponse<ListSinglePaymentResponse> localVarResponse = await ListSinglePaymentsWithHttpInfoAsync(page, recordsPerPage, type, expirationTime, method, customer, id, key, value, createdAt, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -567,13 +955,13 @@ namespace Easypay.Rest.Client.Api
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
-        /// <param name="id">Filter by id (optional)</param>
+        /// <param name="id">Resource Identification (optional)</param>
         /// <param name="key">Filter by single key (optional)</param>
         /// <param name="value">Filter by value (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PropertiesHasListMetaData)</returns>
-        public async System.Threading.Tasks.Task<Easypay.Rest.Client.Client.ApiResponse<PropertiesHasListMetaData>> ListSinglePaymentsWithHttpInfoAsync(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), PaymentSingleMethodAvailable? method = default(PaymentSingleMethodAvailable?), string customer = default(string), string id = default(string), string key = default(string), double? value = default(double?), string createdAt = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        /// <returns>Task of ApiResponse (ListSinglePaymentResponse)</returns>
+        public async System.Threading.Tasks.Task<Easypay.Rest.Client.Client.ApiResponse<ListSinglePaymentResponse>> ListSinglePaymentsWithHttpInfoAsync(int? page = default(int?), int? recordsPerPage = default(int?), string type = default(string), string expirationTime = default(string), string method = default(string), string customer = default(string), Guid? id = default(Guid?), string key = default(string), double? value = default(double?), string createdAt = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
 
             Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
@@ -647,11 +1035,154 @@ namespace Easypay.Rest.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<PropertiesHasListMetaData>("/single", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ListSinglePaymentResponse>("/single", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("ListSinglePayments", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Updates single payment details Updates single payment details
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="singlePaymentUpdateRequest">Single Payment object to edit existing one</param>
+        /// <returns>SinglePaymentUpdateResponse</returns>
+        public SinglePaymentUpdateResponse UpdateSinglePayment(Guid id, SinglePaymentUpdateRequest singlePaymentUpdateRequest)
+        {
+            Easypay.Rest.Client.Client.ApiResponse<SinglePaymentUpdateResponse> localVarResponse = UpdateSinglePaymentWithHttpInfo(id, singlePaymentUpdateRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Updates single payment details Updates single payment details
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="singlePaymentUpdateRequest">Single Payment object to edit existing one</param>
+        /// <returns>ApiResponse of SinglePaymentUpdateResponse</returns>
+        public Easypay.Rest.Client.Client.ApiResponse<SinglePaymentUpdateResponse> UpdateSinglePaymentWithHttpInfo(Guid id, SinglePaymentUpdateRequest singlePaymentUpdateRequest)
+        {
+            // verify the required parameter 'singlePaymentUpdateRequest' is set
+            if (singlePaymentUpdateRequest == null)
+                throw new Easypay.Rest.Client.Client.ApiException(400, "Missing required parameter 'singlePaymentUpdateRequest' when calling SinglePaymentApi->UpdateSinglePayment");
+
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
+
+            String[] _contentTypes = new String[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            String[] _accepts = new String[] {
+                "application/json"
+            };
+
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("id", Easypay.Rest.Client.Client.ClientUtils.ParameterToString(id)); // path parameter
+            localVarRequestOptions.Data = singlePaymentUpdateRequest;
+
+            // authentication (accountId) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
+            }
+            // authentication (apiKey) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Patch<SinglePaymentUpdateResponse>("/single/{id}", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("UpdateSinglePayment", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Updates single payment details Updates single payment details
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="singlePaymentUpdateRequest">Single Payment object to edit existing one</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of SinglePaymentUpdateResponse</returns>
+        public async System.Threading.Tasks.Task<SinglePaymentUpdateResponse> UpdateSinglePaymentAsync(Guid id, SinglePaymentUpdateRequest singlePaymentUpdateRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Easypay.Rest.Client.Client.ApiResponse<SinglePaymentUpdateResponse> localVarResponse = await UpdateSinglePaymentWithHttpInfoAsync(id, singlePaymentUpdateRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Updates single payment details Updates single payment details
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="singlePaymentUpdateRequest">Single Payment object to edit existing one</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (SinglePaymentUpdateResponse)</returns>
+        public async System.Threading.Tasks.Task<Easypay.Rest.Client.Client.ApiResponse<SinglePaymentUpdateResponse>> UpdateSinglePaymentWithHttpInfoAsync(Guid id, SinglePaymentUpdateRequest singlePaymentUpdateRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // verify the required parameter 'singlePaymentUpdateRequest' is set
+            if (singlePaymentUpdateRequest == null)
+                throw new Easypay.Rest.Client.Client.ApiException(400, "Missing required parameter 'singlePaymentUpdateRequest' when calling SinglePaymentApi->UpdateSinglePayment");
+
+
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
+
+            String[] _contentTypes = new String[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            String[] _accepts = new String[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("id", Easypay.Rest.Client.Client.ClientUtils.ParameterToString(id)); // path parameter
+            localVarRequestOptions.Data = singlePaymentUpdateRequest;
+
+            // authentication (accountId) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
+            }
+            // authentication (apiKey) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PatchAsync<SinglePaymentUpdateResponse>("/single/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("UpdateSinglePayment", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

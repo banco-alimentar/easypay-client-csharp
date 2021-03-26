@@ -1,4 +1,5 @@
 # Easypay.Rest.Client.Model.PaymentSingle
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -10,7 +11,7 @@ Name | Type | Description | Notes
 **Key** | **string** | Merchant identification key | [optional] 
 **Value** | **double** | Value will be rounded to 2 decimals | [optional] 
 **Type** | **string** | Optional - only applicable to method cc or mbw | [optional] [default to TypeEnum.Sale]
-**Method** | [**PaymentMethod**](PaymentMethod.md) |  | 
+**Method** | [**PaymentSingleMethod**](PaymentSingleMethod.md) |  | [optional] 
 **PaymentStatus** | **string** | Status of the single payment | [optional] 
 **PaidAt** | **string** | Date when the single payment was paid | [optional] 
 **CreatedAt** | **string** | Date when payment was created | [optional] 

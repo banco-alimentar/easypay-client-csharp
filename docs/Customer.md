@@ -1,4 +1,5 @@
 # Easypay.Rest.Client.Model.Customer
+
 ## Properties
 
 Name | Type | Description | Notes

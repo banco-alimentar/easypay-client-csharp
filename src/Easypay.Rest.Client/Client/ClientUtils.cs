@@ -1,7 +1,7 @@
 /*
  * Easypay API
  *
- * EasyPay - API allows you to query payment meta-data, receive payment notifications and generate payment references. Two distinct environments - [Sandbox environment](https://api.test.easypay.pt/docs) and [Production environment](https://api.prod.easypay.pt/docs).
+ * EasyPay - API
  *
  * The version of the OpenAPI document: 2.0.2
  * Contact: tec@easypay.pt
@@ -52,6 +52,21 @@ namespace Easypay.Rest.Client.Client
                 foreach (var item in collection)
                 {
                     parameters.Add(name, ParameterToString(item));
+                }
+            }
+            else if (value is IDictionary dictionary)
+            {
+                if(collectionFormat == "deepObject") {
+                    foreach (DictionaryEntry entry in dictionary)
+                    {
+                        parameters.Add(name + "[" + entry.Key + "]", ParameterToString(entry.Value));
+                    }
+                }
+                else {
+                    foreach (DictionaryEntry entry in dictionary)
+                    {
+                        parameters.Add(entry.Key.ToString(), ParameterToString(entry.Value));
+                    }
                 }
             }
             else

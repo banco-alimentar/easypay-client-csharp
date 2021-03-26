@@ -1,7 +1,7 @@
 /*
  * Easypay API
  *
- * EasyPay - API allows you to query payment meta-data, receive payment notifications and generate payment references. Two distinct environments - [Sandbox environment](https://api.test.easypay.pt/docs) and [Production environment](https://api.prod.easypay.pt/docs).
+ * EasyPay - API
  *
  * The version of the OpenAPI document: 2.0.2
  * Contact: tec@easypay.pt
@@ -87,11 +87,6 @@ namespace Easypay.Rest.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentSingle" /> class.
         /// </summary>
-        [JsonConstructorAttribute]
-        protected PaymentSingle() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentSingle" /> class.
-        /// </summary>
         /// <param name="id">id.</param>
         /// <param name="expirationTime">Optional.</param>
         /// <param name="currency">currency (default to CurrencyEnum.EUR).</param>
@@ -99,14 +94,12 @@ namespace Easypay.Rest.Client.Model
         /// <param name="key">Merchant identification key.</param>
         /// <param name="value">Value will be rounded to 2 decimals.</param>
         /// <param name="type">Optional - only applicable to method cc or mbw (default to TypeEnum.Sale).</param>
-        /// <param name="method">method (required).</param>
+        /// <param name="method">method.</param>
         /// <param name="paymentStatus">Status of the single payment.</param>
         /// <param name="paidAt">Date when the single payment was paid.</param>
         /// <param name="createdAt">Date when payment was created.</param>
-        public PaymentSingle(Guid id = default(Guid), string expirationTime = default(string), CurrencyEnum? currency = CurrencyEnum.EUR, Customer customer = default(Customer), string key = default(string), double value = default(double), TypeEnum? type = TypeEnum.Sale, PaymentMethod method = default(PaymentMethod), string paymentStatus = default(string), string paidAt = default(string), string createdAt = default(string))
+        public PaymentSingle(Guid id = default(Guid), string expirationTime = default(string), CurrencyEnum? currency = CurrencyEnum.EUR, Customer customer = default(Customer), string key = default(string), double value = default(double), TypeEnum? type = TypeEnum.Sale, PaymentSingleMethod method = default(PaymentSingleMethod), string paymentStatus = default(string), string paidAt = default(string), string createdAt = default(string))
         {
-            // to ensure "method" is required (not null)
-            this.Method = method ?? throw new ArgumentNullException("method is a required property for PaymentSingle and cannot be null");
             this.Id = id;
             this.ExpirationTime = expirationTime;
             this.Currency = currency;
@@ -114,6 +107,7 @@ namespace Easypay.Rest.Client.Model
             this.Key = key;
             this.Value = value;
             this.Type = type;
+            this.Method = method;
             this.PaymentStatus = paymentStatus;
             this.PaidAt = paidAt;
             this.CreatedAt = createdAt;
@@ -155,8 +149,8 @@ namespace Easypay.Rest.Client.Model
         /// <summary>
         /// Gets or Sets Method
         /// </summary>
-        [DataMember(Name = "method", IsRequired = true, EmitDefaultValue = false)]
-        public PaymentMethod Method { get; set; }
+        [DataMember(Name = "method", EmitDefaultValue = false)]
+        public PaymentSingleMethod Method { get; set; }
 
         /// <summary>
         /// Status of the single payment

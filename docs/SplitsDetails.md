@@ -1,4 +1,5 @@
 # Easypay.Rest.Client.Model.SplitsDetails
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -1,4 +1,5 @@
 # Easypay.Rest.Client.Model.StatusFailed
+
 ## Properties
 
 Name | Type | Description | Notes
