@@ -102,7 +102,7 @@ namespace Easypay.Rest.Client.Api
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Subscription Payment object to edit existing one</param>
         /// <returns>InlineResponse2004</returns>
-        InlineResponse2004 SubscriptionIdPatch(string subscriptionid, PaymentSubscriptionPatchable body);
+        InlineResponse2015 SubscriptionIdPatch(string subscriptionid, PaymentSubscriptionPatchable body);
 
         /// <summary>
         /// Updates subscription payment details
@@ -112,18 +112,13 @@ namespace Easypay.Rest.Client.Api
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Subscription Payment object to edit existing one</param>
-        /// <param name="UNKNOWN_PARAMETER_NAME"> (optional)</param>
-        /// <param name="UNKNOWN_PARAMETER_NAME2"> (optional)</param>
-        /// <param name="UNKNOWN_PARAMETER_NAME3"> (optional)</param>
         /// <returns>ApiResponse of InlineResponse2004</returns>
-        ApiResponse<InlineResponse2004> SubscriptionIdPatchWithHttpInfo(string subscriptionid, PaymentSubscriptionPatchable body);
+        ApiResponse<InlineResponse2015> SubscriptionIdPatchWithHttpInfo(string subscriptionid, PaymentSubscriptionPatchable body);
         /// <summary>
         /// Create subscription payment
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">Payment configuration object to generate a payment</param>
-        /// <param name="UNKNOWN_PARAMETER_NAME"> (optional)</param>
-        /// <param name="UNKNOWN_PARAMETER_NAME2"> (optional)</param>
+        /// <param name="value">Payment configuration object to generate a payment</param>
         /// <returns>InlineResponse2015</returns>
         InlineResponse2015 SubscriptionPost(PaymentSubscription value);
 
@@ -134,9 +129,7 @@ namespace Easypay.Rest.Client.Api
         /// 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">Payment configuration object to generate a payment</param>
-        /// <param name="UNKNOWN_PARAMETER_NAME"> (optional)</param>
-        /// <param name="UNKNOWN_PARAMETER_NAME2"> (optional)</param>
+        /// <param name="value">Payment configuration object to generate a payment</param>
         /// <returns>ApiResponse of InlineResponse2015</returns>
         ApiResponse<InlineResponse2015> SubscriptionPostWithHttpInfo(PaymentSubscription value);
         #endregion Synchronous Operations
@@ -237,7 +230,7 @@ namespace Easypay.Rest.Client.Api
         /// <param name="body">Subscription Payment object to edit existing one</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of InlineResponse2004</returns>
-        Task<InlineResponse2004> SubscriptionIdPatchAsync(string subscriptionid, PaymentSubscriptionPatchable body, CancellationToken cancellationToken = default(CancellationToken));
+        Task<InlineResponse2015> SubscriptionIdPatchAsync(string subscriptionid, PaymentSubscriptionPatchable body, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Updates subscription payment details
@@ -247,12 +240,9 @@ namespace Easypay.Rest.Client.Api
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Subscription Payment object to edit existing one</param>
-        /// <param name="UNKNOWN_PARAMETER_NAME"> (optional)</param>
-        /// <param name="UNKNOWN_PARAMETER_NAME2"> (optional)</param>
-        /// <param name="UNKNOWN_PARAMETER_NAME3"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (InlineResponse2004)</returns>
-        Task<ApiResponse<InlineResponse2004>> SubscriptionIdPatchWithHttpInfoAsync(string subscriptionid, PaymentSubscriptionPatchable body, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ApiResponse<InlineResponse2015>> SubscriptionIdPatchWithHttpInfoAsync(string subscriptionid, PaymentSubscriptionPatchable body, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create subscription payment
         /// </summary>
@@ -658,7 +648,7 @@ namespace Easypay.Rest.Client.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>(string.Format("/subscription/{id}", subscriptionid), localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<Object>(string.Format("/subscription/{0}", subscriptionid), localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -719,7 +709,7 @@ namespace Easypay.Rest.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>(string.Format("/subscription/{id}", subscriptionid), localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>(string.Format("/subscription/{0}", subscriptionid), localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -777,7 +767,7 @@ namespace Easypay.Rest.Client.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<PaymentSubscriptionWithTransactions>(string.Format("/subscription/{id}", subscriptionid), localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<PaymentSubscriptionWithTransactions>(string.Format("/subscription/{0}", subscriptionid), localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -840,7 +830,7 @@ namespace Easypay.Rest.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<PaymentSubscriptionWithTransactions>(string.Format("/subscription/{id}", subscriptionid), localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<PaymentSubscriptionWithTransactions>(string.Format("/subscription/{0}", subscriptionid), localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -857,9 +847,9 @@ namespace Easypay.Rest.Client.Api
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Subscription Payment object to edit existing one</param>
         /// <returns>InlineResponse2004</returns>
-        public InlineResponse2004 SubscriptionIdPatch(string subscriptionid, PaymentSubscriptionPatchable body)
+        public InlineResponse2015 SubscriptionIdPatch(string subscriptionid, PaymentSubscriptionPatchable body)
         {
-            ApiResponse<InlineResponse2004> localVarResponse = SubscriptionIdPatchWithHttpInfo(subscriptionid, body);
+            ApiResponse<InlineResponse2015> localVarResponse = SubscriptionIdPatchWithHttpInfo(subscriptionid, body);
             return localVarResponse.Data;
         }
 
@@ -869,7 +859,7 @@ namespace Easypay.Rest.Client.Api
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Subscription Payment object to edit existing one</param>
         /// <returns>ApiResponse of InlineResponse2004</returns>
-        public ApiResponse<InlineResponse2004> SubscriptionIdPatchWithHttpInfo(string subscriptionid, PaymentSubscriptionPatchable body)
+        public ApiResponse<InlineResponse2015> SubscriptionIdPatchWithHttpInfo(string subscriptionid, PaymentSubscriptionPatchable body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -906,7 +896,7 @@ namespace Easypay.Rest.Client.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Patch<InlineResponse2004>(string.Format("/subscription/{id}", subscriptionid), localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Patch<InlineResponse2015>(string.Format("/subscription/{0}", subscriptionid), localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -924,9 +914,9 @@ namespace Easypay.Rest.Client.Api
         /// <param name="body">Subscription Payment object to edit existing one</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of InlineResponse2004</returns>
-        public async Task<InlineResponse2004> SubscriptionIdPatchAsync(string subscriptionid, PaymentSubscriptionPatchable body, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<InlineResponse2015> SubscriptionIdPatchAsync(string subscriptionid, PaymentSubscriptionPatchable body, CancellationToken cancellationToken = default(CancellationToken))
         {
-            ApiResponse<InlineResponse2004> localVarResponse = await SubscriptionIdPatchWithHttpInfoAsync(subscriptionid, body, cancellationToken).ConfigureAwait(false);
+            ApiResponse<InlineResponse2015> localVarResponse = await SubscriptionIdPatchWithHttpInfoAsync(subscriptionid, body, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -937,7 +927,7 @@ namespace Easypay.Rest.Client.Api
         /// <param name="body">Subscription Payment object to edit existing one</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (InlineResponse2004)</returns>
-        public async Task<ApiResponse<InlineResponse2004>> SubscriptionIdPatchWithHttpInfoAsync(string subscriptionid, PaymentSubscriptionPatchable body, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ApiResponse<InlineResponse2015>> SubscriptionIdPatchWithHttpInfoAsync(string subscriptionid, PaymentSubscriptionPatchable body, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -977,7 +967,7 @@ namespace Easypay.Rest.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PatchAsync<InlineResponse2004>(string.Format("/subscription/{id}", subscriptionid), localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PatchAsync<InlineResponse2015>(string.Format("/subscription/{0}", subscriptionid), localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

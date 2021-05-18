@@ -140,6 +140,7 @@ namespace Easypay.Rest.Client.Model
         /// Initializes a new instance of the <see cref="PaymentSubscription" /> class.
         /// </summary>
         /// <param name="id">id.</param>
+        /// <param name="capture">Default setup for all captures</param>
         /// <param name="expirationTime">Optional.</param>
         /// <param name="currency">currency (default to CurrencyEnum.EUR).</param>
         /// <param name="customer">customer.</param>
@@ -152,10 +153,12 @@ namespace Easypay.Rest.Client.Model
         /// <param name="captureNow">This option will force schedule a immediate capture and schedule next one for start_time (default to false).</param>
         /// <param name="retries">Number of retries on every payment cycle, the chosen frequency will define the max number of possible retries.</param>
         /// <param name="method">method.</param>
+        /// <param name="sddMandate"></param>
         /// <param name="createdAt">Date when payment was created.</param>
-        public PaymentSubscription(Guid id = default(Guid), string expirationTime = default(string), CurrencyEnum? currency = CurrencyEnum.EUR, Customer customer = default(Customer), string key = default(string), double value = default(double), FrequencyEnum? frequency = default(FrequencyEnum?), decimal maxCaptures = default(decimal), string startTime = default(string), bool failover = false, bool captureNow = false, decimal retries = default(decimal), PaymentSubscriptionMethodResponseMethod method = default(PaymentSubscriptionMethodResponseMethod), string createdAt = default(string))
+        public PaymentSubscription(Guid id = default(Guid), SubscriptionCapture capture = default(SubscriptionCapture), string expirationTime = default(string), CurrencyEnum? currency = CurrencyEnum.EUR, Customer customer = default(Customer), string key = default(string), double value = default(double), FrequencyEnum? frequency = default(FrequencyEnum?), decimal maxCaptures = default(decimal), string startTime = default(string), bool failover = false, bool captureNow = false, decimal retries = default(decimal), PaymentSubscriptionMethodAvailable method = default(PaymentSubscriptionMethodAvailable), SddMandate sddMandate = default(SddMandate), string createdAt = default(string))
         {
             this.Id = id;
+            this.Capture = capture;
             this.ExpirationTime = expirationTime;
             this.Currency = currency;
             this.Customer = customer;
@@ -176,6 +179,12 @@ namespace Easypay.Rest.Client.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Capture
+        /// </summary>
+        [DataMember(Name = "capture", EmitDefaultValue = false)]
+        public SubscriptionCapture Capture { get; }
 
         /// <summary>
         /// Optional
@@ -243,7 +252,13 @@ namespace Easypay.Rest.Client.Model
         /// Gets or Sets Method
         /// </summary>
         [DataMember(Name = "method", EmitDefaultValue = false)]
-        public PaymentSubscriptionMethodResponseMethod Method { get; set; }
+        public PaymentSubscriptionMethodAvailable Method { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SddMandate
+        /// </summary>
+        [DataMember(Name = "sdd_mandate", EmitDefaultValue = false)]
+        public SddMandate SddMandate { get; set; }
 
         /// <summary>
         /// Date when payment was created
@@ -307,65 +322,65 @@ namespace Easypay.Rest.Client.Model
             if (input == null)
                 return false;
 
-            return 
+            return
                 (
                     this.Id == input.Id ||
                     (this.Id != null &&
                     this.Id.Equals(input.Id))
-                ) && 
+                ) &&
                 (
                     this.ExpirationTime == input.ExpirationTime ||
                     (this.ExpirationTime != null &&
                     this.ExpirationTime.Equals(input.ExpirationTime))
-                ) && 
+                ) &&
                 (
                     this.Currency == input.Currency ||
                     this.Currency.Equals(input.Currency)
-                ) && 
+                ) &&
                 (
                     this.Customer == input.Customer ||
                     (this.Customer != null &&
                     this.Customer.Equals(input.Customer))
-                ) && 
+                ) &&
                 (
                     this.Key == input.Key ||
                     (this.Key != null &&
                     this.Key.Equals(input.Key))
-                ) && 
+                ) &&
                 (
                     this.Value == input.Value ||
                     this.Value.Equals(input.Value)
-                ) && 
+                ) &&
                 (
                     this.Frequency == input.Frequency ||
                     this.Frequency.Equals(input.Frequency)
-                ) && 
+                ) &&
                 (
                     this.MaxCaptures == input.MaxCaptures ||
                     this.MaxCaptures.Equals(input.MaxCaptures)
-                ) && 
+                ) &&
                 (
                     this.StartTime == input.StartTime ||
                     (this.StartTime != null &&
                     this.StartTime.Equals(input.StartTime))
-                ) && 
+                ) &&
                 (
                     this.Failover == input.Failover ||
                     this.Failover.Equals(input.Failover)
-                ) && 
+                ) &&
                 (
                     this.CaptureNow == input.CaptureNow ||
                     this.CaptureNow.Equals(input.CaptureNow)
-                ) && 
+                ) &&
                 (
                     this.Retries == input.Retries ||
                     this.Retries.Equals(input.Retries)
-                ) && 
+                ) &&
                 (
                     this.Method == input.Method ||
                     (this.Method != null &&
                     this.Method.Equals(input.Method))
-                ) && 
+                ) &&
                 (
                     this.CreatedAt == input.CreatedAt ||
                     (this.CreatedAt != null &&
@@ -415,15 +430,15 @@ namespace Easypay.Rest.Client.Model
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // Key (string) maxLength
-            if(this.Key != null && this.Key.Length > 50)
+            if (this.Key != null && this.Key.Length > 50)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Key, length must be less than 50.", new [] { "Key" });
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Key, length must be less than 50.", new[] { "Key" });
             }
 
             // Value (double) minimum
-            if(this.Value < (double)0.5)
+            if (this.Value < (double)0.5)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Value, must be a value greater than or equal to 0.5.", new [] { "Value" });
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Value, must be a value greater than or equal to 0.5.", new[] { "Value" });
             }
 
             yield break;

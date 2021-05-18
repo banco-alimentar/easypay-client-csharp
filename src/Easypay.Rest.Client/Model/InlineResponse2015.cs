@@ -44,6 +44,30 @@ namespace Easypay.Rest.Client.Model
         }
 
         /// <summary>
+        /// Gets or Sets Messages
+        /// </summary>
+        [DataMember(Name = "message", EmitDefaultValue = false)]
+        public List<string> Messages { get; set; }
+
+        /// <summary>
+        /// Gets or Sets the response status
+        /// </summary>
+        [DataMember(Name = "status", EmitDefaultValue = false)]
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Id
+        /// </summary>
+        [DataMember(Name = "id", EmitDefaultValue = false)]
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Id
+        /// </summary>
+        [DataMember(Name = "method", EmitDefaultValue = false)]
+        public PaymentRecurringResponseMethod Method { get; set; }
+
+        /// <summary>
         /// Gets or Sets ResponseMinimalOutputSubscription
         /// </summary>
         [DataMember(Name = "Response_MinimalOutput_Subscription", EmitDefaultValue = false)]
