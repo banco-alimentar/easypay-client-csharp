@@ -81,7 +81,7 @@ namespace Easypay.Rest.Client.Model
         /// </summary>
         [DataMember(Name = "transfer_date", EmitDefaultValue = false)]
         [JsonConverter(typeof(OpenAPIDateConverter))]
-        public DateTime TransferDate { get; set; }
+        public DateTime? TransferDate { get; set; }
 
         /// <summary>
         /// Unique document number used for Easypay Invoice
