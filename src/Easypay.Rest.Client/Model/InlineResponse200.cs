@@ -47,6 +47,9 @@ namespace Easypay.Rest.Client.Model
         [DataMember(Name = "Properties_Has_ListMetaData", EmitDefaultValue = false)]
         public PropertiesHasListMetaData PropertiesHasListMetaData { get; set; }
 
+        [DataMember(Name = "data")]
+        public List<PaymentSingle> Data { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
