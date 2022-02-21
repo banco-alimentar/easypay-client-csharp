@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>Easypay.Rest.Client.Test</AssemblyName>
     <RootNamespace>Easypay.Rest.Client.Test</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

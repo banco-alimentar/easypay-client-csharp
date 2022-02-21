@@ -155,9 +155,8 @@ namespace Easypay.Rest.Client.Model
         /// <param name="method">method.</param>
         /// <param name="sddMandate"></param>
         /// <param name="createdAt">Date when payment was created.</param>
-        public PaymentSubscription(Guid id = default(Guid), SubscriptionCapture capture = default(SubscriptionCapture), string expirationTime = default(string), CurrencyEnum? currency = CurrencyEnum.EUR, Customer customer = default(Customer), string key = default(string), double value = default(double), FrequencyEnum? frequency = default(FrequencyEnum?), decimal maxCaptures = default(decimal), string startTime = default(string), bool failover = false, bool captureNow = false, decimal retries = default(decimal), PaymentSubscriptionMethodAvailable method = default(PaymentSubscriptionMethodAvailable), SddMandate sddMandate = default(SddMandate), string createdAt = default(string))
+        public PaymentSubscription(SubscriptionCapture capture = default(SubscriptionCapture), string expirationTime = default(string), CurrencyEnum? currency = CurrencyEnum.EUR, Customer customer = default(Customer), string key = default(string), double value = default(double), FrequencyEnum? frequency = default(FrequencyEnum?), decimal maxCaptures = default(decimal), string startTime = default(string), bool failover = false, bool captureNow = false, decimal retries = default(decimal), PaymentSubscriptionMethodAvailable method = default(PaymentSubscriptionMethodAvailable), SddMandate sddMandate = default(SddMandate), string createdAt = default(string))
         {
-            this.Id = id;
             this.Capture = capture;
             this.ExpirationTime = expirationTime;
             this.Currency = currency;
@@ -173,12 +172,6 @@ namespace Easypay.Rest.Client.Model
             this.Method = method;
             this.CreatedAt = createdAt;
         }
-
-        /// <summary>
-        /// Gets or Sets Id
-        /// </summary>
-        [DataMember(Name = "id", EmitDefaultValue = false)]
-        public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Capture
@@ -275,7 +268,6 @@ namespace Easypay.Rest.Client.Model
         {
             var sb = new StringBuilder();
             sb.Append("class PaymentSubscription {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  ExpirationTime: ").Append(ExpirationTime).Append("\n");
             sb.Append("  Currency: ").Append(Currency).Append("\n");
             sb.Append("  Customer: ").Append(Customer).Append("\n");
@@ -323,11 +315,6 @@ namespace Easypay.Rest.Client.Model
                 return false;
 
             return
-                (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
-                ) &&
                 (
                     this.ExpirationTime == input.ExpirationTime ||
                     (this.ExpirationTime != null &&
@@ -396,9 +383,7 @@ namespace Easypay.Rest.Client.Model
         {
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
-                if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                int hashCode = 41;                
                 if (this.ExpirationTime != null)
                     hashCode = hashCode * 59 + this.ExpirationTime.GetHashCode();
                 hashCode = hashCode * 59 + this.Currency.GetHashCode();
