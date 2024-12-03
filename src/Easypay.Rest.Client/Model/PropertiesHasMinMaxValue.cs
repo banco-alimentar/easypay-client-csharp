@@ -1,7 +1,7 @@
 /*
- * Easypay API
+ * Easypay Payments API
  *
- * <a href='https://www.easypay.pt/en/terms-conditions-and-legal-terms' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-policy' class='item'>Privacy Policy</a><br><br><b>EasyPay</b> API allows you to query payment meta-data, receive payment notifications and generate payment references. Since EasyPay API is based on REST principles, it´s very easy to write and test applications. You can use our code examples in PHP/CURL to test all the JSON payloads for Easypay Payment Service API.<br><br> We have two distinct environments on our API Services:<br> - If you are looking to receive payments, please use the <a href='https://api.prod.easypay.pt/docs#' class='item'><b>Production Documentation</b></a>.<br> - If you are looking to test or integrate, please use the <a href='https://goo.gl/CPxQnM' class='item'><b>Sandbox Documentation</b></a>. This environment will always have the latest road map deployments, usually all deployments are sent to production within 10 days. This environment is not meant for <b>Load Tests</b>, please do not use for this purpose, you might be blocked. <br><br> All communications have to include two headers for authentication, if fails it will always respond 403.<br> On <a href='https://backoffice.easypay.pt' class='item'><b>Easypay Backoffice</b></a> please create your authentication AccountId and ApiKey on menu: <i><b>Web Services->Configuration API 2.0->Keys</b></i>.<br><br> Our default response produces a <i><b>application/json</b></i>, but the <b>Accept</b> request-header field can be used to specify certain media types which are acceptable for the response. <br>Our available options are: <i>application/json</i>, <i>application/xml</i>, <i>text/csv</i>
+ * <a href='https://www.easypay.pt/en/legal-terms-and-conditions/' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-and-data-protection-policy/' class='item'>Privacy Policy</a>
  *
  * The version of the OpenAPI document: 2.0
  * Contact: tec@easypay.pt
@@ -30,7 +30,7 @@ namespace Easypay.Rest.Client.Model
     /// PropertiesHasMinMaxValue
     /// </summary>
     [DataContract(Name = "Properties_Has_MinMaxValue")]
-    public partial class PropertiesHasMinMaxValue : IEquatable<PropertiesHasMinMaxValue>, IValidatableObject
+    public partial class PropertiesHasMinMaxValue : IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertiesHasMinMaxValue" /> class.
@@ -49,6 +49,9 @@ namespace Easypay.Rest.Client.Model
         /// Value will be rounded to 2 decimals
         /// </summary>
         /// <value>Value will be rounded to 2 decimals</value>
+        /*
+        <example>20</example>
+        */
         [DataMember(Name = "max_value", EmitDefaultValue = false)]
         public double MaxValue { get; set; }
 
@@ -56,6 +59,9 @@ namespace Easypay.Rest.Client.Model
         /// Value will be rounded to 2 decimals
         /// </summary>
         /// <value>Value will be rounded to 2 decimals</value>
+        /*
+        <example>2</example>
+        */
         [DataMember(Name = "min_value", EmitDefaultValue = false)]
         public double MinValue { get; set; }
 
@@ -63,7 +69,10 @@ namespace Easypay.Rest.Client.Model
         /// Transactions will be unlimited, max or min value will be refreshed on each payment
         /// </summary>
         /// <value>Transactions will be unlimited, max or min value will be refreshed on each payment</value>
-        [DataMember(Name = "unlimited_payments", EmitDefaultValue = false)]
+        /*
+        <example>false</example>
+        */
+        [DataMember(Name = "unlimited_payments", EmitDefaultValue = true)]
         public bool UnlimitedPayments { get; set; }
 
         /// <summary>
@@ -72,7 +81,7 @@ namespace Easypay.Rest.Client.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PropertiesHasMinMaxValue {\n");
             sb.Append("  MaxValue: ").Append(MaxValue).Append("\n");
             sb.Append("  MinValue: ").Append(MinValue).Append("\n");
@@ -91,73 +100,22 @@ namespace Easypay.Rest.Client.Model
         }
 
         /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PropertiesHasMinMaxValue);
-        }
-
-        /// <summary>
-        /// Returns true if PropertiesHasMinMaxValue instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PropertiesHasMinMaxValue to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PropertiesHasMinMaxValue input)
-        {
-            if (input == null)
-                return false;
-
-            return 
-                (
-                    this.MaxValue == input.MaxValue ||
-                    this.MaxValue.Equals(input.MaxValue)
-                ) && 
-                (
-                    this.MinValue == input.MinValue ||
-                    this.MinValue.Equals(input.MinValue)
-                ) && 
-                (
-                    this.UnlimitedPayments == input.UnlimitedPayments ||
-                    this.UnlimitedPayments.Equals(input.UnlimitedPayments)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = hashCode * 59 + this.MaxValue.GetHashCode();
-                hashCode = hashCode * 59 + this.MinValue.GetHashCode();
-                hashCode = hashCode * 59 + this.UnlimitedPayments.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
         /// To validate all properties of the instance
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // MaxValue (double) minimum
-            if(this.MaxValue < (double)0)
+            if (this.MaxValue < (double)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for MaxValue, must be a value greater than or equal to 0.", new [] { "MaxValue" });
+                yield return new ValidationResult("Invalid value for MaxValue, must be a value greater than or equal to 0.", new[] { "MaxValue" });
             }
 
             // MinValue (double) minimum
-            if(this.MinValue < (double)0)
+            if (this.MinValue < (double)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for MinValue, must be a value greater than or equal to 0.", new [] { "MinValue" });
+                yield return new ValidationResult("Invalid value for MinValue, must be a value greater than or equal to 0.", new[] { "MinValue" });
             }
 
             yield break;

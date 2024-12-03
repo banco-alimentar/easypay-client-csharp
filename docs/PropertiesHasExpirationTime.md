@@ -1,4 +1,5 @@
 # Easypay.Rest.Client.Model.PropertiesHasExpirationTime
+
 ## Properties
 
 Name | Type | Description | Notes

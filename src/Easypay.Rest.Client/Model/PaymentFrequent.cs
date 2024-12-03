@@ -1,7 +1,7 @@
 /*
- * Easypay API
+ * Easypay Payments API
  *
- * <a href='https://www.easypay.pt/en/terms-conditions-and-legal-terms' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-policy' class='item'>Privacy Policy</a><br><br><b>EasyPay</b> API allows you to query payment meta-data, receive payment notifications and generate payment references. Since EasyPay API is based on REST principles, it´s very easy to write and test applications. You can use our code examples in PHP/CURL to test all the JSON payloads for Easypay Payment Service API.<br><br> We have two distinct environments on our API Services:<br> - If you are looking to receive payments, please use the <a href='https://api.prod.easypay.pt/docs#' class='item'><b>Production Documentation</b></a>.<br> - If you are looking to test or integrate, please use the <a href='https://goo.gl/CPxQnM' class='item'><b>Sandbox Documentation</b></a>. This environment will always have the latest road map deployments, usually all deployments are sent to production within 10 days. This environment is not meant for <b>Load Tests</b>, please do not use for this purpose, you might be blocked. <br><br> All communications have to include two headers for authentication, if fails it will always respond 403.<br> On <a href='https://backoffice.easypay.pt' class='item'><b>Easypay Backoffice</b></a> please create your authentication AccountId and ApiKey on menu: <i><b>Web Services->Configuration API 2.0->Keys</b></i>.<br><br> Our default response produces a <i><b>application/json</b></i>, but the <b>Accept</b> request-header field can be used to specify certain media types which are acceptable for the response. <br>Our available options are: <i>application/json</i>, <i>application/xml</i>, <i>text/csv</i>
+ * <a href='https://www.easypay.pt/en/legal-terms-and-conditions/' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-and-data-protection-policy/' class='item'>Privacy Policy</a>
  *
  * The version of the OpenAPI document: 2.0
  * Contact: tec@easypay.pt
@@ -30,50 +30,40 @@ namespace Easypay.Rest.Client.Model
     /// PaymentFrequent
     /// </summary>
     [DataContract(Name = "Payment_Frequent")]
-    public partial class PaymentFrequent : IEquatable<PaymentFrequent>, IValidatableObject
+    public partial class PaymentFrequent : IValidatableObject
     {
-        /// <summary>
-        /// Defines Currency
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum CurrencyEnum
-        {
-            /// <summary>
-            /// Enum EUR for value: EUR
-            /// </summary>
-            [EnumMember(Value = "EUR")]
-            EUR = 1,
-
-            /// <summary>
-            /// Enum BRL for value: BRL
-            /// </summary>
-            [EnumMember(Value = "BRL")]
-            BRL = 2
-
-        }
 
         /// <summary>
         /// Gets or Sets Currency
         /// </summary>
         [DataMember(Name = "currency", EmitDefaultValue = false)]
-        public CurrencyEnum? Currency { get; set; }
+        public Currency? Currency { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PaymentFrequent" /> class.
+        /// </summary>
+        [JsonConstructorAttribute]
+        protected PaymentFrequent() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentFrequent" /> class.
         /// </summary>
         /// <param name="id">id.</param>
         /// <param name="createdAt">Date when payment was created.</param>
+        /// <param name="descriptive">This will appear in the bank statement/mbway application.</param>
+        /// <param name="value">Value will be rounded to 2 decimals (required).</param>
         /// <param name="expirationTime">Optional.</param>
-        /// <param name="currency">currency (default to CurrencyEnum.EUR).</param>
+        /// <param name="currency">currency.</param>
         /// <param name="customer">customer.</param>
         /// <param name="key">Merchant identification key.</param>
         /// <param name="maxValue">Value will be rounded to 2 decimals.</param>
         /// <param name="minValue">Value will be rounded to 2 decimals.</param>
         /// <param name="unlimitedPayments">Transactions will be unlimited, max or min value will be refreshed on each payment (default to true).</param>
         /// <param name="method">method.</param>
-        public PaymentFrequent(Guid id = default(Guid), string createdAt = default(string), string expirationTime = default(string), CurrencyEnum? currency = CurrencyEnum.EUR, Customer customer = default(Customer), string key = default(string), double maxValue = default(double), double minValue = default(double), bool unlimitedPayments = true, PaymentFrequentMethodResponseMethod method = default(PaymentFrequentMethodResponseMethod))
+        public PaymentFrequent(Guid id = default(Guid), string createdAt = default(string), string descriptive = default(string), double value = default(double), string expirationTime = default(string), Currency? currency = default(Currency?), Customer customer = default(Customer), string key = default(string), double maxValue = default(double), double minValue = default(double), bool unlimitedPayments = true, PaymentFrequentMethodResponseMethod method = default(PaymentFrequentMethodResponseMethod))
         {
+            this.Value = value;
             this.Id = id;
             this.CreatedAt = createdAt;
+            this.Descriptive = descriptive;
             this.ExpirationTime = expirationTime;
             this.Currency = currency;
             this.Customer = customer;
@@ -87,6 +77,9 @@ namespace Easypay.Rest.Client.Model
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
+        /*
+        <example>4c67e74b-a256-4e0a-965d-97bf5d01bd50</example>
+        */
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public Guid Id { get; set; }
 
@@ -94,13 +87,39 @@ namespace Easypay.Rest.Client.Model
         /// Date when payment was created
         /// </summary>
         /// <value>Date when payment was created</value>
+        /*
+        <example>2017-12-12 16:05:02</example>
+        */
         [DataMember(Name = "created_at", EmitDefaultValue = false)]
         public string CreatedAt { get; set; }
+
+        /// <summary>
+        /// This will appear in the bank statement/mbway application
+        /// </summary>
+        /// <value>This will appear in the bank statement/mbway application</value>
+        /*
+        <example>Descriptive Example</example>
+        */
+        [DataMember(Name = "descriptive", EmitDefaultValue = false)]
+        public string Descriptive { get; set; }
+
+        /// <summary>
+        /// Value will be rounded to 2 decimals
+        /// </summary>
+        /// <value>Value will be rounded to 2 decimals</value>
+        /*
+        <example>17.5</example>
+        */
+        [DataMember(Name = "value", IsRequired = true, EmitDefaultValue = true)]
+        public double Value { get; set; }
 
         /// <summary>
         /// Optional
         /// </summary>
         /// <value>Optional</value>
+        /*
+        <example>2017-12-12 16:05</example>
+        */
         [DataMember(Name = "expiration_time", EmitDefaultValue = false)]
         public string ExpirationTime { get; set; }
 
@@ -114,6 +133,9 @@ namespace Easypay.Rest.Client.Model
         /// Merchant identification key
         /// </summary>
         /// <value>Merchant identification key</value>
+        /*
+        <example>Example Key</example>
+        */
         [DataMember(Name = "key", EmitDefaultValue = false)]
         public string Key { get; set; }
 
@@ -121,6 +143,9 @@ namespace Easypay.Rest.Client.Model
         /// Value will be rounded to 2 decimals
         /// </summary>
         /// <value>Value will be rounded to 2 decimals</value>
+        /*
+        <example>20</example>
+        */
         [DataMember(Name = "max_value", EmitDefaultValue = false)]
         public double MaxValue { get; set; }
 
@@ -128,6 +153,9 @@ namespace Easypay.Rest.Client.Model
         /// Value will be rounded to 2 decimals
         /// </summary>
         /// <value>Value will be rounded to 2 decimals</value>
+        /*
+        <example>2</example>
+        */
         [DataMember(Name = "min_value", EmitDefaultValue = false)]
         public double MinValue { get; set; }
 
@@ -135,7 +163,10 @@ namespace Easypay.Rest.Client.Model
         /// Transactions will be unlimited, max or min value will be refreshed on each payment
         /// </summary>
         /// <value>Transactions will be unlimited, max or min value will be refreshed on each payment</value>
-        [DataMember(Name = "unlimited_payments", EmitDefaultValue = false)]
+        /*
+        <example>false</example>
+        */
+        [DataMember(Name = "unlimited_payments", EmitDefaultValue = true)]
         public bool UnlimitedPayments { get; set; }
 
         /// <summary>
@@ -150,10 +181,12 @@ namespace Easypay.Rest.Client.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaymentFrequent {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
+            sb.Append("  Descriptive: ").Append(Descriptive).Append("\n");
+            sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("  ExpirationTime: ").Append(ExpirationTime).Append("\n");
             sb.Append("  Currency: ").Append(Currency).Append("\n");
             sb.Append("  Customer: ").Append(Customer).Append("\n");
@@ -176,126 +209,40 @@ namespace Easypay.Rest.Client.Model
         }
 
         /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PaymentFrequent);
-        }
-
-        /// <summary>
-        /// Returns true if PaymentFrequent instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PaymentFrequent to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PaymentFrequent input)
-        {
-            if (input == null)
-                return false;
-
-            return 
-                (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
-                ) && 
-                (
-                    this.CreatedAt == input.CreatedAt ||
-                    (this.CreatedAt != null &&
-                    this.CreatedAt.Equals(input.CreatedAt))
-                ) && 
-                (
-                    this.ExpirationTime == input.ExpirationTime ||
-                    (this.ExpirationTime != null &&
-                    this.ExpirationTime.Equals(input.ExpirationTime))
-                ) && 
-                (
-                    this.Currency == input.Currency ||
-                    this.Currency.Equals(input.Currency)
-                ) && 
-                (
-                    this.Customer == input.Customer ||
-                    (this.Customer != null &&
-                    this.Customer.Equals(input.Customer))
-                ) && 
-                (
-                    this.Key == input.Key ||
-                    (this.Key != null &&
-                    this.Key.Equals(input.Key))
-                ) && 
-                (
-                    this.MaxValue == input.MaxValue ||
-                    this.MaxValue.Equals(input.MaxValue)
-                ) && 
-                (
-                    this.MinValue == input.MinValue ||
-                    this.MinValue.Equals(input.MinValue)
-                ) && 
-                (
-                    this.UnlimitedPayments == input.UnlimitedPayments ||
-                    this.UnlimitedPayments.Equals(input.UnlimitedPayments)
-                ) && 
-                (
-                    this.Method == input.Method ||
-                    (this.Method != null &&
-                    this.Method.Equals(input.Method))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
-                if (this.CreatedAt != null)
-                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
-                if (this.ExpirationTime != null)
-                    hashCode = hashCode * 59 + this.ExpirationTime.GetHashCode();
-                hashCode = hashCode * 59 + this.Currency.GetHashCode();
-                if (this.Customer != null)
-                    hashCode = hashCode * 59 + this.Customer.GetHashCode();
-                if (this.Key != null)
-                    hashCode = hashCode * 59 + this.Key.GetHashCode();
-                hashCode = hashCode * 59 + this.MaxValue.GetHashCode();
-                hashCode = hashCode * 59 + this.MinValue.GetHashCode();
-                hashCode = hashCode * 59 + this.UnlimitedPayments.GetHashCode();
-                if (this.Method != null)
-                    hashCode = hashCode * 59 + this.Method.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
         /// To validate all properties of the instance
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            // Key (string) maxLength
-            if(this.Key != null && this.Key.Length > 50)
+            // Descriptive (string) maxLength
+            if (this.Descriptive != null && this.Descriptive.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Key, length must be less than 50.", new [] { "Key" });
+                yield return new ValidationResult("Invalid value for Descriptive, length must be less than 255.", new[] { "Descriptive" });
+            }
+
+            // Value (double) minimum
+            if (this.Value < (double)0.5)
+            {
+                yield return new ValidationResult("Invalid value for Value, must be a value greater than or equal to 0.5.", new[] { "Value" });
+            }
+
+            // Key (string) maxLength
+            if (this.Key != null && this.Key.Length > 50)
+            {
+                yield return new ValidationResult("Invalid value for Key, length must be less than 50.", new[] { "Key" });
             }
 
             // MaxValue (double) minimum
-            if(this.MaxValue < (double)0)
+            if (this.MaxValue < (double)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for MaxValue, must be a value greater than or equal to 0.", new [] { "MaxValue" });
+                yield return new ValidationResult("Invalid value for MaxValue, must be a value greater than or equal to 0.", new[] { "MaxValue" });
             }
 
             // MinValue (double) minimum
-            if(this.MinValue < (double)0)
+            if (this.MinValue < (double)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for MinValue, must be a value greater than or equal to 0.", new [] { "MinValue" });
+                yield return new ValidationResult("Invalid value for MinValue, must be a value greater than or equal to 0.", new[] { "MinValue" });
             }
 
             yield break;

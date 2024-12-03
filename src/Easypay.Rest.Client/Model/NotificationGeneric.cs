@@ -1,7 +1,7 @@
 /*
- * Easypay API
+ * Easypay Payments API
  *
- * <a href='https://www.easypay.pt/en/terms-conditions-and-legal-terms' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-policy' class='item'>Privacy Policy</a><br><br><b>EasyPay</b> API allows you to query payment meta-data, receive payment notifications and generate payment references. Since EasyPay API is based on REST principles, it´s very easy to write and test applications. You can use our code examples in PHP/CURL to test all the JSON payloads for Easypay Payment Service API.<br><br> We have two distinct environments on our API Services:<br> - If you are looking to receive payments, please use the <a href='https://api.prod.easypay.pt/docs#' class='item'><b>Production Documentation</b></a>.<br> - If you are looking to test or integrate, please use the <a href='https://goo.gl/CPxQnM' class='item'><b>Sandbox Documentation</b></a>. This environment will always have the latest road map deployments, usually all deployments are sent to production within 10 days. This environment is not meant for <b>Load Tests</b>, please do not use for this purpose, you might be blocked. <br><br> All communications have to include two headers for authentication, if fails it will always respond 403.<br> On <a href='https://backoffice.easypay.pt' class='item'><b>Easypay Backoffice</b></a> please create your authentication AccountId and ApiKey on menu: <i><b>Web Services->Configuration API 2.0->Keys</b></i>.<br><br> Our default response produces a <i><b>application/json</b></i>, but the <b>Accept</b> request-header field can be used to specify certain media types which are acceptable for the response. <br>Our available options are: <i>application/json</i>, <i>application/xml</i>, <i>text/csv</i>
+ * <a href='https://www.easypay.pt/en/legal-terms-and-conditions/' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-and-data-protection-policy/' class='item'>Privacy Policy</a>
  *
  * The version of the OpenAPI document: 2.0
  * Contact: tec@easypay.pt
@@ -30,7 +30,7 @@ namespace Easypay.Rest.Client.Model
     /// NotificationGeneric
     /// </summary>
     [DataContract(Name = "Notification_Generic")]
-    public partial class NotificationGeneric : IEquatable<NotificationGeneric>, IValidatableObject
+    public partial class NotificationGeneric : IValidatableObject
     {
         /// <summary>
         /// Defines Type
@@ -91,12 +91,15 @@ namespace Easypay.Rest.Client.Model
             /// </summary>
             [EnumMember(Value = "out_payment")]
             OutPayment = 9
-
         }
+
 
         /// <summary>
         /// Gets or Sets Type
         /// </summary>
+        /*
+        <example>capture</example>
+        */
         [DataMember(Name = "type", EmitDefaultValue = false)]
         public TypeEnum? Type { get; set; }
         /// <summary>
@@ -116,12 +119,15 @@ namespace Easypay.Rest.Client.Model
             /// </summary>
             [EnumMember(Value = "success")]
             Success = 2
-
         }
+
 
         /// <summary>
         /// Gets or Sets Status
         /// </summary>
+        /*
+        <example>success</example>
+        */
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public StatusEnum? Status { get; set; }
         /// <summary>
@@ -133,7 +139,7 @@ namespace Easypay.Rest.Client.Model
         /// <param name="status">status.</param>
         /// <param name="messages">messages.</param>
         /// <param name="date">date.</param>
-        public NotificationGeneric(Guid id = default(Guid), string key = default(string), TypeEnum? type = default(TypeEnum?), StatusEnum? status = default(StatusEnum?), List<string> messages = default(List<string>), string date = default(string))
+        public NotificationGeneric(Guid id = default(Guid), string key = default(string), TypeEnum? type = default(TypeEnum?), StatusEnum? status = default(StatusEnum?), Collection<string> messages = default(Collection<string>), string date = default(string))
         {
             this.Id = id;
             this.Key = key;
@@ -147,6 +153,9 @@ namespace Easypay.Rest.Client.Model
         /// ID of the related notified resource
         /// </summary>
         /// <value>ID of the related notified resource</value>
+        /*
+        <example>1bbc14c3-8ca8-492c-887d-1ca86400e4fa</example>
+        */
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public Guid Id { get; set; }
 
@@ -154,6 +163,9 @@ namespace Easypay.Rest.Client.Model
         /// Merchant identification key
         /// </summary>
         /// <value>Merchant identification key</value>
+        /*
+        <example>Example Key</example>
+        */
         [DataMember(Name = "key", EmitDefaultValue = false)]
         public string Key { get; set; }
 
@@ -161,11 +173,14 @@ namespace Easypay.Rest.Client.Model
         /// Gets or Sets Messages
         /// </summary>
         [DataMember(Name = "messages", EmitDefaultValue = false)]
-        public List<string> Messages { get; set; }
+        public Collection<string> Messages { get; set; }
 
         /// <summary>
         /// Gets or Sets Date
         /// </summary>
+        /*
+        <example>2022-01-01 10:20:30</example>
+        */
         [DataMember(Name = "date", EmitDefaultValue = false)]
         public string Date { get; set; }
 
@@ -175,7 +190,7 @@ namespace Easypay.Rest.Client.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class NotificationGeneric {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Key: ").Append(Key).Append("\n");
@@ -197,86 +212,11 @@ namespace Easypay.Rest.Client.Model
         }
 
         /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as NotificationGeneric);
-        }
-
-        /// <summary>
-        /// Returns true if NotificationGeneric instances are equal
-        /// </summary>
-        /// <param name="input">Instance of NotificationGeneric to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(NotificationGeneric input)
-        {
-            if (input == null)
-                return false;
-
-            return 
-                (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
-                ) && 
-                (
-                    this.Key == input.Key ||
-                    (this.Key != null &&
-                    this.Key.Equals(input.Key))
-                ) && 
-                (
-                    this.Type == input.Type ||
-                    this.Type.Equals(input.Type)
-                ) && 
-                (
-                    this.Status == input.Status ||
-                    this.Status.Equals(input.Status)
-                ) && 
-                (
-                    this.Messages == input.Messages ||
-                    this.Messages != null &&
-                    input.Messages != null &&
-                    this.Messages.SequenceEqual(input.Messages)
-                ) && 
-                (
-                    this.Date == input.Date ||
-                    (this.Date != null &&
-                    this.Date.Equals(input.Date))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
-                if (this.Key != null)
-                    hashCode = hashCode * 59 + this.Key.GetHashCode();
-                hashCode = hashCode * 59 + this.Type.GetHashCode();
-                hashCode = hashCode * 59 + this.Status.GetHashCode();
-                if (this.Messages != null)
-                    hashCode = hashCode * 59 + this.Messages.GetHashCode();
-                if (this.Date != null)
-                    hashCode = hashCode * 59 + this.Date.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
         /// To validate all properties of the instance
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }

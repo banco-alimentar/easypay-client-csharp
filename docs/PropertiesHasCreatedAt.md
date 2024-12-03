@@ -1,4 +1,5 @@
 # Easypay.Rest.Client.Model.PropertiesHasCreatedAt
+
 ## Properties
 
 Name | Type | Description | Notes

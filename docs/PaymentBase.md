@@ -1,10 +1,14 @@
 # Easypay.Rest.Client.Model.PaymentBase
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Id** | **Guid** |  | [optional] 
+**Descriptive** | **string** | This will appear in the bank statement/mbway application | [optional] 
+**Value** | **double** | Value will be rounded to 2 decimals | 
 **ExpirationTime** | **string** | Optional | [optional] 
-**Currency** | **string** |  | [optional] [default to CurrencyEnum.EUR]
+**Currency** | **Currency** |  | [optional] 
 **Customer** | [**Customer**](Customer.md) |  | [optional] 
 **Key** | **string** | Merchant identification key | [optional] 
 

@@ -1,7 +1,7 @@
 /*
- * Easypay API
+ * Easypay Payments API
  *
- * <a href='https://www.easypay.pt/en/terms-conditions-and-legal-terms' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-policy' class='item'>Privacy Policy</a><br><br><b>EasyPay</b> API allows you to query payment meta-data, receive payment notifications and generate payment references. Since EasyPay API is based on REST principles, it´s very easy to write and test applications. You can use our code examples in PHP/CURL to test all the JSON payloads for Easypay Payment Service API.<br><br> We have two distinct environments on our API Services:<br> - If you are looking to receive payments, please use the <a href='https://api.prod.easypay.pt/docs#' class='item'><b>Production Documentation</b></a>.<br> - If you are looking to test or integrate, please use the <a href='https://goo.gl/CPxQnM' class='item'><b>Sandbox Documentation</b></a>. This environment will always have the latest road map deployments, usually all deployments are sent to production within 10 days. This environment is not meant for <b>Load Tests</b>, please do not use for this purpose, you might be blocked. <br><br> All communications have to include two headers for authentication, if fails it will always respond 403.<br> On <a href='https://backoffice.easypay.pt' class='item'><b>Easypay Backoffice</b></a> please create your authentication AccountId and ApiKey on menu: <i><b>Web Services->Configuration API 2.0->Keys</b></i>.<br><br> Our default response produces a <i><b>application/json</b></i>, but the <b>Accept</b> request-header field can be used to specify certain media types which are acceptable for the response. <br>Our available options are: <i>application/json</i>, <i>application/xml</i>, <i>text/csv</i>
+ * <a href='https://www.easypay.pt/en/legal-terms-and-conditions/' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-and-data-protection-policy/' class='item'>Privacy Policy</a>
  *
  * The version of the OpenAPI document: 2.0
  * Contact: tec@easypay.pt
@@ -30,7 +30,7 @@ namespace Easypay.Rest.Client.Model
     /// MbwaySdk
     /// </summary>
     [DataContract(Name = "Mbway_sdk")]
-    public partial class MbwaySdk : IEquatable<MbwaySdk>, IValidatableObject
+    public partial class MbwaySdk : IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MbwaySdk" /> class.
@@ -50,12 +50,18 @@ namespace Easypay.Rest.Client.Model
         /// <summary>
         /// Gets or Sets PurchaseToken
         /// </summary>
+        /*
+        <example>626E6AA2224D017917D839D4D39296B49441A1D10DA7E8DB6E7E1A4356DDE75429531BEB32190C6D736FA12C7A116CA5F3FCAEE72570406F51371A0CB6E14B6B</example>
+        */
         [DataMember(Name = "purchase_token", EmitDefaultValue = false)]
         public string PurchaseToken { get; set; }
 
         /// <summary>
         /// Gets or Sets InitialTimestamp
         /// </summary>
+        /*
+        <example>2018-01-01 23:59:59</example>
+        */
         [DataMember(Name = "initial_timestamp", EmitDefaultValue = false)]
         public string InitialTimestamp { get; set; }
 
@@ -63,12 +69,18 @@ namespace Easypay.Rest.Client.Model
         /// unique-concatenation between client identifier and client operation id (total max 20 chars)
         /// </summary>
         /// <value>unique-concatenation between client identifier and client operation id (total max 20 chars)</value>
+        /*
+        <example>TESTACCOUNT5436</example>
+        */
         [DataMember(Name = "merchant_operation_id", EmitDefaultValue = false)]
         public string MerchantOperationId { get; set; }
 
         /// <summary>
         /// Gets or Sets Payload
         /// </summary>
+        /*
+        <example>{&#39;purchase_token&#39;:&#39;EDEB342D3588DDDEEE3E070476E72A6B222E3456C1C825D3E89A734005CE81F69986045424984F55B3233CBFD090A8A564071BBB493F34C4849C964&#39;,&#39;initial_timestamp&#39;:&#39;2018-09-20T10:46:08+01:00&#39;,&#39;merchant_operation_id&#39;:&#39;TESTACCOUNT5436&#39;,&#39;payload&#39;:{&#39;amount&#39;:1000,&#39;currencyCode&#39;:&#39;9782&#39;}}</example>
+        */
         [DataMember(Name = "payload", EmitDefaultValue = false)]
         public string Payload { get; set; }
 
@@ -78,7 +90,7 @@ namespace Easypay.Rest.Client.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class MbwaySdk {\n");
             sb.Append("  PurchaseToken: ").Append(PurchaseToken).Append("\n");
             sb.Append("  InitialTimestamp: ").Append(InitialTimestamp).Append("\n");
@@ -98,75 +110,11 @@ namespace Easypay.Rest.Client.Model
         }
 
         /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as MbwaySdk);
-        }
-
-        /// <summary>
-        /// Returns true if MbwaySdk instances are equal
-        /// </summary>
-        /// <param name="input">Instance of MbwaySdk to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(MbwaySdk input)
-        {
-            if (input == null)
-                return false;
-
-            return 
-                (
-                    this.PurchaseToken == input.PurchaseToken ||
-                    (this.PurchaseToken != null &&
-                    this.PurchaseToken.Equals(input.PurchaseToken))
-                ) && 
-                (
-                    this.InitialTimestamp == input.InitialTimestamp ||
-                    (this.InitialTimestamp != null &&
-                    this.InitialTimestamp.Equals(input.InitialTimestamp))
-                ) && 
-                (
-                    this.MerchantOperationId == input.MerchantOperationId ||
-                    (this.MerchantOperationId != null &&
-                    this.MerchantOperationId.Equals(input.MerchantOperationId))
-                ) && 
-                (
-                    this.Payload == input.Payload ||
-                    (this.Payload != null &&
-                    this.Payload.Equals(input.Payload))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.PurchaseToken != null)
-                    hashCode = hashCode * 59 + this.PurchaseToken.GetHashCode();
-                if (this.InitialTimestamp != null)
-                    hashCode = hashCode * 59 + this.InitialTimestamp.GetHashCode();
-                if (this.MerchantOperationId != null)
-                    hashCode = hashCode * 59 + this.MerchantOperationId.GetHashCode();
-                if (this.Payload != null)
-                    hashCode = hashCode * 59 + this.Payload.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
         /// To validate all properties of the instance
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }

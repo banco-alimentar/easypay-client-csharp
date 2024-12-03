@@ -1,7 +1,7 @@
 /*
- * Easypay API
+ * Easypay Payments API
  *
- * <a href='https://www.easypay.pt/en/terms-conditions-and-legal-terms' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-policy' class='item'>Privacy Policy</a><br><br><b>EasyPay</b> API allows you to query payment meta-data, receive payment notifications and generate payment references. Since EasyPay API is based on REST principles, it´s very easy to write and test applications. You can use our code examples in PHP/CURL to test all the JSON payloads for Easypay Payment Service API.<br><br> We have two distinct environments on our API Services:<br> - If you are looking to receive payments, please use the <a href='https://api.prod.easypay.pt/docs#' class='item'><b>Production Documentation</b></a>.<br> - If you are looking to test or integrate, please use the <a href='https://goo.gl/CPxQnM' class='item'><b>Sandbox Documentation</b></a>. This environment will always have the latest road map deployments, usually all deployments are sent to production within 10 days. This environment is not meant for <b>Load Tests</b>, please do not use for this purpose, you might be blocked. <br><br> All communications have to include two headers for authentication, if fails it will always respond 403.<br> On <a href='https://backoffice.easypay.pt' class='item'><b>Easypay Backoffice</b></a> please create your authentication AccountId and ApiKey on menu: <i><b>Web Services->Configuration API 2.0->Keys</b></i>.<br><br> Our default response produces a <i><b>application/json</b></i>, but the <b>Accept</b> request-header field can be used to specify certain media types which are acceptable for the response. <br>Our available options are: <i>application/json</i>, <i>application/xml</i>, <i>text/csv</i>
+ * <a href='https://www.easypay.pt/en/legal-terms-and-conditions/' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-and-data-protection-policy/' class='item'>Privacy Policy</a>
  *
  * The version of the OpenAPI document: 2.0
  * Contact: tec@easypay.pt
@@ -27,10 +27,10 @@ using OpenAPIDateConverter = Easypay.Rest.Client.Client.OpenAPIDateConverter;
 namespace Easypay.Rest.Client.Model
 {
     /// <summary>
-    /// Only required if &#39;method&#39; is &#39;dd&#39;
+    /// The SDD Mandate object contains the necessary fields to create a SEPA Direct Debit mandate. This object ensures that all required information is provided to authorize and process SEPA Direct Debit transactions. Object required when method is Direct Debit.
     /// </summary>
     [DataContract(Name = "SddMandate")]
-    public partial class SddMandate : IEquatable<SddMandate>, IValidatableObject
+    public partial class SddMandate : IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SddMandate" /> class.
@@ -40,91 +40,137 @@ namespace Easypay.Rest.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="SddMandate" /> class.
         /// </summary>
-        /// <param name="id">Optional - unique identifier from previous created mandates.</param>
-        /// <param name="iban">iban (required).</param>
-        /// <param name="key">Custom string controlled by our clients.</param>
-        /// <param name="name">name (required).</param>
-        /// <param name="email">email (required).</param>
-        /// <param name="phone">phone (required).</param>
-        /// <param name="accountHolder">Bank account holder name (required).</param>
-        /// <param name="countryCode">Bank account country code.</param>
-        /// <param name="maxNumDebits">Optional: Max number of debits described in SDD Mandate.</param>
-        public SddMandate(string id = default(string), string iban = default(string), string key = default(string), string name = default(string), string email = default(string), string phone = default(string), string accountHolder = default(string), string countryCode = default(string), string maxNumDebits = default(string))
+        /// <param name="id">A unique identifier for the resource. While typically formatted as a UUID (Universally Unique Identifier), it can also be in other formats as defined by the user. This field ensures the resource can be distinctly recognized and referenced..</param>
+        /// <param name="iban">The International Bank Account Number (IBAN) of the debtor&#39;s account. This field is used to uniquely identify the debtor&#39;s bank account across international borders, ensuring accurate and efficient processing of SEPA Direct Debit transactions. The IBAN is a standardized format that includes the country code, check digits, bank code, and account number. (required).</param>
+        /// <param name="key">A customizable text field for users to input their own identifier for the resource. This can be any string that helps the user uniquely identify or reference the resource in their own system..</param>
+        /// <param name="name">The full name of the individual or entity. This field is used to identify the person or organization involved in the transaction or mandate. (required).</param>
+        /// <param name="email">The contact phone number of the individual or entity, including the country code indicator (e.g., \&quot;+351\&quot;). This field is used for communication purposes, such as contacting the individual for verification or support. (required).</param>
+        /// <param name="phone">The contact phone number of the individual or entity, excluding the country code indicator (e.g., \&quot;+351\&quot;). This field is used for communication purposes, such as contacting the individual for verification or support. If the payment method is MBWAY, the phone number is required and is used to send the MBWAY push notification. (required).</param>
+        /// <param name="accountHolder">The name of the person or entity that holds the bank account. This field is used to identify the owner of the bank account involved in the transaction, ensuring that the correct account is credited or debited. (required).</param>
+        /// <param name="countryCode">The two-letter ISO 3166-1 alpha-2 country code representing the country of the individual or entity. This field is used to specify the country associated with the address or account, ensuring correct geographical identification..</param>
+        /// <param name="maxNumDebits">The maximum number of debits that can be made under the mandate. This field sets a limit on the number of transactions that can be processed, providing control and security over the usage of the direct debit mandate..</param>
+        /// <param name="billingEntity">The entity responsible for billing in the context of the SEPA Direct Debit (SDD) mandate. This field specifies the identifier of the organization that issues the bills and collects the payments under the mandate. (default to &quot;PT16103627&quot;).</param>
+        public SddMandate(string id = default(string), string iban = default(string), string key = default(string), string name = default(string), string email = default(string), string phone = default(string), string accountHolder = default(string), string countryCode = default(string), string maxNumDebits = default(string), string billingEntity = @"PT16103627")
         {
             // to ensure "iban" is required (not null)
-            this.Iban = iban ?? throw new ArgumentNullException("iban is a required property for SddMandate and cannot be null");
+            if (iban == null)
+            {
+                throw new ArgumentNullException("iban is a required property for SddMandate and cannot be null");
+            }
+            this.Iban = iban;
             // to ensure "name" is required (not null)
-            this.Name = name ?? throw new ArgumentNullException("name is a required property for SddMandate and cannot be null");
+            if (name == null)
+            {
+                throw new ArgumentNullException("name is a required property for SddMandate and cannot be null");
+            }
+            this.Name = name;
             // to ensure "email" is required (not null)
-            this.Email = email ?? throw new ArgumentNullException("email is a required property for SddMandate and cannot be null");
+            if (email == null)
+            {
+                throw new ArgumentNullException("email is a required property for SddMandate and cannot be null");
+            }
+            this.Email = email;
             // to ensure "phone" is required (not null)
-            this.Phone = phone ?? throw new ArgumentNullException("phone is a required property for SddMandate and cannot be null");
+            if (phone == null)
+            {
+                throw new ArgumentNullException("phone is a required property for SddMandate and cannot be null");
+            }
+            this.Phone = phone;
             // to ensure "accountHolder" is required (not null)
-            this.AccountHolder = accountHolder ?? throw new ArgumentNullException("accountHolder is a required property for SddMandate and cannot be null");
+            if (accountHolder == null)
+            {
+                throw new ArgumentNullException("accountHolder is a required property for SddMandate and cannot be null");
+            }
+            this.AccountHolder = accountHolder;
             this.Id = id;
             this.Key = key;
             this.CountryCode = countryCode;
             this.MaxNumDebits = maxNumDebits;
+            // use default value if no "billingEntity" provided
+            this.BillingEntity = billingEntity ?? @"PT16103627";
         }
 
         /// <summary>
-        /// Optional - unique identifier from previous created mandates
+        /// A unique identifier for the resource. While typically formatted as a UUID (Universally Unique Identifier), it can also be in other formats as defined by the user. This field ensures the resource can be distinctly recognized and referenced.
         /// </summary>
-        /// <value>Optional - unique identifier from previous created mandates</value>
+        /// <value>A unique identifier for the resource. While typically formatted as a UUID (Universally Unique Identifier), it can also be in other formats as defined by the user. This field ensures the resource can be distinctly recognized and referenced.</value>
+        /*
+        <example>c6056234-a3f9-42de-b944-3ed793fcb6bb</example>
+        */
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets Iban
+        /// The International Bank Account Number (IBAN) of the debtor&#39;s account. This field is used to uniquely identify the debtor&#39;s bank account across international borders, ensuring accurate and efficient processing of SEPA Direct Debit transactions. The IBAN is a standardized format that includes the country code, check digits, bank code, and account number.
         /// </summary>
-        [DataMember(Name = "iban", IsRequired = true, EmitDefaultValue = false)]
+        /// <value>The International Bank Account Number (IBAN) of the debtor&#39;s account. This field is used to uniquely identify the debtor&#39;s bank account across international borders, ensuring accurate and efficient processing of SEPA Direct Debit transactions. The IBAN is a standardized format that includes the country code, check digits, bank code, and account number.</value>
+        /*
+        <example>PT50000747199140461443823</example>
+        */
+        [DataMember(Name = "iban", IsRequired = true, EmitDefaultValue = true)]
         public string Iban { get; set; }
 
         /// <summary>
-        /// Custom string controlled by our clients
+        /// A customizable text field for users to input their own identifier for the resource. This can be any string that helps the user uniquely identify or reference the resource in their own system.
         /// </summary>
-        /// <value>Custom string controlled by our clients</value>
+        /// <value>A customizable text field for users to input their own identifier for the resource. This can be any string that helps the user uniquely identify or reference the resource in their own system.</value>
+        /*
+        <example>01J1PKR2RPHJNJQGFWGDYXY0KM</example>
+        */
         [DataMember(Name = "key", EmitDefaultValue = false)]
         public string Key { get; set; }
 
         /// <summary>
-        /// Gets or Sets Name
+        /// The full name of the individual or entity. This field is used to identify the person or organization involved in the transaction or mandate.
         /// </summary>
-        [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = false)]
+        /// <value>The full name of the individual or entity. This field is used to identify the person or organization involved in the transaction or mandate.</value>
+        [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = true)]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets Email
+        /// The contact phone number of the individual or entity, including the country code indicator (e.g., \&quot;+351\&quot;). This field is used for communication purposes, such as contacting the individual for verification or support.
         /// </summary>
-        [DataMember(Name = "email", IsRequired = true, EmitDefaultValue = false)]
+        /// <value>The contact phone number of the individual or entity, including the country code indicator (e.g., \&quot;+351\&quot;). This field is used for communication purposes, such as contacting the individual for verification or support.</value>
+        [DataMember(Name = "email", IsRequired = true, EmitDefaultValue = true)]
         public string Email { get; set; }
 
         /// <summary>
-        /// Gets or Sets Phone
+        /// The contact phone number of the individual or entity, excluding the country code indicator (e.g., \&quot;+351\&quot;). This field is used for communication purposes, such as contacting the individual for verification or support. If the payment method is MBWAY, the phone number is required and is used to send the MBWAY push notification.
         /// </summary>
-        [DataMember(Name = "phone", IsRequired = true, EmitDefaultValue = false)]
+        /// <value>The contact phone number of the individual or entity, excluding the country code indicator (e.g., \&quot;+351\&quot;). This field is used for communication purposes, such as contacting the individual for verification or support. If the payment method is MBWAY, the phone number is required and is used to send the MBWAY push notification.</value>
+        [DataMember(Name = "phone", IsRequired = true, EmitDefaultValue = true)]
         public string Phone { get; set; }
 
         /// <summary>
-        /// Bank account holder name
+        /// The name of the person or entity that holds the bank account. This field is used to identify the owner of the bank account involved in the transaction, ensuring that the correct account is credited or debited.
         /// </summary>
-        /// <value>Bank account holder name</value>
-        [DataMember(Name = "account_holder", IsRequired = true, EmitDefaultValue = false)]
+        /// <value>The name of the person or entity that holds the bank account. This field is used to identify the owner of the bank account involved in the transaction, ensuring that the correct account is credited or debited.</value>
+        [DataMember(Name = "account_holder", IsRequired = true, EmitDefaultValue = true)]
         public string AccountHolder { get; set; }
 
         /// <summary>
-        /// Bank account country code
+        /// The two-letter ISO 3166-1 alpha-2 country code representing the country of the individual or entity. This field is used to specify the country associated with the address or account, ensuring correct geographical identification.
         /// </summary>
-        /// <value>Bank account country code</value>
+        /// <value>The two-letter ISO 3166-1 alpha-2 country code representing the country of the individual or entity. This field is used to specify the country associated with the address or account, ensuring correct geographical identification.</value>
         [DataMember(Name = "country_code", EmitDefaultValue = false)]
         public string CountryCode { get; set; }
 
         /// <summary>
-        /// Optional: Max number of debits described in SDD Mandate
+        /// The maximum number of debits that can be made under the mandate. This field sets a limit on the number of transactions that can be processed, providing control and security over the usage of the direct debit mandate.
         /// </summary>
-        /// <value>Optional: Max number of debits described in SDD Mandate</value>
+        /// <value>The maximum number of debits that can be made under the mandate. This field sets a limit on the number of transactions that can be processed, providing control and security over the usage of the direct debit mandate.</value>
         [DataMember(Name = "max_num_debits", EmitDefaultValue = false)]
         public string MaxNumDebits { get; set; }
+
+        /// <summary>
+        /// The entity responsible for billing in the context of the SEPA Direct Debit (SDD) mandate. This field specifies the identifier of the organization that issues the bills and collects the payments under the mandate.
+        /// </summary>
+        /// <value>The entity responsible for billing in the context of the SEPA Direct Debit (SDD) mandate. This field specifies the identifier of the organization that issues the bills and collects the payments under the mandate.</value>
+        /*
+        <example>PT16103627</example>
+        */
+        [DataMember(Name = "billing_entity", EmitDefaultValue = false)]
+        public string BillingEntity { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -132,7 +178,7 @@ namespace Easypay.Rest.Client.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class SddMandate {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Iban: ").Append(Iban).Append("\n");
@@ -143,6 +189,7 @@ namespace Easypay.Rest.Client.Model
             sb.Append("  AccountHolder: ").Append(AccountHolder).Append("\n");
             sb.Append("  CountryCode: ").Append(CountryCode).Append("\n");
             sb.Append("  MaxNumDebits: ").Append(MaxNumDebits).Append("\n");
+            sb.Append("  BillingEntity: ").Append(BillingEntity).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -157,145 +204,46 @@ namespace Easypay.Rest.Client.Model
         }
 
         /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as SddMandate);
-        }
-
-        /// <summary>
-        /// Returns true if SddMandate instances are equal
-        /// </summary>
-        /// <param name="input">Instance of SddMandate to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(SddMandate input)
-        {
-            if (input == null)
-                return false;
-
-            return 
-                (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
-                ) && 
-                (
-                    this.Iban == input.Iban ||
-                    (this.Iban != null &&
-                    this.Iban.Equals(input.Iban))
-                ) && 
-                (
-                    this.Key == input.Key ||
-                    (this.Key != null &&
-                    this.Key.Equals(input.Key))
-                ) && 
-                (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
-                ) && 
-                (
-                    this.Email == input.Email ||
-                    (this.Email != null &&
-                    this.Email.Equals(input.Email))
-                ) && 
-                (
-                    this.Phone == input.Phone ||
-                    (this.Phone != null &&
-                    this.Phone.Equals(input.Phone))
-                ) && 
-                (
-                    this.AccountHolder == input.AccountHolder ||
-                    (this.AccountHolder != null &&
-                    this.AccountHolder.Equals(input.AccountHolder))
-                ) && 
-                (
-                    this.CountryCode == input.CountryCode ||
-                    (this.CountryCode != null &&
-                    this.CountryCode.Equals(input.CountryCode))
-                ) && 
-                (
-                    this.MaxNumDebits == input.MaxNumDebits ||
-                    (this.MaxNumDebits != null &&
-                    this.MaxNumDebits.Equals(input.MaxNumDebits))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
-                if (this.Iban != null)
-                    hashCode = hashCode * 59 + this.Iban.GetHashCode();
-                if (this.Key != null)
-                    hashCode = hashCode * 59 + this.Key.GetHashCode();
-                if (this.Name != null)
-                    hashCode = hashCode * 59 + this.Name.GetHashCode();
-                if (this.Email != null)
-                    hashCode = hashCode * 59 + this.Email.GetHashCode();
-                if (this.Phone != null)
-                    hashCode = hashCode * 59 + this.Phone.GetHashCode();
-                if (this.AccountHolder != null)
-                    hashCode = hashCode * 59 + this.AccountHolder.GetHashCode();
-                if (this.CountryCode != null)
-                    hashCode = hashCode * 59 + this.CountryCode.GetHashCode();
-                if (this.MaxNumDebits != null)
-                    hashCode = hashCode * 59 + this.MaxNumDebits.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
         /// To validate all properties of the instance
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // Iban (string) maxLength
-            if(this.Iban != null && this.Iban.Length > 34)
+            if (this.Iban != null && this.Iban.Length > 34)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Iban, length must be less than 34.", new [] { "Iban" });
+                yield return new ValidationResult("Invalid value for Iban, length must be less than 34.", new[] { "Iban" });
             }
 
             // Key (string) maxLength
-            if(this.Key != null && this.Key.Length > 255)
+            if (this.Key != null && this.Key.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Key, length must be less than 255.", new [] { "Key" });
+                yield return new ValidationResult("Invalid value for Key, length must be less than 255.", new[] { "Key" });
             }
 
             // Name (string) maxLength
-            if(this.Name != null && this.Name.Length > 100)
+            if (this.Name != null && this.Name.Length > 100)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Name, length must be less than 100.", new [] { "Name" });
+                yield return new ValidationResult("Invalid value for Name, length must be less than 100.", new[] { "Name" });
             }
 
             // Email (string) maxLength
-            if(this.Email != null && this.Email.Length > 50)
+            if (this.Email != null && this.Email.Length > 50)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Email, length must be less than 50.", new [] { "Email" });
+                yield return new ValidationResult("Invalid value for Email, length must be less than 50.", new[] { "Email" });
             }
 
             // Phone (string) maxLength
-            if(this.Phone != null && this.Phone.Length > 20)
+            if (this.Phone != null && this.Phone.Length > 20)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Phone, length must be less than 20.", new [] { "Phone" });
+                yield return new ValidationResult("Invalid value for Phone, length must be less than 20.", new[] { "Phone" });
             }
 
             // AccountHolder (string) maxLength
-            if(this.AccountHolder != null && this.AccountHolder.Length > 100)
+            if (this.AccountHolder != null && this.AccountHolder.Length > 100)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AccountHolder, length must be less than 100.", new [] { "AccountHolder" });
+                yield return new ValidationResult("Invalid value for AccountHolder, length must be less than 100.", new[] { "AccountHolder" });
             }
 
             yield break;

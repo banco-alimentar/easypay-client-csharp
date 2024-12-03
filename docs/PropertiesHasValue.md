@@ -1,9 +1,10 @@
 # Easypay.Rest.Client.Model.PropertiesHasValue
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Value** | **double** | Value will be rounded to 2 decimals | [optional] 
+**Value** | **double** | Value will be rounded to 2 decimals | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

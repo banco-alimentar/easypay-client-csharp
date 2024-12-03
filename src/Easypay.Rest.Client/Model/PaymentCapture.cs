@@ -1,7 +1,7 @@
 /*
- * Easypay API
+ * Easypay Payments API
  *
- * <a href='https://www.easypay.pt/en/terms-conditions-and-legal-terms' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-policy' class='item'>Privacy Policy</a><br><br><b>EasyPay</b> API allows you to query payment meta-data, receive payment notifications and generate payment references. Since EasyPay API is based on REST principles, it´s very easy to write and test applications. You can use our code examples in PHP/CURL to test all the JSON payloads for Easypay Payment Service API.<br><br> We have two distinct environments on our API Services:<br> - If you are looking to receive payments, please use the <a href='https://api.prod.easypay.pt/docs#' class='item'><b>Production Documentation</b></a>.<br> - If you are looking to test or integrate, please use the <a href='https://goo.gl/CPxQnM' class='item'><b>Sandbox Documentation</b></a>. This environment will always have the latest road map deployments, usually all deployments are sent to production within 10 days. This environment is not meant for <b>Load Tests</b>, please do not use for this purpose, you might be blocked. <br><br> All communications have to include two headers for authentication, if fails it will always respond 403.<br> On <a href='https://backoffice.easypay.pt' class='item'><b>Easypay Backoffice</b></a> please create your authentication AccountId and ApiKey on menu: <i><b>Web Services->Configuration API 2.0->Keys</b></i>.<br><br> Our default response produces a <i><b>application/json</b></i>, but the <b>Accept</b> request-header field can be used to specify certain media types which are acceptable for the response. <br>Our available options are: <i>application/json</i>, <i>application/xml</i>, <i>text/csv</i>
+ * <a href='https://www.easypay.pt/en/legal-terms-and-conditions/' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-and-data-protection-policy/' class='item'>Privacy Policy</a>
  *
  * The version of the OpenAPI document: 2.0
  * Contact: tec@easypay.pt
@@ -30,22 +30,103 @@ namespace Easypay.Rest.Client.Model
     /// PaymentCapture
     /// </summary>
     [DataContract(Name = "Payment_Capture")]
-    public partial class PaymentCapture : IEquatable<PaymentCapture>, IValidatableObject
+    public partial class PaymentCapture : IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentCapture" /> class.
         /// </summary>
-        /// <param name="capture">capture.</param>
-        public PaymentCapture(PaymentCaptureCapture capture = default(PaymentCaptureCapture))
+        /// <param name="transactionKey">transactionKey.</param>
+        /// <param name="captureDate">captureDate.</param>
+        /// <param name="account">account.</param>
+        /// <param name="status">status.</param>
+        /// <param name="splits">splits.</param>
+        /// <param name="paymentType">paymentType.</param>
+        /// <param name="paymentId">paymentId.</param>
+        /// <param name="id">id.</param>
+        /// <param name="descriptive">descriptive.</param>
+        /// <param name="value">value.</param>
+        /// <param name="force3ds">Whether or not you want to force the 3DS authentication. (default to false).</param>
+        public PaymentCapture(string transactionKey = default(string), string captureDate = default(string), SubscriptionPost201ResponseCustomer account = default(SubscriptionPost201ResponseCustomer), string status = default(string), Collection<CaptureSplit> splits = default(Collection<CaptureSplit>), string paymentType = default(string), string paymentId = default(string), string id = default(string), string descriptive = default(string), double value = default(double), bool force3ds = false)
         {
-            this.Capture = capture;
+            this.TransactionKey = transactionKey;
+            this.CaptureDate = captureDate;
+            this.Account = account;
+            this.Status = status;
+            this.Splits = splits;
+            this.PaymentType = paymentType;
+            this.PaymentId = paymentId;
+            this.Id = id;
+            this.Descriptive = descriptive;
+            this.Value = value;
+            this.Force3ds = force3ds;
         }
 
         /// <summary>
-        /// Gets or Sets Capture
+        /// Gets or Sets TransactionKey
         /// </summary>
-        [DataMember(Name = "capture", EmitDefaultValue = false)]
-        public PaymentCaptureCapture Capture { get; set; }
+        [DataMember(Name = "transaction_key", EmitDefaultValue = false)]
+        public string TransactionKey { get; set; }
+
+        /// <summary>
+        /// Gets or Sets CaptureDate
+        /// </summary>
+        [DataMember(Name = "capture_date", EmitDefaultValue = false)]
+        public string CaptureDate { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Account
+        /// </summary>
+        [DataMember(Name = "account", EmitDefaultValue = false)]
+        public SubscriptionPost201ResponseCustomer Account { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Status
+        /// </summary>
+        [DataMember(Name = "status", EmitDefaultValue = false)]
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Splits
+        /// </summary>
+        [DataMember(Name = "splits", EmitDefaultValue = false)]
+        public Collection<CaptureSplit> Splits { get; set; }
+
+        /// <summary>
+        /// Gets or Sets PaymentType
+        /// </summary>
+        [DataMember(Name = "payment_type", EmitDefaultValue = false)]
+        public string PaymentType { get; set; }
+
+        /// <summary>
+        /// Gets or Sets PaymentId
+        /// </summary>
+        [DataMember(Name = "payment_id", EmitDefaultValue = false)]
+        public string PaymentId { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Id
+        /// </summary>
+        [DataMember(Name = "id", EmitDefaultValue = false)]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Descriptive
+        /// </summary>
+        [DataMember(Name = "descriptive", EmitDefaultValue = false)]
+        public string Descriptive { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Value
+        /// </summary>
+        [DataMember(Name = "value", EmitDefaultValue = false)]
+        public double Value { get; set; }
+
+        /// <summary>
+        /// Whether or not you want to force the 3DS authentication.
+        /// </summary>
+        /// <value>Whether or not you want to force the 3DS authentication.</value>
+        [DataMember(Name = "force_3ds", EmitDefaultValue = true)]
+        public bool Force3ds { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -53,9 +134,19 @@ namespace Easypay.Rest.Client.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaymentCapture {\n");
-            sb.Append("  Capture: ").Append(Capture).Append("\n");
+            sb.Append("  TransactionKey: ").Append(TransactionKey).Append("\n");
+            sb.Append("  CaptureDate: ").Append(CaptureDate).Append("\n");
+            sb.Append("  Account: ").Append(Account).Append("\n");
+            sb.Append("  Status: ").Append(Status).Append("\n");
+            sb.Append("  Splits: ").Append(Splits).Append("\n");
+            sb.Append("  PaymentType: ").Append(PaymentType).Append("\n");
+            sb.Append("  PaymentId: ").Append(PaymentId).Append("\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Descriptive: ").Append(Descriptive).Append("\n");
+            sb.Append("  Value: ").Append(Value).Append("\n");
+            sb.Append("  Force3ds: ").Append(Force3ds).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -70,54 +161,11 @@ namespace Easypay.Rest.Client.Model
         }
 
         /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PaymentCapture);
-        }
-
-        /// <summary>
-        /// Returns true if PaymentCapture instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PaymentCapture to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PaymentCapture input)
-        {
-            if (input == null)
-                return false;
-
-            return 
-                (
-                    this.Capture == input.Capture ||
-                    (this.Capture != null &&
-                    this.Capture.Equals(input.Capture))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Capture != null)
-                    hashCode = hashCode * 59 + this.Capture.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
         /// To validate all properties of the instance
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }

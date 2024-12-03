@@ -1,7 +1,7 @@
 /*
- * Easypay API
+ * Easypay Payments API
  *
- * <a href='https://www.easypay.pt/en/terms-conditions-and-legal-terms' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-policy' class='item'>Privacy Policy</a><br><br><b>EasyPay</b> API allows you to query payment meta-data, receive payment notifications and generate payment references. Since EasyPay API is based on REST principles, it´s very easy to write and test applications. You can use our code examples in PHP/CURL to test all the JSON payloads for Easypay Payment Service API.<br><br> We have two distinct environments on our API Services:<br> - If you are looking to receive payments, please use the <a href='https://api.prod.easypay.pt/docs#' class='item'><b>Production Documentation</b></a>.<br> - If you are looking to test or integrate, please use the <a href='https://goo.gl/CPxQnM' class='item'><b>Sandbox Documentation</b></a>. This environment will always have the latest road map deployments, usually all deployments are sent to production within 10 days. This environment is not meant for <b>Load Tests</b>, please do not use for this purpose, you might be blocked. <br><br> All communications have to include two headers for authentication, if fails it will always respond 403.<br> On <a href='https://backoffice.easypay.pt' class='item'><b>Easypay Backoffice</b></a> please create your authentication AccountId and ApiKey on menu: <i><b>Web Services->Configuration API 2.0->Keys</b></i>.<br><br> Our default response produces a <i><b>application/json</b></i>, but the <b>Accept</b> request-header field can be used to specify certain media types which are acceptable for the response. <br>Our available options are: <i>application/json</i>, <i>application/xml</i>, <i>text/csv</i>
+ * <a href='https://www.easypay.pt/en/legal-terms-and-conditions/' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-and-data-protection-policy/' class='item'>Privacy Policy</a>
  *
  * The version of the OpenAPI document: 2.0
  * Contact: tec@easypay.pt
@@ -30,106 +30,32 @@ namespace Easypay.Rest.Client.Model
     /// Capture
     /// </summary>
     [DataContract(Name = "Capture")]
-    public partial class Capture : IEquatable<Capture>, IValidatableObject
+    public partial class Capture : IValidatableObject
     {
-        /// <summary>
-        /// Status of this capture
-        /// </summary>
-        /// <value>Status of this capture</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum StatusEnum
-        {
-            /// <summary>
-            /// Enum Waiting for value: waiting
-            /// </summary>
-            [EnumMember(Value = "waiting")]
-            Waiting = 1,
-
-            /// <summary>
-            /// Enum Pending for value: pending
-            /// </summary>
-            [EnumMember(Value = "pending")]
-            Pending = 2,
-
-            /// <summary>
-            /// Enum Success for value: success
-            /// </summary>
-            [EnumMember(Value = "success")]
-            Success = 3,
-
-            /// <summary>
-            /// Enum Failed for value: failed
-            /// </summary>
-            [EnumMember(Value = "failed")]
-            Failed = 4,
-
-            /// <summary>
-            /// Enum Refunded for value: refunded
-            /// </summary>
-            [EnumMember(Value = "refunded")]
-            Refunded = 5
-
-        }
-
-        /// <summary>
-        /// Status of this capture
-        /// </summary>
-        /// <value>Status of this capture</value>
-        [DataMember(Name = "status", EmitDefaultValue = false)]
-        public StatusEnum? Status { get; set; }
         /// <summary>
         /// Initializes a new instance of the <see cref="Capture" /> class.
         /// </summary>
-        /// <param name="transactionKey">Your internal key identifying this capture.</param>
-        /// <param name="captureDate">captureDate.</param>
-        /// <param name="account">Optional - only applicable to multi-account clients.</param>
-        /// <param name="status">Status of this capture.</param>
-        /// <param name="splits">Optional: only used for split payments.</param>
+        [JsonConstructorAttribute]
+        protected Capture() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Capture" /> class.
+        /// </summary>
         /// <param name="id">id.</param>
         /// <param name="descriptive">This will appear in the bank statement/mbway application.</param>
-        /// <param name="value">Value will be rounded to 2 decimals.</param>
-        public Capture(string transactionKey = default(string), string captureDate = default(string), Object account = default(Object), StatusEnum? status = default(StatusEnum?), List<Object> splits = default(List<Object>), Guid id = default(Guid), string descriptive = default(string), double value = default(double))
+        /// <param name="value">Value will be rounded to 2 decimals (required).</param>
+        public Capture(Guid id = default(Guid), string descriptive = default(string), double value = default(double))
         {
-            this.TransactionKey = transactionKey;
-            this.CaptureDate = captureDate;
-            this.Account = account;
-            this.Status = status;
-            this.Splits = splits;
+            this.Value = value;
             this.Id = id;
             this.Descriptive = descriptive;
-            this.Value = value;
         }
-
-        /// <summary>
-        /// Your internal key identifying this capture
-        /// </summary>
-        /// <value>Your internal key identifying this capture</value>
-        [DataMember(Name = "transaction_key", EmitDefaultValue = false)]
-        public string TransactionKey { get; set; }
-
-        /// <summary>
-        /// Gets or Sets CaptureDate
-        /// </summary>
-        [DataMember(Name = "capture_date", EmitDefaultValue = false)]
-        public string CaptureDate { get; set; }
-
-        /// <summary>
-        /// Optional - only applicable to multi-account clients
-        /// </summary>
-        /// <value>Optional - only applicable to multi-account clients</value>
-        [DataMember(Name = "account", EmitDefaultValue = false)]
-        public Object Account { get; set; }
-
-        /// <summary>
-        /// Optional: only used for split payments
-        /// </summary>
-        /// <value>Optional: only used for split payments</value>
-        [DataMember(Name = "splits", EmitDefaultValue = false)]
-        public List<Object> Splits { get; set; }
 
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
+        /*
+        <example>4c67e74b-a256-4e0a-965d-97bf5d01bd50</example>
+        */
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public Guid Id { get; set; }
 
@@ -137,6 +63,9 @@ namespace Easypay.Rest.Client.Model
         /// This will appear in the bank statement/mbway application
         /// </summary>
         /// <value>This will appear in the bank statement/mbway application</value>
+        /*
+        <example>Descriptive Example</example>
+        */
         [DataMember(Name = "descriptive", EmitDefaultValue = false)]
         public string Descriptive { get; set; }
 
@@ -144,7 +73,10 @@ namespace Easypay.Rest.Client.Model
         /// Value will be rounded to 2 decimals
         /// </summary>
         /// <value>Value will be rounded to 2 decimals</value>
-        [DataMember(Name = "value", EmitDefaultValue = false)]
+        /*
+        <example>17.5</example>
+        */
+        [DataMember(Name = "value", IsRequired = true, EmitDefaultValue = true)]
         public double Value { get; set; }
 
         /// <summary>
@@ -153,13 +85,8 @@ namespace Easypay.Rest.Client.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class Capture {\n");
-            sb.Append("  TransactionKey: ").Append(TransactionKey).Append("\n");
-            sb.Append("  CaptureDate: ").Append(CaptureDate).Append("\n");
-            sb.Append("  Account: ").Append(Account).Append("\n");
-            sb.Append("  Status: ").Append(Status).Append("\n");
-            sb.Append("  Splits: ").Append(Splits).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Descriptive: ").Append(Descriptive).Append("\n");
             sb.Append("  Value: ").Append(Value).Append("\n");
@@ -177,111 +104,22 @@ namespace Easypay.Rest.Client.Model
         }
 
         /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as Capture);
-        }
-
-        /// <summary>
-        /// Returns true if Capture instances are equal
-        /// </summary>
-        /// <param name="input">Instance of Capture to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(Capture input)
-        {
-            if (input == null)
-                return false;
-
-            return 
-                (
-                    this.TransactionKey == input.TransactionKey ||
-                    (this.TransactionKey != null &&
-                    this.TransactionKey.Equals(input.TransactionKey))
-                ) && 
-                (
-                    this.CaptureDate == input.CaptureDate ||
-                    (this.CaptureDate != null &&
-                    this.CaptureDate.Equals(input.CaptureDate))
-                ) && 
-                (
-                    this.Account == input.Account ||
-                    (this.Account != null &&
-                    this.Account.Equals(input.Account))
-                ) && 
-                (
-                    this.Status == input.Status ||
-                    this.Status.Equals(input.Status)
-                ) && 
-                (
-                    this.Splits == input.Splits ||
-                    this.Splits != null &&
-                    input.Splits != null &&
-                    this.Splits.SequenceEqual(input.Splits)
-                ) && 
-                (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
-                ) && 
-                (
-                    this.Descriptive == input.Descriptive ||
-                    (this.Descriptive != null &&
-                    this.Descriptive.Equals(input.Descriptive))
-                ) && 
-                (
-                    this.Value == input.Value ||
-                    this.Value.Equals(input.Value)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.TransactionKey != null)
-                    hashCode = hashCode * 59 + this.TransactionKey.GetHashCode();
-                if (this.CaptureDate != null)
-                    hashCode = hashCode * 59 + this.CaptureDate.GetHashCode();
-                if (this.Account != null)
-                    hashCode = hashCode * 59 + this.Account.GetHashCode();
-                hashCode = hashCode * 59 + this.Status.GetHashCode();
-                if (this.Splits != null)
-                    hashCode = hashCode * 59 + this.Splits.GetHashCode();
-                if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
-                if (this.Descriptive != null)
-                    hashCode = hashCode * 59 + this.Descriptive.GetHashCode();
-                hashCode = hashCode * 59 + this.Value.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
         /// To validate all properties of the instance
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // Descriptive (string) maxLength
-            if(this.Descriptive != null && this.Descriptive.Length > 255)
+            if (this.Descriptive != null && this.Descriptive.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Descriptive, length must be less than 255.", new [] { "Descriptive" });
+                yield return new ValidationResult("Invalid value for Descriptive, length must be less than 255.", new[] { "Descriptive" });
             }
 
             // Value (double) minimum
-            if(this.Value < (double)0.5)
+            if (this.Value < (double)0.5)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Value, must be a value greater than or equal to 0.5.", new [] { "Value" });
+                yield return new ValidationResult("Invalid value for Value, must be a value greater than or equal to 0.5.", new[] { "Value" });
             }
 
             yield break;

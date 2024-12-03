@@ -1,4 +1,5 @@
 # Easypay.Rest.Client.Model.PropertiesHasDescriptive
+
 ## Properties
 
 Name | Type | Description | Notes

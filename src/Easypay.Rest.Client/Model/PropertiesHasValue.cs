@@ -1,7 +1,7 @@
 /*
- * Easypay API
+ * Easypay Payments API
  *
- * <a href='https://www.easypay.pt/en/terms-conditions-and-legal-terms' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-policy' class='item'>Privacy Policy</a><br><br><b>EasyPay</b> API allows you to query payment meta-data, receive payment notifications and generate payment references. Since EasyPay API is based on REST principles, it´s very easy to write and test applications. You can use our code examples in PHP/CURL to test all the JSON payloads for Easypay Payment Service API.<br><br> We have two distinct environments on our API Services:<br> - If you are looking to receive payments, please use the <a href='https://api.prod.easypay.pt/docs#' class='item'><b>Production Documentation</b></a>.<br> - If you are looking to test or integrate, please use the <a href='https://goo.gl/CPxQnM' class='item'><b>Sandbox Documentation</b></a>. This environment will always have the latest road map deployments, usually all deployments are sent to production within 10 days. This environment is not meant for <b>Load Tests</b>, please do not use for this purpose, you might be blocked. <br><br> All communications have to include two headers for authentication, if fails it will always respond 403.<br> On <a href='https://backoffice.easypay.pt' class='item'><b>Easypay Backoffice</b></a> please create your authentication AccountId and ApiKey on menu: <i><b>Web Services->Configuration API 2.0->Keys</b></i>.<br><br> Our default response produces a <i><b>application/json</b></i>, but the <b>Accept</b> request-header field can be used to specify certain media types which are acceptable for the response. <br>Our available options are: <i>application/json</i>, <i>application/xml</i>, <i>text/csv</i>
+ * <a href='https://www.easypay.pt/en/legal-terms-and-conditions/' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-and-data-protection-policy/' class='item'>Privacy Policy</a>
  *
  * The version of the OpenAPI document: 2.0
  * Contact: tec@easypay.pt
@@ -30,12 +30,17 @@ namespace Easypay.Rest.Client.Model
     /// PropertiesHasValue
     /// </summary>
     [DataContract(Name = "Properties_Has_Value")]
-    public partial class PropertiesHasValue : IEquatable<PropertiesHasValue>, IValidatableObject
+    public partial class PropertiesHasValue : IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertiesHasValue" /> class.
         /// </summary>
-        /// <param name="value">Value will be rounded to 2 decimals.</param>
+        [JsonConstructorAttribute]
+        protected PropertiesHasValue() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PropertiesHasValue" /> class.
+        /// </summary>
+        /// <param name="value">Value will be rounded to 2 decimals (required).</param>
         public PropertiesHasValue(double value = default(double))
         {
             this.Value = value;
@@ -45,7 +50,10 @@ namespace Easypay.Rest.Client.Model
         /// Value will be rounded to 2 decimals
         /// </summary>
         /// <value>Value will be rounded to 2 decimals</value>
-        [DataMember(Name = "value", EmitDefaultValue = false)]
+        /*
+        <example>17.5</example>
+        */
+        [DataMember(Name = "value", IsRequired = true, EmitDefaultValue = true)]
         public double Value { get; set; }
 
         /// <summary>
@@ -54,7 +62,7 @@ namespace Easypay.Rest.Client.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PropertiesHasValue {\n");
             sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("}\n");
@@ -71,57 +79,16 @@ namespace Easypay.Rest.Client.Model
         }
 
         /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PropertiesHasValue);
-        }
-
-        /// <summary>
-        /// Returns true if PropertiesHasValue instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PropertiesHasValue to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PropertiesHasValue input)
-        {
-            if (input == null)
-                return false;
-
-            return 
-                (
-                    this.Value == input.Value ||
-                    this.Value.Equals(input.Value)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = hashCode * 59 + this.Value.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
         /// To validate all properties of the instance
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // Value (double) minimum
-            if(this.Value < (double)0.5)
+            if (this.Value < (double)0.5)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Value, must be a value greater than or equal to 0.5.", new [] { "Value" });
+                yield return new ValidationResult("Invalid value for Value, must be a value greater than or equal to 0.5.", new[] { "Value" });
             }
 
             yield break;

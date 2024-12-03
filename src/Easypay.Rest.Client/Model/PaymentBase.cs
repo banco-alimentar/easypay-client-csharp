@@ -1,7 +1,7 @@
 /*
- * Easypay API
+ * Easypay Payments API
  *
- * <a href='https://www.easypay.pt/en/terms-conditions-and-legal-terms' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-policy' class='item'>Privacy Policy</a><br><br><b>EasyPay</b> API allows you to query payment meta-data, receive payment notifications and generate payment references. Since EasyPay API is based on REST principles, it´s very easy to write and test applications. You can use our code examples in PHP/CURL to test all the JSON payloads for Easypay Payment Service API.<br><br> We have two distinct environments on our API Services:<br> - If you are looking to receive payments, please use the <a href='https://api.prod.easypay.pt/docs#' class='item'><b>Production Documentation</b></a>.<br> - If you are looking to test or integrate, please use the <a href='https://goo.gl/CPxQnM' class='item'><b>Sandbox Documentation</b></a>. This environment will always have the latest road map deployments, usually all deployments are sent to production within 10 days. This environment is not meant for <b>Load Tests</b>, please do not use for this purpose, you might be blocked. <br><br> All communications have to include two headers for authentication, if fails it will always respond 403.<br> On <a href='https://backoffice.easypay.pt' class='item'><b>Easypay Backoffice</b></a> please create your authentication AccountId and ApiKey on menu: <i><b>Web Services->Configuration API 2.0->Keys</b></i>.<br><br> Our default response produces a <i><b>application/json</b></i>, but the <b>Accept</b> request-header field can be used to specify certain media types which are acceptable for the response. <br>Our available options are: <i>application/json</i>, <i>application/xml</i>, <i>text/csv</i>
+ * <a href='https://www.easypay.pt/en/legal-terms-and-conditions/' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-and-data-protection-policy/' class='item'>Privacy Policy</a>
  *
  * The version of the OpenAPI document: 2.0
  * Contact: tec@easypay.pt
@@ -30,42 +30,34 @@ namespace Easypay.Rest.Client.Model
     /// PaymentBase
     /// </summary>
     [DataContract(Name = "Payment_Base")]
-    public partial class PaymentBase : IEquatable<PaymentBase>, IValidatableObject
+    public partial class PaymentBase : IValidatableObject
     {
-        /// <summary>
-        /// Defines Currency
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum CurrencyEnum
-        {
-            /// <summary>
-            /// Enum EUR for value: EUR
-            /// </summary>
-            [EnumMember(Value = "EUR")]
-            EUR = 1,
-
-            /// <summary>
-            /// Enum BRL for value: BRL
-            /// </summary>
-            [EnumMember(Value = "BRL")]
-            BRL = 2
-
-        }
 
         /// <summary>
         /// Gets or Sets Currency
         /// </summary>
         [DataMember(Name = "currency", EmitDefaultValue = false)]
-        public CurrencyEnum? Currency { get; set; }
+        public Currency? Currency { get; set; }
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentBase" /> class.
         /// </summary>
+        [JsonConstructorAttribute]
+        protected PaymentBase() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PaymentBase" /> class.
+        /// </summary>
+        /// <param name="id">id.</param>
+        /// <param name="descriptive">This will appear in the bank statement/mbway application.</param>
+        /// <param name="value">Value will be rounded to 2 decimals (required).</param>
         /// <param name="expirationTime">Optional.</param>
-        /// <param name="currency">currency (default to CurrencyEnum.EUR).</param>
+        /// <param name="currency">currency.</param>
         /// <param name="customer">customer.</param>
         /// <param name="key">Merchant identification key.</param>
-        public PaymentBase(string expirationTime = default(string), CurrencyEnum? currency = CurrencyEnum.EUR, Customer customer = default(Customer), string key = default(string))
+        public PaymentBase(Guid id = default(Guid), string descriptive = default(string), double value = default(double), string expirationTime = default(string), Currency? currency = default(Currency?), Customer customer = default(Customer), string key = default(string))
         {
+            this.Value = value;
+            this.Id = id;
+            this.Descriptive = descriptive;
             this.ExpirationTime = expirationTime;
             this.Currency = currency;
             this.Customer = customer;
@@ -73,9 +65,41 @@ namespace Easypay.Rest.Client.Model
         }
 
         /// <summary>
+        /// Gets or Sets Id
+        /// </summary>
+        /*
+        <example>4c67e74b-a256-4e0a-965d-97bf5d01bd50</example>
+        */
+        [DataMember(Name = "id", EmitDefaultValue = false)]
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// This will appear in the bank statement/mbway application
+        /// </summary>
+        /// <value>This will appear in the bank statement/mbway application</value>
+        /*
+        <example>Descriptive Example</example>
+        */
+        [DataMember(Name = "descriptive", EmitDefaultValue = false)]
+        public string Descriptive { get; set; }
+
+        /// <summary>
+        /// Value will be rounded to 2 decimals
+        /// </summary>
+        /// <value>Value will be rounded to 2 decimals</value>
+        /*
+        <example>17.5</example>
+        */
+        [DataMember(Name = "value", IsRequired = true, EmitDefaultValue = true)]
+        public double Value { get; set; }
+
+        /// <summary>
         /// Optional
         /// </summary>
         /// <value>Optional</value>
+        /*
+        <example>2017-12-12 16:05</example>
+        */
         [DataMember(Name = "expiration_time", EmitDefaultValue = false)]
         public string ExpirationTime { get; set; }
 
@@ -89,6 +113,9 @@ namespace Easypay.Rest.Client.Model
         /// Merchant identification key
         /// </summary>
         /// <value>Merchant identification key</value>
+        /*
+        <example>Example Key</example>
+        */
         [DataMember(Name = "key", EmitDefaultValue = false)]
         public string Key { get; set; }
 
@@ -98,8 +125,11 @@ namespace Easypay.Rest.Client.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class PaymentBase {\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Descriptive: ").Append(Descriptive).Append("\n");
+            sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("  ExpirationTime: ").Append(ExpirationTime).Append("\n");
             sb.Append("  Currency: ").Append(Currency).Append("\n");
             sb.Append("  Customer: ").Append(Customer).Append("\n");
@@ -118,78 +148,28 @@ namespace Easypay.Rest.Client.Model
         }
 
         /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PaymentBase);
-        }
-
-        /// <summary>
-        /// Returns true if PaymentBase instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PaymentBase to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PaymentBase input)
-        {
-            if (input == null)
-                return false;
-
-            return 
-                (
-                    this.ExpirationTime == input.ExpirationTime ||
-                    (this.ExpirationTime != null &&
-                    this.ExpirationTime.Equals(input.ExpirationTime))
-                ) && 
-                (
-                    this.Currency == input.Currency ||
-                    this.Currency.Equals(input.Currency)
-                ) && 
-                (
-                    this.Customer == input.Customer ||
-                    (this.Customer != null &&
-                    this.Customer.Equals(input.Customer))
-                ) && 
-                (
-                    this.Key == input.Key ||
-                    (this.Key != null &&
-                    this.Key.Equals(input.Key))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.ExpirationTime != null)
-                    hashCode = hashCode * 59 + this.ExpirationTime.GetHashCode();
-                hashCode = hashCode * 59 + this.Currency.GetHashCode();
-                if (this.Customer != null)
-                    hashCode = hashCode * 59 + this.Customer.GetHashCode();
-                if (this.Key != null)
-                    hashCode = hashCode * 59 + this.Key.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
         /// To validate all properties of the instance
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            // Key (string) maxLength
-            if(this.Key != null && this.Key.Length > 50)
+            // Descriptive (string) maxLength
+            if (this.Descriptive != null && this.Descriptive.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Key, length must be less than 50.", new [] { "Key" });
+                yield return new ValidationResult("Invalid value for Descriptive, length must be less than 255.", new[] { "Descriptive" });
+            }
+
+            // Value (double) minimum
+            if (this.Value < (double)0.5)
+            {
+                yield return new ValidationResult("Invalid value for Value, must be a value greater than or equal to 0.5.", new[] { "Value" });
+            }
+
+            // Key (string) maxLength
+            if (this.Key != null && this.Key.Length > 50)
+            {
+                yield return new ValidationResult("Invalid value for Key, length must be less than 50.", new[] { "Key" });
             }
 
             yield break;

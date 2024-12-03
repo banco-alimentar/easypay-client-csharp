@@ -1,7 +1,7 @@
 /*
- * Easypay API
+ * Easypay Payments API
  *
- * <a href='https://www.easypay.pt/en/terms-conditions-and-legal-terms' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-policy' class='item'>Privacy Policy</a><br><br><b>EasyPay</b> API allows you to query payment meta-data, receive payment notifications and generate payment references. Since EasyPay API is based on REST principles, it´s very easy to write and test applications. You can use our code examples in PHP/CURL to test all the JSON payloads for Easypay Payment Service API.<br><br> We have two distinct environments on our API Services:<br> - If you are looking to receive payments, please use the <a href='https://api.prod.easypay.pt/docs#' class='item'><b>Production Documentation</b></a>.<br> - If you are looking to test or integrate, please use the <a href='https://goo.gl/CPxQnM' class='item'><b>Sandbox Documentation</b></a>. This environment will always have the latest road map deployments, usually all deployments are sent to production within 10 days. This environment is not meant for <b>Load Tests</b>, please do not use for this purpose, you might be blocked. <br><br> All communications have to include two headers for authentication, if fails it will always respond 403.<br> On <a href='https://backoffice.easypay.pt' class='item'><b>Easypay Backoffice</b></a> please create your authentication AccountId and ApiKey on menu: <i><b>Web Services->Configuration API 2.0->Keys</b></i>.<br><br> Our default response produces a <i><b>application/json</b></i>, but the <b>Accept</b> request-header field can be used to specify certain media types which are acceptable for the response. <br>Our available options are: <i>application/json</i>, <i>application/xml</i>, <i>text/csv</i>
+ * <a href='https://www.easypay.pt/en/legal-terms-and-conditions/' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-and-data-protection-policy/' class='item'>Privacy Policy</a>
  *
  * The version of the OpenAPI document: 2.0
  * Contact: tec@easypay.pt
@@ -30,82 +30,16 @@ namespace Easypay.Rest.Client.Model
     /// NotificationCapture
     /// </summary>
     [DataContract(Name = "Notification_Capture")]
-    public partial class NotificationCapture : IEquatable<NotificationCapture>, IValidatableObject
+    public partial class NotificationCapture : IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationCapture" /> class.
         /// </summary>
-        /// <param name="id">id.</param>
-        /// <param name="value">value.</param>
-        /// <param name="currency">currency (default to &quot;EUR&quot;).</param>
-        /// <param name="key">Merchant identification key.</param>
-        /// <param name="expirationTime">expirationTime.</param>
-        /// <param name="customer">customer.</param>
-        /// <param name="method">method.</param>
-        /// <param name="transaction">transaction.</param>
         /// <param name="account">account.</param>
-        public NotificationCapture(Guid id = default(Guid), double value = default(double), string currency = "EUR", string key = default(string), string expirationTime = default(string), Customer customer = default(Customer), string method = default(string), Transaction transaction = default(Transaction), PropertiesHasID account = default(PropertiesHasID))
+        public NotificationCapture(PropertiesHasID account = default(PropertiesHasID))
         {
-            this.Id = id;
-            this.Value = value;
-            // use default value if no "currency" provided
-            this.Currency = currency ?? "EUR";
-            this.Key = key;
-            this.ExpirationTime = expirationTime;
-            this.Customer = customer;
-            this.Method = method;
-            this.Transaction = transaction;
             this.Account = account;
         }
-
-        /// <summary>
-        /// Gets or Sets Id
-        /// </summary>
-        [DataMember(Name = "id", EmitDefaultValue = false)]
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Value
-        /// </summary>
-        [DataMember(Name = "value", EmitDefaultValue = false)]
-        public double Value { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Currency
-        /// </summary>
-        [DataMember(Name = "currency", EmitDefaultValue = false)]
-        public string Currency { get; set; }
-
-        /// <summary>
-        /// Merchant identification key
-        /// </summary>
-        /// <value>Merchant identification key</value>
-        [DataMember(Name = "key", EmitDefaultValue = false)]
-        public string Key { get; set; }
-
-        /// <summary>
-        /// Gets or Sets ExpirationTime
-        /// </summary>
-        [DataMember(Name = "expiration_time", EmitDefaultValue = false)]
-        public string ExpirationTime { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Customer
-        /// </summary>
-        [DataMember(Name = "customer", EmitDefaultValue = false)]
-        public Customer Customer { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Method
-        /// </summary>
-        [DataMember(Name = "method", EmitDefaultValue = false)]
-        public string Method { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Transaction
-        /// </summary>
-        [DataMember(Name = "transaction", EmitDefaultValue = false)]
-        public Transaction Transaction { get; set; }
 
         /// <summary>
         /// Gets or Sets Account
@@ -119,16 +53,8 @@ namespace Easypay.Rest.Client.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class NotificationCapture {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Value: ").Append(Value).Append("\n");
-            sb.Append("  Currency: ").Append(Currency).Append("\n");
-            sb.Append("  Key: ").Append(Key).Append("\n");
-            sb.Append("  ExpirationTime: ").Append(ExpirationTime).Append("\n");
-            sb.Append("  Customer: ").Append(Customer).Append("\n");
-            sb.Append("  Method: ").Append(Method).Append("\n");
-            sb.Append("  Transaction: ").Append(Transaction).Append("\n");
             sb.Append("  Account: ").Append(Account).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -144,108 +70,11 @@ namespace Easypay.Rest.Client.Model
         }
 
         /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as NotificationCapture);
-        }
-
-        /// <summary>
-        /// Returns true if NotificationCapture instances are equal
-        /// </summary>
-        /// <param name="input">Instance of NotificationCapture to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(NotificationCapture input)
-        {
-            if (input == null)
-                return false;
-
-            return 
-                (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
-                ) && 
-                (
-                    this.Value == input.Value ||
-                    this.Value.Equals(input.Value)
-                ) && 
-                (
-                    this.Currency == input.Currency ||
-                    (this.Currency != null &&
-                    this.Currency.Equals(input.Currency))
-                ) && 
-                (
-                    this.Key == input.Key ||
-                    (this.Key != null &&
-                    this.Key.Equals(input.Key))
-                ) && 
-                (
-                    this.ExpirationTime == input.ExpirationTime ||
-                    (this.ExpirationTime != null &&
-                    this.ExpirationTime.Equals(input.ExpirationTime))
-                ) && 
-                (
-                    this.Customer == input.Customer ||
-                    (this.Customer != null &&
-                    this.Customer.Equals(input.Customer))
-                ) && 
-                (
-                    this.Method == input.Method ||
-                    (this.Method != null &&
-                    this.Method.Equals(input.Method))
-                ) && 
-                (
-                    this.Transaction == input.Transaction ||
-                    (this.Transaction != null &&
-                    this.Transaction.Equals(input.Transaction))
-                ) && 
-                (
-                    this.Account == input.Account ||
-                    (this.Account != null &&
-                    this.Account.Equals(input.Account))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
-                hashCode = hashCode * 59 + this.Value.GetHashCode();
-                if (this.Currency != null)
-                    hashCode = hashCode * 59 + this.Currency.GetHashCode();
-                if (this.Key != null)
-                    hashCode = hashCode * 59 + this.Key.GetHashCode();
-                if (this.ExpirationTime != null)
-                    hashCode = hashCode * 59 + this.ExpirationTime.GetHashCode();
-                if (this.Customer != null)
-                    hashCode = hashCode * 59 + this.Customer.GetHashCode();
-                if (this.Method != null)
-                    hashCode = hashCode * 59 + this.Method.GetHashCode();
-                if (this.Transaction != null)
-                    hashCode = hashCode * 59 + this.Transaction.GetHashCode();
-                if (this.Account != null)
-                    hashCode = hashCode * 59 + this.Account.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
         /// To validate all properties of the instance
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }

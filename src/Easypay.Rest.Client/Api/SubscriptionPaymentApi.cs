@@ -1,7 +1,7 @@
 /*
- * Easypay API
+ * Easypay Payments API
  *
- * <a href='https://www.easypay.pt/en/terms-conditions-and-legal-terms' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-policy' class='item'>Privacy Policy</a><br><br><b>EasyPay</b> API allows you to query payment meta-data, receive payment notifications and generate payment references. Since EasyPay API is based on REST principles, it´s very easy to write and test applications. You can use our code examples in PHP/CURL to test all the JSON payloads for Easypay Payment Service API.<br><br> We have two distinct environments on our API Services:<br> - If you are looking to receive payments, please use the <a href='https://api.prod.easypay.pt/docs#' class='item'><b>Production Documentation</b></a>.<br> - If you are looking to test or integrate, please use the <a href='https://goo.gl/CPxQnM' class='item'><b>Sandbox Documentation</b></a>. This environment will always have the latest road map deployments, usually all deployments are sent to production within 10 days. This environment is not meant for <b>Load Tests</b>, please do not use for this purpose, you might be blocked. <br><br> All communications have to include two headers for authentication, if fails it will always respond 403.<br> On <a href='https://backoffice.easypay.pt' class='item'><b>Easypay Backoffice</b></a> please create your authentication AccountId and ApiKey on menu: <i><b>Web Services->Configuration API 2.0->Keys</b></i>.<br><br> Our default response produces a <i><b>application/json</b></i>, but the <b>Accept</b> request-header field can be used to specify certain media types which are acceptable for the response. <br>Our available options are: <i>application/json</i>, <i>application/xml</i>, <i>text/csv</i>
+ * <a href='https://www.easypay.pt/en/legal-terms-and-conditions/' class='item'>Terms conditions and legal terms</a><br><a href='https://www.easypay.pt/en/privacy-and-data-protection-policy/' class='item'>Privacy Policy</a>
  *
  * The version of the OpenAPI document: 2.0
  * Contact: tec@easypay.pt
@@ -15,8 +15,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
-using System.Threading;
-using System.Threading.Tasks;
 using Easypay.Rest.Client.Client;
 using Easypay.Rest.Client.Model;
 
@@ -35,17 +33,18 @@ namespace Easypay.Rest.Client.Api
         /// <remarks>
         /// Full report with all the subscriptions payments from your Account Id
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="page">Page Number (optional)</param>
-        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20.0M)</param>
+        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20M)</param>
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
         /// <param name="id">Filter by id (optional)</param>
         /// <param name="key">Filter by subscription key (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
-        /// <returns>InlineResponse200</returns>
-        InlineResponse200 SubscriptionGet(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string expirationTime = default(string), Object method = default(Object), string customer = default(string), string id = default(string), string key = default(string), string createdAt = default(string));
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>SubscriptionGet200Response</returns>
+        SubscriptionGet200Response SubscriptionGet(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string? expirationTime = default(string?), string? method = default(string?), string? customer = default(string?), string? id = default(string?), string? key = default(string?), string? createdAt = default(string?), int operationIndex = 0);
 
         /// <summary>
         /// List subscription payments
@@ -53,23 +52,26 @@ namespace Easypay.Rest.Client.Api
         /// <remarks>
         /// Full report with all the subscriptions payments from your Account Id
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="page">Page Number (optional)</param>
-        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20.0M)</param>
+        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20M)</param>
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
         /// <param name="id">Filter by id (optional)</param>
         /// <param name="key">Filter by subscription key (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
-        /// <returns>ApiResponse of InlineResponse200</returns>
-        ApiResponse<InlineResponse200> SubscriptionGetWithHttpInfo(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string expirationTime = default(string), Object method = default(Object), string customer = default(string), string id = default(string), string key = default(string), string createdAt = default(string));
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of SubscriptionGet200Response</returns>
+        ApiResponse<SubscriptionGet200Response> SubscriptionGetWithHttpInfo(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string? expirationTime = default(string?), string? method = default(string?), string? customer = default(string?), string? id = default(string?), string? key = default(string?), string? createdAt = default(string?), int operationIndex = 0);
         /// <summary>
         /// Deletes subscription payment
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns></returns>
-        void SubscriptionIdDelete(string subscriptionid);
+        void SubscriptionIdDelete(Guid id, int operationIndex = 0);
 
         /// <summary>
         /// Deletes subscription payment
@@ -77,15 +79,19 @@ namespace Easypay.Rest.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> SubscriptionIdDeleteWithHttpInfo(string subscriptionid);
+        ApiResponse<Object> SubscriptionIdDeleteWithHttpInfo(Guid id, int operationIndex = 0);
         /// <summary>
         /// Shows subscription payment details
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <returns>PaymentSubscriptionWithTransactions</returns>
-        PaymentSubscriptionWithTransactions SubscriptionIdGet(string subscriptionid);
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>SubscriptionIdGet200Response</returns>
+        SubscriptionIdGet200Response SubscriptionIdGet(Guid id, int operationIndex = 0);
 
         /// <summary>
         /// Shows subscription payment details
@@ -93,45 +99,59 @@ namespace Easypay.Rest.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <returns>ApiResponse of PaymentSubscriptionWithTransactions</returns>
-        ApiResponse<PaymentSubscriptionWithTransactions> SubscriptionIdGetWithHttpInfo(string subscriptionid);
-        /// <summary>
-        /// Updates subscription payment details
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">Subscription Payment object to edit existing one</param>
-        /// <returns>InlineResponse2004</returns>
-        InlineResponse2015 SubscriptionIdPatch(string subscriptionid, PaymentSubscriptionPatchable body);
-
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of SubscriptionIdGet200Response</returns>
+        ApiResponse<SubscriptionIdGet200Response> SubscriptionIdGetWithHttpInfo(Guid id, int operationIndex = 0);
         /// <summary>
         /// Updates subscription payment details
         /// </summary>
         /// <remarks>
-        /// 
+        /// Retrieves the subscription payment details.
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
         /// <param name="body">Subscription Payment object to edit existing one</param>
-        /// <returns>ApiResponse of InlineResponse2004</returns>
-        ApiResponse<InlineResponse2015> SubscriptionIdPatchWithHttpInfo(string subscriptionid, PaymentSubscriptionPatchable body);
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>SubscriptionIdPatch200Response</returns>
+        SubscriptionIdPatch200Response SubscriptionIdPatch(Guid id, SubscriptionIdPatchRequest body, int operationIndex = 0);
+
+        /// <summary>
+        /// Updates subscription payment details
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the subscription payment details.
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="body">Subscription Payment object to edit existing one</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of SubscriptionIdPatch200Response</returns>
+        ApiResponse<SubscriptionIdPatch200Response> SubscriptionIdPatchWithHttpInfo(Guid id, SubscriptionIdPatchRequest body, int operationIndex = 0);
         /// <summary>
         /// Create subscription payment
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="value">Payment configuration object to generate a payment</param>
-        /// <returns>InlineResponse2015</returns>
-        InlineResponse2015 SubscriptionPost(PaymentSubscription value);
+        /// <remarks>
+        /// Subscriptions are periodic payments of the same amount of money, configured through Checkout or our Payments API.  Subscriptions support a number of different frequencies, ranging from daily to once every three years. Their last payment can be determined by the end date of the subscription, as well as the total number of payments captured.  They also support a configurable number of retries for each capture in case of failure, as well as falling back to another (single) payment method if the recurring one is not successful.  Supported methods for subscriptions are: &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Credit Card&lt;/i&gt; and &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Direct Debit.&lt;/i&gt;
+        /// </remarks>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Payment configuration object to generate a payment</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>SubscriptionPost201Response</returns>
+        SubscriptionPost201Response SubscriptionPost(SubscriptionPostRequest body, int operationIndex = 0);
 
         /// <summary>
         /// Create subscription payment
         /// </summary>
         /// <remarks>
-        /// 
+        /// Subscriptions are periodic payments of the same amount of money, configured through Checkout or our Payments API.  Subscriptions support a number of different frequencies, ranging from daily to once every three years. Their last payment can be determined by the end date of the subscription, as well as the total number of payments captured.  They also support a configurable number of retries for each capture in case of failure, as well as falling back to another (single) payment method if the recurring one is not successful.  Supported methods for subscriptions are: &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Credit Card&lt;/i&gt; and &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Direct Debit.&lt;/i&gt;
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="value">Payment configuration object to generate a payment</param>
-        /// <returns>ApiResponse of InlineResponse2015</returns>
-        ApiResponse<InlineResponse2015> SubscriptionPostWithHttpInfo(PaymentSubscription value);
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Payment configuration object to generate a payment</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of SubscriptionPost201Response</returns>
+        ApiResponse<SubscriptionPost201Response> SubscriptionPostWithHttpInfo(SubscriptionPostRequest body, int operationIndex = 0);
         #endregion Synchronous Operations
     }
 
@@ -147,18 +167,19 @@ namespace Easypay.Rest.Client.Api
         /// <remarks>
         /// Full report with all the subscriptions payments from your Account Id
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="page">Page Number (optional)</param>
-        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20.0M)</param>
+        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20M)</param>
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
         /// <param name="id">Filter by id (optional)</param>
         /// <param name="key">Filter by subscription key (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of InlineResponse200</returns>
-        Task<InlineResponse200> SubscriptionGetAsync(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string expirationTime = default(string), Object method = default(Object), string customer = default(string), string id = default(string), string key = default(string), string createdAt = default(string), CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of SubscriptionGet200Response</returns>
+        System.Threading.Tasks.Task<SubscriptionGet200Response> SubscriptionGetAsync(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string? expirationTime = default(string?), string? method = default(string?), string? customer = default(string?), string? id = default(string?), string? key = default(string?), string? createdAt = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// List subscription payments
@@ -166,28 +187,31 @@ namespace Easypay.Rest.Client.Api
         /// <remarks>
         /// Full report with all the subscriptions payments from your Account Id
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="page">Page Number (optional)</param>
-        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20.0M)</param>
+        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20M)</param>
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
         /// <param name="id">Filter by id (optional)</param>
         /// <param name="key">Filter by subscription key (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (InlineResponse200)</returns>
-        Task<ApiResponse<InlineResponse200>> SubscriptionGetWithHttpInfoAsync(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string expirationTime = default(string), Object method = default(Object), string customer = default(string), string id = default(string), string key = default(string), string createdAt = default(string), CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of ApiResponse (SubscriptionGet200Response)</returns>
+        System.Threading.Tasks.Task<ApiResponse<SubscriptionGet200Response>> SubscriptionGetWithHttpInfoAsync(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string? expirationTime = default(string?), string? method = default(string?), string? customer = default(string?), string? id = default(string?), string? key = default(string?), string? createdAt = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Deletes subscription payment
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of void</returns>
-        Task SubscriptionIdDeleteAsync(string subscriptionid, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task SubscriptionIdDeleteAsync(Guid id, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Deletes subscription payment
@@ -195,20 +219,24 @@ namespace Easypay.Rest.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse</returns>
-        Task<ApiResponse<Object>> SubscriptionIdDeleteWithHttpInfoAsync(string subscriptionid, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<Object>> SubscriptionIdDeleteWithHttpInfoAsync(Guid id, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Shows subscription payment details
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PaymentSubscriptionWithTransactions</returns>
-        Task<PaymentSubscriptionWithTransactions> SubscriptionIdGetAsync(string subscriptionid, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of SubscriptionIdGet200Response</returns>
+        System.Threading.Tasks.Task<SubscriptionIdGet200Response> SubscriptionIdGetAsync(Guid id, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Shows subscription payment details
@@ -216,56 +244,64 @@ namespace Easypay.Rest.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PaymentSubscriptionWithTransactions)</returns>
-        Task<ApiResponse<PaymentSubscriptionWithTransactions>> SubscriptionIdGetWithHttpInfoAsync(string subscriptionid, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of ApiResponse (SubscriptionIdGet200Response)</returns>
+        System.Threading.Tasks.Task<ApiResponse<SubscriptionIdGet200Response>> SubscriptionIdGetWithHttpInfoAsync(Guid id, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Updates subscription payment details
         /// </summary>
         /// <remarks>
-        /// 
+        /// Retrieves the subscription payment details.
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
         /// <param name="body">Subscription Payment object to edit existing one</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of InlineResponse2004</returns>
-        Task<InlineResponse2015> SubscriptionIdPatchAsync(string subscriptionid, PaymentSubscriptionPatchable body, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of SubscriptionIdPatch200Response</returns>
+        System.Threading.Tasks.Task<SubscriptionIdPatch200Response> SubscriptionIdPatchAsync(Guid id, SubscriptionIdPatchRequest body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Updates subscription payment details
         /// </summary>
         /// <remarks>
-        /// 
+        /// Retrieves the subscription payment details.
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
         /// <param name="body">Subscription Payment object to edit existing one</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (InlineResponse2004)</returns>
-        Task<ApiResponse<InlineResponse2015>> SubscriptionIdPatchWithHttpInfoAsync(string subscriptionid, PaymentSubscriptionPatchable body, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of ApiResponse (SubscriptionIdPatch200Response)</returns>
+        System.Threading.Tasks.Task<ApiResponse<SubscriptionIdPatch200Response>> SubscriptionIdPatchWithHttpInfoAsync(Guid id, SubscriptionIdPatchRequest body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Create subscription payment
         /// </summary>
         /// <remarks>
-        /// 
+        /// Subscriptions are periodic payments of the same amount of money, configured through Checkout or our Payments API.  Subscriptions support a number of different frequencies, ranging from daily to once every three years. Their last payment can be determined by the end date of the subscription, as well as the total number of payments captured.  They also support a configurable number of retries for each capture in case of failure, as well as falling back to another (single) payment method if the recurring one is not successful.  Supported methods for subscriptions are: &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Credit Card&lt;/i&gt; and &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Direct Debit.&lt;/i&gt;
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Payment configuration object to generate a payment</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of InlineResponse2015</returns>
-        Task<InlineResponse2015> SubscriptionPostAsync(PaymentSubscription value, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of SubscriptionPost201Response</returns>
+        System.Threading.Tasks.Task<SubscriptionPost201Response> SubscriptionPostAsync(SubscriptionPostRequest body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Create subscription payment
         /// </summary>
         /// <remarks>
-        /// 
+        /// Subscriptions are periodic payments of the same amount of money, configured through Checkout or our Payments API.  Subscriptions support a number of different frequencies, ranging from daily to once every three years. Their last payment can be determined by the end date of the subscription, as well as the total number of payments captured.  They also support a configurable number of retries for each capture in case of failure, as well as falling back to another (single) payment method if the recurring one is not successful.  Supported methods for subscriptions are: &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Credit Card&lt;/i&gt; and &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Direct Debit.&lt;/i&gt;
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Payment configuration object to generate a payment</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (InlineResponse2015)</returns>
-        Task<ApiResponse<InlineResponse2015>> SubscriptionPostWithHttpInfoAsync(PaymentSubscription value, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of ApiResponse (SubscriptionPost201Response)</returns>
+        System.Threading.Tasks.Task<ApiResponse<SubscriptionPost201Response>> SubscriptionPostWithHttpInfoAsync(SubscriptionPostRequest body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -282,7 +318,7 @@ namespace Easypay.Rest.Client.Api
     /// </summary>
     public partial class SubscriptionPaymentApi : ISubscriptionPaymentApi
     {
-        private ExceptionFactory _exceptionFactory = (name, response) => null;
+        private Easypay.Rest.Client.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionPaymentApi"/> class.
@@ -296,15 +332,15 @@ namespace Easypay.Rest.Client.Api
         /// Initializes a new instance of the <see cref="SubscriptionPaymentApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public SubscriptionPaymentApi(String basePath)
+        public SubscriptionPaymentApi(string basePath)
         {
-            this.Configuration = Rest.Client.Client.Configuration.MergeConfigurations(
-                GlobalConfiguration.Instance,
-                new Configuration { BasePath = basePath }
+            this.Configuration = Easypay.Rest.Client.Client.Configuration.MergeConfigurations(
+                Easypay.Rest.Client.Client.GlobalConfiguration.Instance,
+                new Easypay.Rest.Client.Client.Configuration { BasePath = basePath }
             );
-            this.Client = new ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new ApiClient(this.Configuration.BasePath);
-            this.ExceptionFactory = Rest.Client.Client.Configuration.DefaultExceptionFactory;
+            this.Client = new Easypay.Rest.Client.Client.ApiClient(this.Configuration.BasePath);
+            this.AsynchronousClient = new Easypay.Rest.Client.Client.ApiClient(this.Configuration.BasePath);
+            this.ExceptionFactory = Easypay.Rest.Client.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -313,17 +349,17 @@ namespace Easypay.Rest.Client.Api
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public SubscriptionPaymentApi(Configuration configuration)
+        public SubscriptionPaymentApi(Easypay.Rest.Client.Client.Configuration configuration)
         {
             if (configuration == null) throw new ArgumentNullException("configuration");
 
-            this.Configuration = Rest.Client.Client.Configuration.MergeConfigurations(
-                GlobalConfiguration.Instance,
+            this.Configuration = Easypay.Rest.Client.Client.Configuration.MergeConfigurations(
+                Easypay.Rest.Client.Client.GlobalConfiguration.Instance,
                 configuration
             );
-            this.Client = new ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new ApiClient(this.Configuration.BasePath);
-            ExceptionFactory = Rest.Client.Client.Configuration.DefaultExceptionFactory;
+            this.Client = new Easypay.Rest.Client.Client.ApiClient(this.Configuration.BasePath);
+            this.AsynchronousClient = new Easypay.Rest.Client.Client.ApiClient(this.Configuration.BasePath);
+            ExceptionFactory = Easypay.Rest.Client.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -333,7 +369,7 @@ namespace Easypay.Rest.Client.Api
         /// <param name="client">The client interface for synchronous API access.</param>
         /// <param name="asyncClient">The client interface for asynchronous API access.</param>
         /// <param name="configuration">The configuration object.</param>
-        public SubscriptionPaymentApi(ISynchronousClient client, IAsynchronousClient asyncClient, IReadableConfiguration configuration)
+        public SubscriptionPaymentApi(Easypay.Rest.Client.Client.ISynchronousClient client, Easypay.Rest.Client.Client.IAsynchronousClient asyncClient, Easypay.Rest.Client.Client.IReadableConfiguration configuration)
         {
             if (client == null) throw new ArgumentNullException("client");
             if (asyncClient == null) throw new ArgumentNullException("asyncClient");
@@ -342,24 +378,24 @@ namespace Easypay.Rest.Client.Api
             this.Client = client;
             this.AsynchronousClient = asyncClient;
             this.Configuration = configuration;
-            this.ExceptionFactory = Rest.Client.Client.Configuration.DefaultExceptionFactory;
+            this.ExceptionFactory = Easypay.Rest.Client.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
         /// The client for accessing this underlying API asynchronously.
         /// </summary>
-        public IAsynchronousClient AsynchronousClient { get; set; }
+        public Easypay.Rest.Client.Client.IAsynchronousClient AsynchronousClient { get; set; }
 
         /// <summary>
         /// The client for accessing this underlying API synchronously.
         /// </summary>
-        public ISynchronousClient Client { get; set; }
+        public Easypay.Rest.Client.Client.ISynchronousClient Client { get; set; }
 
         /// <summary>
         /// Gets the base path of the API client.
         /// </summary>
         /// <value>The base path</value>
-        public String GetBasePath()
+        public string GetBasePath()
         {
             return this.Configuration.BasePath;
         }
@@ -368,12 +404,12 @@ namespace Easypay.Rest.Client.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public IReadableConfiguration Configuration { get; set; }
+        public Easypay.Rest.Client.Client.IReadableConfiguration Configuration { get; set; }
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
         /// </summary>
-        public ExceptionFactory ExceptionFactory
+        public Easypay.Rest.Client.Client.ExceptionFactory ExceptionFactory
         {
             get
             {
@@ -389,104 +425,118 @@ namespace Easypay.Rest.Client.Api
         /// <summary>
         /// List subscription payments Full report with all the subscriptions payments from your Account Id
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="page">Page Number (optional)</param>
-        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20.0M)</param>
+        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20M)</param>
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
         /// <param name="id">Filter by id (optional)</param>
         /// <param name="key">Filter by subscription key (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
-        /// <returns>InlineResponse200</returns>
-        public InlineResponse200 SubscriptionGet(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string expirationTime = default(string), Object method = default(Object), string customer = default(string), string id = default(string), string key = default(string), string createdAt = default(string))
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>SubscriptionGet200Response</returns>
+        public SubscriptionGet200Response SubscriptionGet(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string? expirationTime = default(string?), string? method = default(string?), string? customer = default(string?), string? id = default(string?), string? key = default(string?), string? createdAt = default(string?), int operationIndex = 0)
         {
-            ApiResponse<InlineResponse200> localVarResponse = SubscriptionGetWithHttpInfo(page, recordsPerPage, expirationTime, method, customer, id, key, createdAt);
+            Easypay.Rest.Client.Client.ApiResponse<SubscriptionGet200Response> localVarResponse = SubscriptionGetWithHttpInfo(page, recordsPerPage, expirationTime, method, customer, id, key, createdAt);
             return localVarResponse.Data;
         }
 
         /// <summary>
         /// List subscription payments Full report with all the subscriptions payments from your Account Id
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="page">Page Number (optional)</param>
-        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20.0M)</param>
+        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20M)</param>
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
         /// <param name="id">Filter by id (optional)</param>
         /// <param name="key">Filter by subscription key (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
-        /// <returns>ApiResponse of InlineResponse200</returns>
-        public ApiResponse<InlineResponse200> SubscriptionGetWithHttpInfo(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string expirationTime = default(string), Object method = default(Object), string customer = default(string), string id = default(string), string key = default(string), string createdAt = default(string))
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of SubscriptionGet200Response</returns>
+        public Easypay.Rest.Client.Client.ApiResponse<SubscriptionGet200Response> SubscriptionGetWithHttpInfo(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string? expirationTime = default(string?), string? method = default(string?), string? customer = default(string?), string? id = default(string?), string? key = default(string?), string? createdAt = default(string?), int operationIndex = 0)
         {
-            RequestOptions localVarRequestOptions = new RequestOptions();
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
-                "application/json"
+            string[] _accepts = new string[] {
+                "application/json",
+                "application/xml"
             };
 
-            var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
-            var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             if (page != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "page", page));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "page", page));
             }
             if (recordsPerPage != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "records_per_page", recordsPerPage));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "records_per_page", recordsPerPage));
             }
             if (expirationTime != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "expiration_time", expirationTime));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "expiration_time", expirationTime));
             }
             if (method != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "method", method));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "method", method));
             }
             if (customer != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "customer", customer));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "customer", customer));
             }
             if (id != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "id", id));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "id", id));
             }
             if (key != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "key", key));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "key", key));
             }
             if (createdAt != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "created_at", createdAt));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "created_at", createdAt));
             }
 
+            localVarRequestOptions.Operation = "SubscriptionPaymentApi.SubscriptionGet";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
             // authentication (accountId) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
             {
                 localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
             }
             // authentication (apiKey) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
             {
                 localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<InlineResponse200>("/subscription", localVarRequestOptions, this.Configuration);
-
+            var localVarResponse = this.Client.Get<SubscriptionGet200Response>("/subscription", localVarRequestOptions, this.Configuration);
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("SubscriptionGet", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -495,109 +545,122 @@ namespace Easypay.Rest.Client.Api
         /// <summary>
         /// List subscription payments Full report with all the subscriptions payments from your Account Id
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="page">Page Number (optional)</param>
-        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20.0M)</param>
+        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20M)</param>
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
         /// <param name="id">Filter by id (optional)</param>
         /// <param name="key">Filter by subscription key (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of InlineResponse200</returns>
-        public async Task<InlineResponse200> SubscriptionGetAsync(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string expirationTime = default(string), Object method = default(Object), string customer = default(string), string id = default(string), string key = default(string), string createdAt = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of SubscriptionGet200Response</returns>
+        public async System.Threading.Tasks.Task<SubscriptionGet200Response> SubscriptionGetAsync(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string? expirationTime = default(string?), string? method = default(string?), string? customer = default(string?), string? id = default(string?), string? key = default(string?), string? createdAt = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
-            ApiResponse<InlineResponse200> localVarResponse = await SubscriptionGetWithHttpInfoAsync(page, recordsPerPage, expirationTime, method, customer, id, key, createdAt, cancellationToken).ConfigureAwait(false);
+            Easypay.Rest.Client.Client.ApiResponse<SubscriptionGet200Response> localVarResponse = await SubscriptionGetWithHttpInfoAsync(page, recordsPerPage, expirationTime, method, customer, id, key, createdAt, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
         /// List subscription payments Full report with all the subscriptions payments from your Account Id
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="page">Page Number (optional)</param>
-        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20.0M)</param>
+        /// <param name="recordsPerPage">Limit records per page (Max: 100) (optional, default to 20M)</param>
         /// <param name="expirationTime">Filter by expiration time interval (max 30 days) (optional)</param>
         /// <param name="method">Filter by method (optional)</param>
         /// <param name="customer">Filter by customer key (optional)</param>
         /// <param name="id">Filter by id (optional)</param>
         /// <param name="key">Filter by subscription key (optional)</param>
         /// <param name="createdAt">Filter by created datetime interval (max 30 days) (optional)</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (InlineResponse200)</returns>
-        public async Task<ApiResponse<InlineResponse200>> SubscriptionGetWithHttpInfoAsync(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string expirationTime = default(string), Object method = default(Object), string customer = default(string), string id = default(string), string key = default(string), string createdAt = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of ApiResponse (SubscriptionGet200Response)</returns>
+        public async System.Threading.Tasks.Task<Easypay.Rest.Client.Client.ApiResponse<SubscriptionGet200Response>> SubscriptionGetWithHttpInfoAsync(decimal? page = default(decimal?), decimal? recordsPerPage = default(decimal?), string? expirationTime = default(string?), string? method = default(string?), string? customer = default(string?), string? id = default(string?), string? key = default(string?), string? createdAt = default(string?), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
 
-            RequestOptions localVarRequestOptions = new RequestOptions();
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
-                "application/json"
+            string[] _accepts = new string[] {
+                "application/json",
+                "application/xml"
             };
 
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
-            var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             if (page != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "page", page));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "page", page));
             }
             if (recordsPerPage != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "records_per_page", recordsPerPage));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "records_per_page", recordsPerPage));
             }
             if (expirationTime != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "expiration_time", expirationTime));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "expiration_time", expirationTime));
             }
             if (method != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "method", method));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "method", method));
             }
             if (customer != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "customer", customer));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "customer", customer));
             }
             if (id != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "id", id));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "id", id));
             }
             if (key != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "key", key));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "key", key));
             }
             if (createdAt != null)
             {
-                localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "created_at", createdAt));
+                localVarRequestOptions.QueryParameters.Add(Easypay.Rest.Client.Client.ClientUtils.ParameterToMultiMap("", "created_at", createdAt));
             }
 
+            localVarRequestOptions.Operation = "SubscriptionPaymentApi.SubscriptionGet";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
             // authentication (accountId) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
             {
                 localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
             }
             // authentication (apiKey) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
             {
                 localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
             }
 
             // make the HTTP request
-
-            var localVarResponse = await this.AsynchronousClient.GetAsync<InlineResponse200>("/subscription", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<SubscriptionGet200Response>("/subscription", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("SubscriptionGet", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -606,54 +669,72 @@ namespace Easypay.Rest.Client.Api
         /// <summary>
         /// Deletes subscription payment 
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns></returns>
-        public void SubscriptionIdDelete(string subscriptionid)
+        public void SubscriptionIdDelete(Guid id, int operationIndex = 0)
         {
-            SubscriptionIdDeleteWithHttpInfo(subscriptionid);
+            SubscriptionIdDeleteWithHttpInfo(id);
         }
 
         /// <summary>
         /// Deletes subscription payment 
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<object> SubscriptionIdDeleteWithHttpInfo(string subscriptionid)
+        public Easypay.Rest.Client.Client.ApiResponse<Object> SubscriptionIdDeleteWithHttpInfo(Guid id, int operationIndex = 0)
         {
-            RequestOptions localVarRequestOptions = new RequestOptions();
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
+                "application/json",
+                "application/xml"
             };
 
-            var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
-            var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
+            localVarRequestOptions.PathParameters.Add("id", Easypay.Rest.Client.Client.ClientUtils.ParameterToString(id)); // path parameter
+
+            localVarRequestOptions.Operation = "SubscriptionPaymentApi.SubscriptionIdDelete";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (accountId) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
             {
                 localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
             }
             // authentication (apiKey) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
             {
                 localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>(string.Format("/subscription/{0}", subscriptionid), localVarRequestOptions, this.Configuration);
-
+            var localVarResponse = this.Client.Delete<Object>("/subscription/{id}", localVarRequestOptions, this.Configuration);
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("SubscriptionIdDelete", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -662,59 +743,76 @@ namespace Easypay.Rest.Client.Api
         /// <summary>
         /// Deletes subscription payment 
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of void</returns>
-        public async Task SubscriptionIdDeleteAsync(string subscriptionid, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task SubscriptionIdDeleteAsync(Guid id, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
-            await SubscriptionIdDeleteWithHttpInfoAsync(subscriptionid, cancellationToken).ConfigureAwait(false);
+            await SubscriptionIdDeleteWithHttpInfoAsync(id, operationIndex, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Deletes subscription payment 
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse</returns>
-        public async Task<ApiResponse<object>> SubscriptionIdDeleteWithHttpInfoAsync(string subscriptionid, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Easypay.Rest.Client.Client.ApiResponse<Object>> SubscriptionIdDeleteWithHttpInfoAsync(Guid id, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
 
-            RequestOptions localVarRequestOptions = new RequestOptions();
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
+            string[] _accepts = new string[] {
+                "application/json",
+                "application/xml"
             };
 
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
-            var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
-            var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            localVarRequestOptions.PathParameters.Add("id", Easypay.Rest.Client.Client.ClientUtils.ParameterToString(id)); // path parameter
 
+            localVarRequestOptions.Operation = "SubscriptionPaymentApi.SubscriptionIdDelete";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (accountId) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
             {
                 localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
             }
             // authentication (apiKey) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
             {
                 localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
             }
 
             // make the HTTP request
-
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>(string.Format("/subscription/{0}", subscriptionid), localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/subscription/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("SubscriptionIdDelete", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
@@ -723,393 +821,494 @@ namespace Easypay.Rest.Client.Api
         /// <summary>
         /// Shows subscription payment details 
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <returns>PaymentSubscriptionWithTransactions</returns>
-        public PaymentSubscriptionWithTransactions SubscriptionIdGet(string subscriptionid)
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>SubscriptionIdGet200Response</returns>
+        public SubscriptionIdGet200Response SubscriptionIdGet(Guid id, int operationIndex = 0)
         {
-            ApiResponse<PaymentSubscriptionWithTransactions> localVarResponse = SubscriptionIdGetWithHttpInfo(subscriptionid);
+            Easypay.Rest.Client.Client.ApiResponse<SubscriptionIdGet200Response> localVarResponse = SubscriptionIdGetWithHttpInfo(id);
             return localVarResponse.Data;
         }
 
         /// <summary>
         /// Shows subscription payment details 
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <returns>ApiResponse of PaymentSubscriptionWithTransactions</returns>
-        public ApiResponse<PaymentSubscriptionWithTransactions> SubscriptionIdGetWithHttpInfo(string subscriptionid)
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of SubscriptionIdGet200Response</returns>
+        public Easypay.Rest.Client.Client.ApiResponse<SubscriptionIdGet200Response> SubscriptionIdGetWithHttpInfo(Guid id, int operationIndex = 0)
         {
-            RequestOptions localVarRequestOptions = new RequestOptions();
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
-                "application/json"
+            string[] _accepts = new string[] {
+                "application/json",
+                "application/xml"
             };
 
-            var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
-            var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
+            localVarRequestOptions.PathParameters.Add("id", Easypay.Rest.Client.Client.ClientUtils.ParameterToString(id)); // path parameter
+
+            localVarRequestOptions.Operation = "SubscriptionPaymentApi.SubscriptionIdGet";
+            localVarRequestOptions.OperationIndex = operationIndex;
 
             // authentication (accountId) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
             {
                 localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
             }
             // authentication (apiKey) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
             {
                 localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<PaymentSubscriptionWithTransactions>(string.Format("/subscription/{0}", subscriptionid), localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<SubscriptionIdGet200Response>("/subscription/{id}", localVarRequestOptions, this.Configuration);
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("SubscriptionIdGet", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Shows subscription payment details 
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of SubscriptionIdGet200Response</returns>
+        public async System.Threading.Tasks.Task<SubscriptionIdGet200Response> SubscriptionIdGetAsync(Guid id, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        {
+            Easypay.Rest.Client.Client.ApiResponse<SubscriptionIdGet200Response> localVarResponse = await SubscriptionIdGetWithHttpInfoAsync(id, operationIndex, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Shows subscription payment details 
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (SubscriptionIdGet200Response)</returns>
+        public async System.Threading.Tasks.Task<Easypay.Rest.Client.Client.ApiResponse<SubscriptionIdGet200Response>> SubscriptionIdGetWithHttpInfoAsync(Guid id, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        {
+
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json",
+                "application/xml"
+            };
+
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("id", Easypay.Rest.Client.Client.ClientUtils.ParameterToString(id)); // path parameter
+
+            localVarRequestOptions.Operation = "SubscriptionPaymentApi.SubscriptionIdGet";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+            // authentication (accountId) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
+            }
+            // authentication (apiKey) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = await this.AsynchronousClient.GetAsync<SubscriptionIdGet200Response>("/subscription/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("SubscriptionIdGet", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
         }
 
         /// <summary>
-        /// Shows subscription payment details 
+        /// Updates subscription payment details Retrieves the subscription payment details.
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PaymentSubscriptionWithTransactions</returns>
-        public async Task<PaymentSubscriptionWithTransactions> SubscriptionIdGetAsync(string subscriptionid, CancellationToken cancellationToken = default(CancellationToken))
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="body">Subscription Payment object to edit existing one</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>SubscriptionIdPatch200Response</returns>
+        public SubscriptionIdPatch200Response SubscriptionIdPatch(Guid id, SubscriptionIdPatchRequest body, int operationIndex = 0)
         {
-            ApiResponse<PaymentSubscriptionWithTransactions> localVarResponse = await SubscriptionIdGetWithHttpInfoAsync(subscriptionid, cancellationToken).ConfigureAwait(false);
+            Easypay.Rest.Client.Client.ApiResponse<SubscriptionIdPatch200Response> localVarResponse = SubscriptionIdPatchWithHttpInfo(id, body);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Shows subscription payment details 
+        /// Updates subscription payment details Retrieves the subscription payment details.
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PaymentSubscriptionWithTransactions)</returns>
-        public async Task<ApiResponse<PaymentSubscriptionWithTransactions>> SubscriptionIdGetWithHttpInfoAsync(string subscriptionid, CancellationToken cancellationToken = default(CancellationToken))
-        {
-
-            RequestOptions localVarRequestOptions = new RequestOptions();
-
-            String[] _contentTypes = new String[] {
-            };
-
-            // to determine the Accept header
-            String[] _accepts = new String[] {
-                "application/json"
-            };
-
-
-            var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-
-            // authentication (accountId) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
-            }
-            // authentication (apiKey) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
-            }
-
-            // make the HTTP request
-
-            var localVarResponse = await this.AsynchronousClient.GetAsync<PaymentSubscriptionWithTransactions>(string.Format("/subscription/{0}", subscriptionid), localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("SubscriptionIdGet", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Updates subscription payment details 
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
         /// <param name="body">Subscription Payment object to edit existing one</param>
-        /// <returns>InlineResponse2004</returns>
-        public InlineResponse2015 SubscriptionIdPatch(string subscriptionid, PaymentSubscriptionPatchable body)
-        {
-            ApiResponse<InlineResponse2015> localVarResponse = SubscriptionIdPatchWithHttpInfo(subscriptionid, body);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Updates subscription payment details 
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">Subscription Payment object to edit existing one</param>
-        /// <returns>ApiResponse of InlineResponse2004</returns>
-        public ApiResponse<InlineResponse2015> SubscriptionIdPatchWithHttpInfo(string subscriptionid, PaymentSubscriptionPatchable body)
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of SubscriptionIdPatch200Response</returns>
+        public Easypay.Rest.Client.Client.ApiResponse<SubscriptionIdPatch200Response> SubscriptionIdPatchWithHttpInfo(Guid id, SubscriptionIdPatchRequest body, int operationIndex = 0)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling SubscriptionPaymentApi->SubscriptionIdPatch");
+            {
+                throw new Easypay.Rest.Client.Client.ApiException(400, "Missing required parameter 'body' when calling SubscriptionPaymentApi->SubscriptionIdPatch");
+            }
 
-            RequestOptions localVarRequestOptions = new RequestOptions();
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
                 "application/json"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
-                "application/json"
+            string[] _accepts = new string[] {
+                "application/json",
+                "application/xml"
             };
 
-            var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
-            var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
+            localVarRequestOptions.PathParameters.Add("id", Easypay.Rest.Client.Client.ClientUtils.ParameterToString(id)); // path parameter
             localVarRequestOptions.Data = body;
 
+            localVarRequestOptions.Operation = "SubscriptionPaymentApi.SubscriptionIdPatch";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
             // authentication (accountId) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
             {
                 localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
             }
             // authentication (apiKey) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
             {
                 localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Patch<InlineResponse2015>(string.Format("/subscription/{0}", subscriptionid), localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Patch<SubscriptionIdPatch200Response>("/subscription/{id}", localVarRequestOptions, this.Configuration);
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("SubscriptionIdPatch", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Updates subscription payment details Retrieves the subscription payment details.
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="body">Subscription Payment object to edit existing one</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of SubscriptionIdPatch200Response</returns>
+        public async System.Threading.Tasks.Task<SubscriptionIdPatch200Response> SubscriptionIdPatchAsync(Guid id, SubscriptionIdPatchRequest body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        {
+            Easypay.Rest.Client.Client.ApiResponse<SubscriptionIdPatch200Response> localVarResponse = await SubscriptionIdPatchWithHttpInfoAsync(id, body, operationIndex, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Updates subscription payment details Retrieves the subscription payment details.
+        /// </summary>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">Resource Identification</param>
+        /// <param name="body">Subscription Payment object to edit existing one</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (SubscriptionIdPatch200Response)</returns>
+        public async System.Threading.Tasks.Task<Easypay.Rest.Client.Client.ApiResponse<SubscriptionIdPatch200Response>> SubscriptionIdPatchWithHttpInfoAsync(Guid id, SubscriptionIdPatchRequest body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        {
+            // verify the required parameter 'body' is set
+            if (body == null)
+            {
+                throw new Easypay.Rest.Client.Client.ApiException(400, "Missing required parameter 'body' when calling SubscriptionPaymentApi->SubscriptionIdPatch");
+            }
+
+
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json",
+                "application/xml"
+            };
+
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("id", Easypay.Rest.Client.Client.ClientUtils.ParameterToString(id)); // path parameter
+            localVarRequestOptions.Data = body;
+
+            localVarRequestOptions.Operation = "SubscriptionPaymentApi.SubscriptionIdPatch";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+            // authentication (accountId) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
+            }
+            // authentication (apiKey) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
+            }
+
+            // make the HTTP request
+            var localVarResponse = await this.AsynchronousClient.PatchAsync<SubscriptionIdPatch200Response>("/subscription/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("SubscriptionIdPatch", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
         }
 
         /// <summary>
-        /// Updates subscription payment details 
+        /// Create subscription payment Subscriptions are periodic payments of the same amount of money, configured through Checkout or our Payments API.  Subscriptions support a number of different frequencies, ranging from daily to once every three years. Their last payment can be determined by the end date of the subscription, as well as the total number of payments captured.  They also support a configurable number of retries for each capture in case of failure, as well as falling back to another (single) payment method if the recurring one is not successful.  Supported methods for subscriptions are: &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Credit Card&lt;/i&gt; and &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Direct Debit.&lt;/i&gt;
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">Subscription Payment object to edit existing one</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of InlineResponse2004</returns>
-        public async Task<InlineResponse2015> SubscriptionIdPatchAsync(string subscriptionid, PaymentSubscriptionPatchable body, CancellationToken cancellationToken = default(CancellationToken))
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Payment configuration object to generate a payment</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>SubscriptionPost201Response</returns>
+        public SubscriptionPost201Response SubscriptionPost(SubscriptionPostRequest body, int operationIndex = 0)
         {
-            ApiResponse<InlineResponse2015> localVarResponse = await SubscriptionIdPatchWithHttpInfoAsync(subscriptionid, body, cancellationToken).ConfigureAwait(false);
+            Easypay.Rest.Client.Client.ApiResponse<SubscriptionPost201Response> localVarResponse = SubscriptionPostWithHttpInfo(body);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Updates subscription payment details 
+        /// Create subscription payment Subscriptions are periodic payments of the same amount of money, configured through Checkout or our Payments API.  Subscriptions support a number of different frequencies, ranging from daily to once every three years. Their last payment can be determined by the end date of the subscription, as well as the total number of payments captured.  They also support a configurable number of retries for each capture in case of failure, as well as falling back to another (single) payment method if the recurring one is not successful.  Supported methods for subscriptions are: &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Credit Card&lt;/i&gt; and &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Direct Debit.&lt;/i&gt;
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">Subscription Payment object to edit existing one</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (InlineResponse2004)</returns>
-        public async Task<ApiResponse<InlineResponse2015>> SubscriptionIdPatchWithHttpInfoAsync(string subscriptionid, PaymentSubscriptionPatchable body, CancellationToken cancellationToken = default(CancellationToken))
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">Payment configuration object to generate a payment</param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of SubscriptionPost201Response</returns>
+        public Easypay.Rest.Client.Client.ApiResponse<SubscriptionPost201Response> SubscriptionPostWithHttpInfo(SubscriptionPostRequest body, int operationIndex = 0)
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling SubscriptionPaymentApi->SubscriptionIdPatch");
+            {
+                throw new Easypay.Rest.Client.Client.ApiException(400, "Missing required parameter 'body' when calling SubscriptionPaymentApi->SubscriptionPost");
+            }
 
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
 
-            RequestOptions localVarRequestOptions = new RequestOptions();
-
-            String[] _contentTypes = new String[] {
+            string[] _contentTypes = new string[] {
                 "application/json"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
-                "application/json"
+            string[] _accepts = new string[] {
+                "application/json",
+                "application/xml"
             };
 
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
-            var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = body;
 
+            localVarRequestOptions.Operation = "SubscriptionPaymentApi.SubscriptionPost";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
             // authentication (accountId) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
             {
                 localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
             }
             // authentication (apiKey) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
             {
                 localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
             }
 
             // make the HTTP request
-
-            var localVarResponse = await this.AsynchronousClient.PatchAsync<InlineResponse2015>(string.Format("/subscription/{0}", subscriptionid), localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
+            var localVarResponse = this.Client.Post<SubscriptionPost201Response>("/subscription", localVarRequestOptions, this.Configuration);
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("SubscriptionIdPatch", localVarResponse);
-                if (_exception != null) throw _exception;
+                Exception _exception = this.ExceptionFactory("SubscriptionPost", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
         }
 
         /// <summary>
-        /// Create subscription payment 
+        /// Create subscription payment Subscriptions are periodic payments of the same amount of money, configured through Checkout or our Payments API.  Subscriptions support a number of different frequencies, ranging from daily to once every three years. Their last payment can be determined by the end date of the subscription, as well as the total number of payments captured.  They also support a configurable number of retries for each capture in case of failure, as well as falling back to another (single) payment method if the recurring one is not successful.  Supported methods for subscriptions are: &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Credit Card&lt;/i&gt; and &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Direct Debit.&lt;/i&gt;
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Payment configuration object to generate a payment</param>
-        /// <returns>InlineResponse2015</returns>
-        public InlineResponse2015 SubscriptionPost(PaymentSubscription body)
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of SubscriptionPost201Response</returns>
+        public async System.Threading.Tasks.Task<SubscriptionPost201Response> SubscriptionPostAsync(SubscriptionPostRequest body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
-            ApiResponse<InlineResponse2015> localVarResponse = SubscriptionPostWithHttpInfo(body);
+            Easypay.Rest.Client.Client.ApiResponse<SubscriptionPost201Response> localVarResponse = await SubscriptionPostWithHttpInfoAsync(body, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create subscription payment 
+        /// Create subscription payment Subscriptions are periodic payments of the same amount of money, configured through Checkout or our Payments API.  Subscriptions support a number of different frequencies, ranging from daily to once every three years. Their last payment can be determined by the end date of the subscription, as well as the total number of payments captured.  They also support a configurable number of retries for each capture in case of failure, as well as falling back to another (single) payment method if the recurring one is not successful.  Supported methods for subscriptions are: &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Credit Card&lt;/i&gt; and &lt;i style&#x3D;\&quot;color:red\&quot;&gt;Direct Debit.&lt;/i&gt;
         /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Easypay.Rest.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Payment configuration object to generate a payment</param>
-        /// <returns>ApiResponse of InlineResponse2015</returns>
-        public ApiResponse<InlineResponse2015> SubscriptionPostWithHttpInfo(PaymentSubscription body)
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (SubscriptionPost201Response)</returns>
+        public async System.Threading.Tasks.Task<Easypay.Rest.Client.Client.ApiResponse<SubscriptionPost201Response>> SubscriptionPostWithHttpInfoAsync(SubscriptionPostRequest body, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling SubscriptionPaymentApi->SubscriptionPost");
+            {
+                throw new Easypay.Rest.Client.Client.ApiException(400, "Missing required parameter 'body' when calling SubscriptionPaymentApi->SubscriptionPost");
+            }
 
-            RequestOptions localVarRequestOptions = new RequestOptions();
 
-            String[] _contentTypes = new String[] {
+            Easypay.Rest.Client.Client.RequestOptions localVarRequestOptions = new Easypay.Rest.Client.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
                 "application/json"
             };
 
             // to determine the Accept header
-            String[] _accepts = new String[] {
-                "application/json"
+            string[] _accepts = new string[] {
+                "application/json",
+                "application/xml"
             };
 
-            var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            var localVarContentType = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
 
-            var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            var localVarAccept = Easypay.Rest.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
 
             localVarRequestOptions.Data = body;
 
+            localVarRequestOptions.Operation = "SubscriptionPaymentApi.SubscriptionPost";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
             // authentication (accountId) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
             {
                 localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
             }
             // authentication (apiKey) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
             {
                 localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<InlineResponse2015>("/subscription", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<SubscriptionPost201Response>("/subscription", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("SubscriptionPost", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Create subscription payment 
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">Payment configuration object to generate a payment</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of InlineResponse2015</returns>
-        public async Task<InlineResponse2015> SubscriptionPostAsync(PaymentSubscription body, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            ApiResponse<InlineResponse2015> localVarResponse = await SubscriptionPostWithHttpInfoAsync(body, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Create subscription payment 
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">Payment configuration object to generate a payment</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (InlineResponse2015)</returns>
-        public async Task<ApiResponse<InlineResponse2015>> SubscriptionPostWithHttpInfoAsync(PaymentSubscription body, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // verify the required parameter 'body' is set
-            if (body == null)
-                throw new ApiException(400, "Missing required parameter 'body' when calling SubscriptionPaymentApi->SubscriptionPost");
-
-
-            RequestOptions localVarRequestOptions = new RequestOptions();
-
-            String[] _contentTypes = new String[] {
-                "application/json"
-            };
-
-            // to determine the Accept header
-            String[] _accepts = new String[] {
-                "application/json"
-            };
-
-
-            var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-            localVarRequestOptions.Data = body;
-
-            // authentication (accountId) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("AccountId")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("AccountId", this.Configuration.GetApiKeyWithPrefix("AccountId"));
-            }
-            // authentication (apiKey) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("ApiKey")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("ApiKey", this.Configuration.GetApiKeyWithPrefix("ApiKey"));
-            }
-
-            // make the HTTP request
-
-            var localVarResponse = await this.AsynchronousClient.PostAsync<InlineResponse2015>("/subscription", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("SubscriptionPost", localVarResponse);
-                if (_exception != null) throw _exception;
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
             }
 
             return localVarResponse;
